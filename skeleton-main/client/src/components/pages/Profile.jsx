@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import "./Profile.css";
@@ -18,6 +18,8 @@ const Profile = () => {
     <>
       <div className="background-picture" />
       <div className="user-name">Name here</div>
+      <div className="user-description">Description here</div>
+      <div className="user-email">Email here</div>
     </>
   );
 };
