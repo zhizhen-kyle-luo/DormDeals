@@ -1,0 +1,7 @@
+.NavBar-container {
+  background-color: var(--mit--red);
+}
+
+.NavBar-title {
+  color: var(--white);
+}
