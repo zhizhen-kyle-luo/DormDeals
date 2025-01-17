@@ -16,7 +16,10 @@ const Profile = () => {
 
   return (
     <>
-      <div className="background-picture" />
+      <div className="background-picture-container"></div>
+      <div className="background-picture">
+        <div className="profile-picture" />
+      </div>
       <div className="user-name">Name here</div>
       <div className="user-description">Description here</div>
       <div className="user-email">Email here</div>
