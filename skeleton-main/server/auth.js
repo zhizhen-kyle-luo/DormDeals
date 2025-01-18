@@ -64,6 +64,13 @@ function ensureLoggedIn(req, res, next) {
   next();
 }
 
+/*
+router.get("/login/callback", function (req, res) {
+  // ... existing code ...
+  res.redirect("/home"); // Change this to redirect to home after login
+});
+*/
+
 module.exports = {
   login,
   logout,
