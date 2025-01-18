@@ -1,7 +1,26 @@
 .NavBar-container {
-  background-color: var(--mit--red);
+  padding: 1rem;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .NavBar-title {
-  color: var(--white);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.NavBar-linkContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.NavBar-link {
+  text-decoration: none;
+  color: #000;
+}
+
+.NavBar-link:hover {
+  color: #666;
 }
