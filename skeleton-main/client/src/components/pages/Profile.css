@@ -1,35 +1,62 @@
-.background-and-profile {
-  height: 300px;
-}
-
-.background-picture-container {
+.Profile-container {
   width: 100%;
-  height: 200px;
+  min-height: 100vh;
 }
 
-.background-picture {
+.Profile-banner {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+
+.Profile-bannerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.Profile-content {
+  max-width: 800px;
+  margin: -60px auto 0;
+  padding: 0 20px;
+  position: relative;
+}
+
+.Profile-avatarContainer {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Profile-avatar {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.profile-picture-container {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  z-index: 1;
-  top: 100px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
+.Profile-info {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.profile-picture {
-  width: 100%;
-  height: 100%;
+.Profile-info h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #333;
 }
 
-.user-name {
-  font: arial;
+.Profile-description {
+  color: #666;
+  margin: 10px 0;
+}
+
+.Profile-email {
+  color: #888;
+  font-size: 0.9rem;
 }
