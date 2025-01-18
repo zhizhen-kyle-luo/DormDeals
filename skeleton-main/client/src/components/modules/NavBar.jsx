@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 
-const NavBar = () => {
+const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
       <div className="NavBar-title">
@@ -11,7 +11,7 @@ const NavBar = () => {
         </Link>
       </div>
       <div className="NavBar-linkContainer">
-        <Link to="/profile" className="NavBar-link">
+        <Link to={`/profile/${props.userId}`} className="NavBar-link">
           Profile
         </Link>
         {/* Add more navigation links as needed */}
