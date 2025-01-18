@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import "../../utilities.css";
 import "./Skeleton.css";
@@ -30,6 +30,17 @@ const Skeleton = () => {
           <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
         )}
         <Routes>
+          <Route 
+            path="/" 
+            element={
+              userId ? (
+                <Navigate to="/home" replace />
+              ) : (
+                <div>Please log in to continue</div>
+              )
+            } 
+          />
+          
           <Route
             path="/home"
             element={
@@ -46,7 +57,7 @@ const Skeleton = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/" element={<Home />} />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
