@@ -24,3 +24,17 @@
 .NavBar-link:hover {
   color: #666;
 }
+
+.Cart-icon,
+.New-order-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  vertical-align: middle;
+  transition: transform 0.2s;
+}
+
+.Cart-icon:hover,
+.New-order-icon:hover {
+  transform: scale(1.1);
+}
