@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./NavBar.css";
 
-const NavBar = () => {
+const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
       <div className="NavBar-title">
@@ -12,11 +12,14 @@ const NavBar = () => {
         </Link>
       </div>
       <div className="NavBar-linkContainer">
-        <Link to="/profile" className="NavBar-link">
+        <Link to={`/profile/${props.userId}`} className="NavBar-link">
           Profile
         </Link>
-        <Link to="/newPage" className="NavBar-link">
-          NewPage
+        <Link to={`/NewPage/${props.userId}`} className="NavBar-link">
+          New Order
+        </Link>
+        <Link to={`/Cart/${props.userId}`} className="NavBar-link">
+          Shopping Cart
         </Link>
       </div>
     </nav>
