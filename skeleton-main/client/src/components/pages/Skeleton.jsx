@@ -38,7 +38,11 @@ const Skeleton = () => {
             </ProtectedRoute>
           } />
           <Route path="/profile/:userId" element={<Profile />} />
-          <Route path="/NewPage/:userId" element={<NewPage />} />
+          <Route path="/NewPage/:userId" element={
+            <ProtectedRoute userId={userId}>
+              <NewPage />
+            </ProtectedRoute>
+          } />
           <Route path="/Cart/:userId" element={<Cart />} />
         </Routes>
       </div>
