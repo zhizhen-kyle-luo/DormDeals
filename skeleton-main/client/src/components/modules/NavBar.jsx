@@ -2,25 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 // Import images
-import newOrderIcon from "../../assets/plus_sign.jpg";
+import newOrderIcon from "../../assets/plus_sign.png";
 import cartIcon from "../../assets/shopping_cart.webp";
+import profileIcon from "../../assets/profile.jpg";
 
 const NavBar = (props) => {
   return (
     <nav className="NavBar-container">
       <div className="NavBar-title">
         <Link to="/" className="NavBar-link">
-          Home
+          MIT Marketplace
         </Link>
       </div>
       <div className="NavBar-linkContainer">
-        <Link to={`/profile/${props.userId}`} className="NavBar-link">
-          Profile
+        <Link to={`/profile/${props.userId}`} className="NavBar-link" title="Profile">
+          <img src={profileIcon} alt="Profile" className="Profile-icon"/>
         </Link>
-        <Link to={`/NewPage/${props.userId}`} className="NavBar-link">
+        <Link to={`/NewPage/${props.userId}`} className="NavBar-link" title="New Order">
           <img src={newOrderIcon} alt="New Order" className="New-order-icon"/>
         </Link>
-        <Link to={`/Cart/${props.userId}`} className="NavBar-link">
+        <Link to={`/Cart/${props.userId}`} className="NavBar-link" title="Shopping Cart">
           <img src={cartIcon} alt="Shopping Cart" className="Cart-icon"/>
         </Link>
       </div>
