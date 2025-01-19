@@ -18,7 +18,7 @@
 }
 
 .Profile-content {
-  max-width: 800px;
+  max-width: 1500px;
   margin: -60px auto 0;
   padding: 0 20px;
   position: relative;
@@ -40,12 +40,32 @@
   object-fit: cover;
 }
 
+.Edit-avatarContainer {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Edit-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .Profile-info {
-  text-align: center;
   margin-top: 20px;
 }
 
-.Profile-info h1 {
+.Profile-subContainer {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.Profile-subtitle {
   margin: 0;
   font-size: 2rem;
   color: #333;
@@ -59,4 +79,50 @@
 .Profile-email {
   color: #888;
   font-size: 0.9rem;
+}
+
+.edit-Form-popup {
+  width: 30%;
+  border: 2px solid #f1f1f1;
+  background-color: white;
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 35%;
+  z-index: 20;
+  margin: 0 auto;
+  padding: 2%;
+}
+
+.Form-container {
+  width: 50%;
+}
+
+.Description-input {
+  padding: 10px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  font-family: inherit;
+}
+
+.Email-input {
+  padding: 10px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  font-family: inherit;
+}
+
+.Submit-button {
+  background-color: #04aa6d;
+  color: white;
+  font-size: 15px;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
+  opacity: 0.8;
 }

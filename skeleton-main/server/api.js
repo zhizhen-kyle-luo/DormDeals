@@ -11,6 +11,7 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
+const UserProfile = require("./models/user-profile");
 
 // import authentication library
 const auth = require("./auth");
@@ -43,10 +44,34 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+/*
+router.get("/userprofile", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    const newUserProfile = new UserProfile({
+      user: {
+        name: req.user.name,
+        _id: req.user._id,
+      },
+      description: "Blank",
+      email: "Blank",
+      picture: "../client/src/assets/blank-profile.png",
+    });
+    newUserProfile.save().then((userprofile) => res.send(userprofile));
+  });
+});
+*/
+
 router.get("/user", (req, res) => {
   User.findById(req.query.userid)
     .then((user) => {
-      res.send(user);
+      const newUserProfile = new UserProfile({
+        user: user,
+        description: "Blank",
+        email: "Blank",
+        picture: "../client/src/assets/blank-profile.png",
+      });
+
+      newUserProfile.save().then(res.send([user, newUserProfile]));
     })
     .catch((err) => {
       res.status(500).send("User Not");
