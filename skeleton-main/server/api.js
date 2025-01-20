@@ -12,6 +12,7 @@ const express = require("express");
 // import models so we can interact with the database
 const User = require("./models/user");
 const UserProfile = require("./models/user-profile");
+const Item = require("./models/item");
 
 // import authentication library
 const auth = require("./auth");
@@ -44,6 +45,12 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+router.get("/useritems", (req, res) => {
+  Item.find({ seller_id: req.query.userid }).then((userItemsObj) => {
+    res.send(userItemsObj);
+  });
+});
+
 router.get("/user", (req, res) => {
   User.findById(req.query.userid)
     .then((user) => {
@@ -56,7 +63,6 @@ router.get("/user", (req, res) => {
         First find the user by id. If the user already possesses a user profile object, display that.
         Else, create a new one for the user.
         */
-        console.log(userObj.length);
         if (existsProfile === true) {
           userProfile = userObj[0];
         } else {

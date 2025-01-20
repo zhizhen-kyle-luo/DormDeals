@@ -4,13 +4,14 @@ import { useParams } from "react-router-dom";
 
 import "./Profile.css";
 import backgroundimg from "../../assets/mit-dome.jpg";
-import defaultpfpimg from "../../assets/blank-profile.png";
+/*import defaultpfpimg from "../../assets/blank-profile.png";*/
 import editicon from "../../assets/edit-symbol.png";
 
 const Profile = () => {
   let props = useParams();
   const [userandinformation, setUser] = useState([]);
   const [viewingUser, setViewingUser] = useState();
+  const [userItems, setUserItems] = useState([]); /*The items the user is selling */
 
   useEffect(() => {
     get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
@@ -18,6 +19,12 @@ const Profile = () => {
 
   useEffect(() => {
     get(`/api/whoami`).then((viewingUserObj) => setViewingUser(viewingUserObj));
+  }, []);
+
+  useEffect(() => {
+    get(`/api/useritems`, { userid: props.userId }).then((userItemsObj) =>
+      setUserItems(userItemsObj)
+    );
   }, []);
 
   const user = userandinformation[0];
@@ -55,6 +62,16 @@ const Profile = () => {
     editVisible = "u-invisible";
   }
 
+  const userHasItems = userItems.length > 0;
+  let userItemsDisplay;
+  if (userHasItems) {
+    userItemsDisplay = userItems.map((itemObj) => {
+      <img src={itemObj.image[0]} class="userItem" alt="Item" />;
+    });
+  } else {
+    userItemsDisplay = <div className="Profile-description">No Items!</div>;
+  }
+
   return (
     <>
       <div className="Profile-container">
@@ -86,6 +103,7 @@ const Profile = () => {
             </div>
             <div className="Profile-subContainer u-textCenter">
               <h1 className="Profile-subtitle">My Items</h1>
+              <div className="userItems">{userItemsDisplay}</div>
             </div>
           </div>
         </div>
