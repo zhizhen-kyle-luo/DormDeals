@@ -1,20 +1,11 @@
 import React, { useState, useEffect, createContext } from "react";
-import NavBar from "./modules/NavBar";
-import { Outlet } from "react-router-dom";
-
-import jwt_decode from "jwt-decode";
-
-import "../utilities.css";
-
-import { socket } from "../client-socket";
-
 import { get, post } from "../utilities";
+import { socket } from "../client-socket";
+import Skeleton from "./pages/Skeleton.jsx";
+import "../utilities.css";
 
 export const UserContext = createContext(null);
 
-/**
- * Define the "App" component
- */
 const App = () => {
   const [userId, setUserId] = useState(undefined);
 
@@ -29,8 +20,6 @@ const App = () => {
 
   const handleLogin = (credentialResponse) => {
     const userToken = credentialResponse.credential;
-    const decodedCredential = jwt_decode(userToken);
-    console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
@@ -50,8 +39,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={authContextValue}>
-      <NavBar userId={userId} />
-      <Outlet />
+      <Skeleton />
     </UserContext.Provider>
   );
 };

@@ -12,7 +12,6 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const GOOGLE_CLIENT_ID = "190074658805-371tjs3v0qjskhk7taih29hb9230t857.apps.googleusercontent.com";
