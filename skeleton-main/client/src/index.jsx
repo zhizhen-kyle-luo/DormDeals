@@ -5,6 +5,8 @@ import Skeleton from "./components/pages/Skeleton";
 import NotFound from "./components/pages/NotFound";
 import Profile from "./components/pages/Profile";
 import Home from "./components/pages/Home";
+import NewPage from "./components/pages/NewPage";
+import Cart from "./components/pages/Cart";
 
 import {
   createBrowserRouter,
@@ -22,6 +24,8 @@ const router = createBrowserRouter(
       <Route path="/" element={<Skeleton />} />
       <Route path="/home" element={<Home />} />
       <Route path="/profile/:userId" element={<Profile />} />
+      <Route path="/NewPage/:userId" element={<NewPage />} />
+      <Route path="/Cart/:userId" element={<Cart />} />
     </Route>
   )
 );
