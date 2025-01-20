@@ -90,3 +90,11 @@ form {
 .u-link:hover {
   color: var(--primary--dim);
 }
+
+.u-invisible {
+  visibility: hidden;
+}
+
+.u-visible {
+  visibility: visible;
+}
