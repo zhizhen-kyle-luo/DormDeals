@@ -56,6 +56,7 @@ router.get("/user", (req, res) => {
         First find the user by id. If the user already possesses a user profile object, display that.
         Else, create a new one for the user.
         */
+        console.log(userObj.length);
         if (existsProfile === true) {
           userProfile = userObj[0];
         } else {
@@ -82,8 +83,9 @@ router.post("/edituser", (req, res) => {
         user: user,
         description: req.body.description,
         email: req.body.email,
-        picture: "../client/src/assets/blank-profile.png",
+        picture: req.body.picture,
       });
+      console.log(editedProfile);
       editedProfile.save().then(res.send(editedProfile));
     })
     .catch((err) => {

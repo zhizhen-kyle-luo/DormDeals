@@ -34,7 +34,13 @@ const Profile = () => {
   const saveEdits = () => {
     const newDescription = document.getElementById("Description-input").value;
     const newEmail = document.getElementById("Email-input").value;
-    const body = { userid: props.userId, description: newDescription, email: newEmail };
+    const newPicture = document.getElementById("Picture-input").value;
+    const body = {
+      userid: props.userId,
+      description: newDescription,
+      email: newEmail,
+      picture: newPicture,
+    };
     post("/api/edituser", body).then((profile) => setUser([user, profile]));
   };
 
@@ -58,7 +64,7 @@ const Profile = () => {
         <div className="Profile-content">
           <div className="Profile-and-edit-container">
             <div className="Profile-avatarContainer">
-              <img src={defaultpfpimg} alt="Profile" className="Profile-avatar" />
+              <img src={user.picture} alt="Profile" className="Profile-avatar" />
             </div>
             <div
               className={`Edit-avatarContainer ${editVisible}`}
@@ -95,8 +101,10 @@ const Profile = () => {
             id="Description-input"
           />
           <h3>Email</h3>
-          <input type="text" placeholder="Enter email" id="Email-input" />
+          <input type="text" placeholder="Enter email" id="Email-input" required />
 
+          <h3>Profile Picture</h3>
+          <input type="file" id="Picture-input" name="image" accept="image/*" />
           <button
             className="Cancel-button"
             type="button"
