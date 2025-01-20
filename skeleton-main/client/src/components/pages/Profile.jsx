@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 import { useParams } from "react-router-dom";
 
 import "./Profile.css";
@@ -15,6 +15,7 @@ const Profile = () => {
   useEffect(() => {
     get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
   }, []);
+
   useEffect(() => {
     get(`/api/whoami`).then((viewingUserObj) => setViewingUser(viewingUserObj));
   }, []);
@@ -28,6 +29,13 @@ const Profile = () => {
 
   const closeProfileEdit = () => {
     document.getElementById("Form").style.display = "none";
+  };
+
+  const saveEdits = () => {
+    const newDescription = document.getElementById("Description-input").value;
+    const newEmail = document.getElementById("Email-input").value;
+    const body = { userid: props.userId, description: newDescription, email: newEmail };
+    post("/api/edituser", body).then((profile) => setUser([user, profile]));
   };
 
   if (!user) {
@@ -82,16 +90,28 @@ const Profile = () => {
           <h3>Description</h3>
           <textarea
             cols="40"
-            rows="10"
+            rows="6"
             placeholder="Type a description of yourself"
-            className="Description-input"
+            id="Description-input"
           />
           <h3>Email</h3>
-          <input type="text" placeholder="Enter email" className="Email-input" />
+          <input type="text" placeholder="Enter email" id="Email-input" />
+
+          <button
+            className="Cancel-button"
+            type="button"
+            onClick={() => {
+              closeProfileEdit();
+            }}
+          >
+            Cancel
+          </button>
 
           <button
             className="Submit-button"
+            type="button"
             onClick={() => {
+              saveEdits();
               closeProfileEdit();
             }}
           >
