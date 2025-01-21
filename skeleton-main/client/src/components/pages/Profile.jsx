@@ -66,7 +66,7 @@ const Profile = () => {
   let userItemsDisplay;
   if (userHasItems) {
     userItemsDisplay = userItems.map((itemObj) => {
-      <img src={itemObj.image[0]} class="userItem" alt="Item" />;
+      <img src={itemObj.image[0]} className="userItem" alt="Item" />;
     });
   } else {
     userItemsDisplay = <div className="Profile-description">No Items!</div>;

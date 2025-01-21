@@ -8,7 +8,7 @@ const ItemSchema = new mongoose.Schema({
   category: String,
   condition: String,
   description: String,
-  image: Array,
+  images: Array,
 });
 
 // compile model from schema
