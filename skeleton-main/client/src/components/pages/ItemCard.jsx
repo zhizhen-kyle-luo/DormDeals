@@ -76,8 +76,11 @@ const ItemCard = (props) => {
             <h1 className="Item-name">Test Item</h1>
             <h1 className="Item-cost">$Cost</h1>
           </>
-          <div className="Item-seller">Seller</div>
-          <div className="Item-tags">Map item condition & category here</div>
+          <div className="Item-seller">Seller (insert link to profile)</div>
+          <div className="Item-tags">
+            <div className="Item-category">Category</div>
+            <div className="Item-condition">Condition</div>
+          </div>
           <button className="Cart-button">Add to Cart</button>
         </div>
       </div>

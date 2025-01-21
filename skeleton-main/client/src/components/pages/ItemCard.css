@@ -72,6 +72,29 @@
   font-size: 20px;
 }
 
+.Item-tags {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  margin-top: 15px;
+}
+
+.Item-category {
+  padding: 4%;
+  background-color: #e3b552;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.Item-condition {
+  padding: 4%;
+  background-color: #f89aff;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
 .Cart-button {
   background-color: #04aa6d;
   color: white;

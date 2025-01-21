@@ -52,7 +52,7 @@ const Profile = () => {
   };
 
   if (!user) {
-    return <div>Please Log in</div>;
+    return <div>Please log in</div>;
   }
 
   let editVisible;
