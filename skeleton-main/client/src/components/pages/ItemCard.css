@@ -62,7 +62,7 @@
 .Item-cost {
   color: #333;
   font-size: 45px;
-  display: inline-block;
+  display: flex;
   float: right;
   margin-right: 8%;
 }
@@ -87,7 +87,7 @@
 }
 
 .Item-description-container {
-  display: inline-block;
+  display: block;
   float: right;
   margin-right: 10%;
 }
