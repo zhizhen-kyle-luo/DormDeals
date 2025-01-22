@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import Link from "react-router-dom";
 
 import "./ItemCard.css";
 
@@ -21,7 +22,7 @@ import defaultpfpimg from "../../assets/blank-profile.png";
  */
 
 const ItemCard = (props) => {
-  const itemImages = [backgroundimg, defaultpfpimg];
+  const itemImages = props.images;
   const [selectedImage, setSelectedImage] = useState(itemImages[0]);
 
   const changeSelectedImage = (index) => {
@@ -73,20 +74,22 @@ const ItemCard = (props) => {
         </div>
         <div className="Item-information">
           <>
-            <h1 className="Item-name">Test Item</h1>
-            <h1 className="Item-cost">$Cost</h1>
+            <h1 className="Item-name">{props.name}</h1>
+            <h1 className="Item-cost">{props.price}</h1>
           </>
-          <div className="Item-seller">Seller (insert link to profile)</div>
+          <Link to={`/profile/${props.seller_id}`} className="Item-seller">
+            {props.seller}
+          </Link>
           <div className="Item-tags">
-            <div className="Item-category">Category</div>
-            <div className="Item-condition">Condition</div>
+            <div className="Item-category">{props.category}</div>
+            <div className="Item-condition">{props.condition}</div>
           </div>
           <button className="Cart-button">Add to Cart</button>
         </div>
       </div>
       <div className="Item-description-container">
         <h1 className="Item-description-header">Item Description</h1>
-        <div className="Item-description">Description</div>
+        <div className="Item-description">{props.description}</div>
       </div>
     </div>
   );
