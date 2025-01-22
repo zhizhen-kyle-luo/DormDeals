@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import "./Profile.css";
 import backgroundimg from "../../assets/mit-dome.jpg";
-/*import defaultpfpimg from "../../assets/blank-profile.png";*/
+import defaultpfpimg from "../../assets/blank-profile.png";
 import editicon from "../../assets/edit-symbol.png";
 
 const Profile = () => {
@@ -14,7 +14,9 @@ const Profile = () => {
   const [userItems, setUserItems] = useState([]); /*The items the user is selling */
 
   useEffect(() => {
-    get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+    get(`/api/user`, { userid: props.userId, picture: defaultpfpimg }).then((userObj) => {
+      setUser(userObj);
+    });
   }, []);
 
   useEffect(() => {
@@ -30,6 +32,10 @@ const Profile = () => {
   const user = userandinformation[0];
   const userinformation = userandinformation[1];
 
+  const [editForm, setEditForm] = useState({
+    picture: [],
+  });
+
   const openProfileEdit = () => {
     document.getElementById("Form").style.display = "flex";
   };
@@ -38,17 +44,41 @@ const Profile = () => {
     document.getElementById("Form").style.display = "none";
   };
 
-  const saveEdits = () => {
+  const handleImageUpload = async (event) => {
+    const files = Array.from(event.target.files);
+    const imagePromises = files.map((file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    });
+
+    const base64Images = await Promise.all(imagePromises);
+    console.log(base64Images);
+    setEditForm((prev) => ({
+      ...prev,
+      picture: base64Images,
+    }));
+  };
+
+  const saveEdits = async () => {
     const newDescription = document.getElementById("Description-input").value;
     const newEmail = document.getElementById("Email-input").value;
-    const newPicture = document.getElementById("Picture-input").value;
+    let newPictureObj = editForm.picture;
+    if (newPictureObj.length === 0) {
+      newPictureObj = [defaultpfpimg];
+    }
+    console.log(newPictureObj);
     const body = {
       userid: props.userId,
       description: newDescription,
       email: newEmail,
-      picture: newPicture,
+      picture: newPictureObj[0],
     };
-    post("/api/edituser", body).then((profile) => setUser([user, profile]));
+    await post("/api/edituser", body).then((profile) => {
+      setUser([user, profile]);
+    });
   };
 
   if (!user) {
@@ -66,7 +96,7 @@ const Profile = () => {
   let userItemsDisplay;
   if (userHasItems) {
     userItemsDisplay = userItems.map((itemObj) => {
-      <img src={itemObj.image[0]} className="userItem" alt="Item" />;
+      <img src={itemObj} className="userItem" alt="Item" />;
     });
   } else {
     userItemsDisplay = <div className="Profile-description">No Items!</div>;
@@ -81,7 +111,7 @@ const Profile = () => {
         <div className="Profile-content">
           <div className="Profile-and-edit-container">
             <div className="Profile-avatarContainer">
-              <img src={user.picture} alt="Profile" className="Profile-avatar" />
+              <img src={userinformation.picture} alt="Profile" id="Profile-avatar" />
             </div>
             <div
               className={`Edit-avatarContainer ${editVisible}`}
@@ -114,15 +144,21 @@ const Profile = () => {
           <h3>Description</h3>
           <textarea
             cols="40"
-            rows="6"
+            rows="5"
             placeholder="Type a description of yourself"
             id="Description-input"
           />
           <h3>Email</h3>
-          <input type="text" placeholder="Enter email" id="Email-input" required />
+          <input type="text" placeholder="Enter email" id="Email-input" />
 
           <h3>Profile Picture</h3>
-          <input type="file" id="Picture-input" name="image" accept="image/*" />
+          <input
+            type="file"
+            id="Picture-input"
+            name="image"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
           <button
             className="Cancel-button"
             type="button"

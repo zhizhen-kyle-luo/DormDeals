@@ -7,7 +7,7 @@ const UserProfileSchema = new mongoose.Schema({
   },
   description: String,
   email: String,
-  picture: String,
+  picture: Object,
 });
 
 // compile model from schema

@@ -70,7 +70,7 @@ router.get("/user", (req, res) => {
             user: user,
             description: "Blank",
             email: "Blank",
-            picture: "../client/src/assets/blank-profile.png",
+            picture: req.query.picture,
           });
         }
         userProfile.save().then(res.send([userProfile.user, userProfile]));
@@ -111,7 +111,8 @@ router.post("/orders", auth.ensureLoggedIn, (req, res) => {
     images: req.body.images || [],
   });
 
-  newItem.save()
+  newItem
+    .save()
     .then((savedItem) => {
       res.status(201).send(savedItem);
     })
