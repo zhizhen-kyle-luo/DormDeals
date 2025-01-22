@@ -142,7 +142,7 @@ const Profile = () => {
           <h3>Description</h3>
           <textarea
             cols="40"
-            rows="5"
+            rows="4"
             placeholder="Type a description of yourself"
             id="Description-input"
           />
