@@ -25,18 +25,14 @@ const OrderDetails = () => {
     <div className="OrderDetails-container">
       <div className="OrderDetails-content">
         <div className="OrderDetails-imageSection">
-          <img 
-            src={selectedImage} 
-            alt={order.name} 
-            className="OrderDetails-mainImage"
-          />
+          <img src={selectedImage} alt={order.name} className="OrderDetails-mainImage" />
           <div className="OrderDetails-thumbnails">
             {order.images.map((image, index) => (
               <img
                 key={index}
                 src={image}
                 alt={`${order.name} view ${index + 1}`}
-                className={`OrderDetails-thumbnail ${image === selectedImage ? 'active' : ''}`}
+                className={`OrderDetails-thumbnail ${image === selectedImage ? "active" : ""}`}
                 onClick={() => setSelectedImage(image)}
               />
             ))}
@@ -47,7 +43,7 @@ const OrderDetails = () => {
           <h1 className="OrderDetails-title">{order.name}</h1>
           <div className="OrderDetails-price">${order.price}</div>
           <div className="OrderDetails-seller">Seller: {order.seller}</div>
-          
+
           <div className="OrderDetails-tags">
             <span className="OrderDetails-category">{order.category}</span>
             <span className="OrderDetails-condition">{order.condition}</span>
@@ -59,12 +55,8 @@ const OrderDetails = () => {
           </div>
 
           <div className="OrderDetails-actions">
-            <button className="OrderDetails-button OrderDetails-addToCart">
-              Add to Cart
-            </button>
-            <button className="OrderDetails-button OrderDetails-contact">
-              Contact Seller
-            </button>
+            <button className="OrderDetails-button OrderDetails-addToCart">Add to Cart</button>
+            <button className="OrderDetails-button OrderDetails-contact">Contact Seller</button>
           </div>
         </div>
       </div>

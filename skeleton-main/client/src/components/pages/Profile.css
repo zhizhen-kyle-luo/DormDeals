@@ -81,6 +81,16 @@
   font-size: 0.9rem;
 }
 
+.userItems {
+  display: block;
+}
+
+.userItem {
+  width: 100px;
+  height: 60px;
+  object-fit: contain;
+}
+
 .edit-Form-popup {
   width: 30%;
   border: 1px solid #f1f1f1;

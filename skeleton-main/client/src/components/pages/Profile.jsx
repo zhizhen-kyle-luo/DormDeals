@@ -32,7 +32,7 @@ const Profile = () => {
   const user = userandinformation[0];
   const userinformation = userandinformation[1];
 
-  const [editForm, setEditForm] = useState({
+  const [newPicture, setNewPicture] = useState({
     picture: [],
   });
 
@@ -55,8 +55,7 @@ const Profile = () => {
     });
 
     const base64Images = await Promise.all(imagePromises);
-    console.log(base64Images);
-    setEditForm((prev) => ({
+    setNewPicture((prev) => ({
       ...prev,
       picture: base64Images,
     }));
@@ -65,11 +64,10 @@ const Profile = () => {
   const saveEdits = async () => {
     const newDescription = document.getElementById("Description-input").value;
     const newEmail = document.getElementById("Email-input").value;
-    let newPictureObj = editForm.picture;
+    let newPictureObj = newPicture.picture;
     if (newPictureObj.length === 0) {
       newPictureObj = [defaultpfpimg];
     }
-    console.log(newPictureObj);
     const body = {
       userid: props.userId,
       description: newDescription,
@@ -96,7 +94,7 @@ const Profile = () => {
   let userItemsDisplay;
   if (userHasItems) {
     userItemsDisplay = userItems.map((itemObj) => {
-      <img src={itemObj} className="userItem" alt="Item" />;
+      <img src={itemObj.images[0]} className="userItem" alt="Item" />;
     });
   } else {
     userItemsDisplay = <div className="Profile-description">No Items!</div>;
@@ -133,7 +131,7 @@ const Profile = () => {
             </div>
             <div className="Profile-subContainer u-textCenter">
               <h1 className="Profile-subtitle">My Items</h1>
-              <div className="userItems">{userItemsDisplay}</div>
+              <div className="userItems">Still in works{userItemsDisplay}</div>
             </div>
           </div>
         </div>
