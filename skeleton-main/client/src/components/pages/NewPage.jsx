@@ -92,11 +92,6 @@ const NewPage = () => {
   return (
     <div className="NewPage-container">
       <h1>Create New Order</h1>
-      {submitStatus && (
-        <div className={`NewPage-status ${submitStatus.includes("Failed") ? "error" : "success"}`}>
-          {submitStatus}
-        </div>
-      )}
       <form onSubmit={handleSubmit} className="NewPage-form">
         <div className="NewPage-formGroup">
           <label htmlFor="itemName">Item Name *</label>
@@ -187,6 +182,12 @@ const NewPage = () => {
         <button type="submit" className="NewPage-submit">
           Post Order
         </button>
+
+        {submitStatus && (
+          <div className={`NewPage-status ${submitStatus.includes("Failed") ? "error" : "success"}`}>
+            {submitStatus}
+          </div>
+        )}
       </form>
     </div>
   );

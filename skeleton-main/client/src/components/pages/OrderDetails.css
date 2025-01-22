@@ -2,23 +2,23 @@
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  background: #fff;
 }
 
 .OrderDetails-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  background: white;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Image Section */
 .OrderDetails-imageSection {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .OrderDetails-imageContainer {
@@ -31,9 +31,15 @@
 
 .OrderDetails-mainImage {
   width: 100%;
-  height: 100%;
+  height: 500px;
   object-fit: contain;
-  background: #f5f5f5;
+  background: #f8f8f8;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.OrderDetails-mainImage:hover {
+  transform: scale(1.02);
 }
 
 .OrderDetails-imageNav {
@@ -65,102 +71,133 @@
 
 .OrderDetails-thumbnails {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   overflow-x: auto;
   padding: 0.5rem;
+  scrollbar-width: thin;
 }
 
 .OrderDetails-thumbnail {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   opacity: 0.6;
-  transition: opacity 0.2s;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
 }
 
 .OrderDetails-thumbnail:hover,
 .OrderDetails-thumbnail.active {
   opacity: 1;
+  border-color: #e07007;
 }
 
 /* Info Section */
 .OrderDetails-info {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+  padding: 1rem;
 }
 
 .OrderDetails-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #333;
   margin: 0;
+  line-height: 1.2;
 }
 
 .OrderDetails-price {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #e07007;
   font-weight: bold;
+  margin: 0.5rem 0;
 }
 
-.OrderDetails-metadata {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.metadata-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.label {
+.OrderDetails-seller {
+  font-size: 1.1rem;
   color: #666;
-  font-size: 0.9rem;
+  margin-bottom: 1rem;
 }
 
-.value {
+.OrderDetails-tags {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.OrderDetails-category,
+.OrderDetails-condition {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
   font-weight: 500;
-  color: #333;
+}
+
+.OrderDetails-category {
+  background: #f0f7ff;
+  color: #0066cc;
+}
+
+.OrderDetails-condition {
+  background: #fff3e6;
+  color: #e07007;
 }
 
 .OrderDetails-description {
+  margin-top: 2rem;
+  padding-top: 2rem;
   border-top: 1px solid #eee;
-  padding-top: 1.5rem;
 }
 
 .OrderDetails-description h2 {
-  font-size: 1.2rem;
-  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
   color: #333;
+  margin-bottom: 1rem;
 }
 
 .OrderDetails-description p {
   color: #666;
   line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.OrderDetails-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 1rem;
+}
+
+.OrderDetails-button {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.OrderDetails-addToCart {
+  background: #e07007;
+  color: white;
+}
+
+.OrderDetails-addToCart:hover {
+  background: #c86206;
+  transform: translateY(-2px);
 }
 
 .OrderDetails-contact {
-  margin-top: auto;
+  background: #f5f5f5;
+  color: #333;
 }
 
-.OrderDetails-contactButton {
-  width: 100%;
-  padding: 1rem;
-  background: #e07007;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.OrderDetails-contactButton:hover {
-  background: #c86206;
+.OrderDetails-contact:hover {
+  background: #e8e8e8;
 }
 
 /* Loading State */
@@ -174,12 +211,35 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .OrderDetails-content {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
-  .OrderDetails-imageContainer {
-    height: 300px;
+  .OrderDetails-mainImage {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .OrderDetails-container {
+    padding: 1rem;
+  }
+
+  .OrderDetails-content {
+    padding: 1rem;
+  }
+
+  .OrderDetails-title {
+    font-size: 2rem;
+  }
+
+  .OrderDetails-price {
+    font-size: 1.75rem;
+  }
+
+  .OrderDetails-actions {
+    flex-direction: column;
   }
 }

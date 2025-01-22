@@ -21,49 +21,52 @@ const OrderDetails = () => {
     return <div className="OrderDetails-loading">Loading...</div>;
   }
 
-  const changeSelectedImage = (index) => {
-    setSelectedImage(order.images[index]);
-  };
-
-  const createImageIcon = (image, index) => {
-    return (
-      <img
-        key={index}
-        src={image}
-        className={image === selectedImage ? "Selected-image" : "Single-image"}
-        alt="Item Image"
-        onClick={() => changeSelectedImage(index)}
-      />
-    );
-  };
-
   return (
-    <div className="Item-page">
-      <div className="Item-main-container">
-        <div className="Item-images-container">
-          <div className="Images-list-container">
-            {order.images.map((image, index) => createImageIcon(image, index))}
-          </div>
-          <div className="Main-image-container">
-            <img src={selectedImage} className="Main-image" alt={order.itemName} />
+    <div className="OrderDetails-container">
+      <div className="OrderDetails-content">
+        <div className="OrderDetails-imageSection">
+          <img 
+            src={selectedImage} 
+            alt={order.name} 
+            className="OrderDetails-mainImage"
+          />
+          <div className="OrderDetails-thumbnails">
+            {order.images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`${order.name} view ${index + 1}`}
+                className={`OrderDetails-thumbnail ${image === selectedImage ? 'active' : ''}`}
+                onClick={() => setSelectedImage(image)}
+              />
+            ))}
           </div>
         </div>
-        <div className="Item-information">
-          <>
-            <h1 className="Item-name">{order.itemName}</h1>
-            <h1 className="Item-cost">${order.price}</h1>
-          </>
-          <div className="Item-seller">Seller: {order.seller}</div>
-          <div className="Item-tags">
-            <div className="Item-category">{order.category}</div>
-            <div className="Item-condition">{order.condition}</div>
+
+        <div className="OrderDetails-info">
+          <h1 className="OrderDetails-title">{order.name}</h1>
+          <div className="OrderDetails-price">${order.price}</div>
+          <div className="OrderDetails-seller">Seller: {order.seller}</div>
+          
+          <div className="OrderDetails-tags">
+            <span className="OrderDetails-category">{order.category}</span>
+            <span className="OrderDetails-condition">{order.condition}</span>
           </div>
-          <button className="Cart-button">Add to Cart</button>
+
+          <div className="OrderDetails-description">
+            <h2>Description</h2>
+            <p>{order.description}</p>
+          </div>
+
+          <div className="OrderDetails-actions">
+            <button className="OrderDetails-button OrderDetails-addToCart">
+              Add to Cart
+            </button>
+            <button className="OrderDetails-button OrderDetails-contact">
+              Contact Seller
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="Item-description-container">
-        <h1 className="Item-description-header">Item Description</h1>
-        <div className="Item-description">{order.description}</div>
       </div>
     </div>
   );
