@@ -127,6 +127,21 @@ router.get("/orders", (req, res) => {
   });
 });
 
+router.get("/order", (req, res) => {
+  Item.findById(req.query.orderId)
+    .then((order) => {
+      if (!order) {
+        res.status(404).send({ error: "Order not found" });
+      } else {
+        res.send(order);
+      }
+    })
+    .catch((err) => {
+      console.log("Failed to fetch order:", err);
+      res.status(500).send({ error: "Failed to fetch order" });
+    });
+});
+
 // anything else falls to this "not found" case
 
 router.all("*", (req, res) => {

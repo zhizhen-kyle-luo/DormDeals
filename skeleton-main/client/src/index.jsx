@@ -7,6 +7,7 @@ import Profile from "./components/pages/Profile";
 import Home from "./components/pages/Home";
 import NewPage from "./components/pages/NewPage";
 import Cart from "./components/pages/Cart";
+import OrderDetails from "./components/pages/OrderDetails";
 
 import {
   createBrowserRouter,
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       <Route path="/profile/:userId" element={<Profile />} />
       <Route path="/NewPage/:userId" element={<NewPage />} />
       <Route path="/Cart/:userId" element={<Cart />} />
+      <Route path="/OrderDetails/:orderId" element={<OrderDetails />} />
     </Route>
   )
 );

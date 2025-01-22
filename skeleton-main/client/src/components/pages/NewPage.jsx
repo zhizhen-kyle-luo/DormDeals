@@ -32,11 +32,20 @@ const NewPage = () => {
     }));
   };
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
+    const imagePromises = files.map((file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    });
+
+    const base64Images = await Promise.all(imagePromises);
     setFormData((prev) => ({
       ...prev,
-      images: files,
+      images: base64Images,
     }));
   };
 
@@ -45,13 +54,13 @@ const NewPage = () => {
     setSubmitStatus("Submitting...");
     
     try {
-      // Create a new FormData object
       const formDataToSend = {
         itemName: formData.itemName,
         price: formData.price,
         category: formData.category,
         description: formData.description,
         condition: formData.condition,
+        images: formData.images,
       };
 
       const newOrder = await post("/api/orders", formDataToSend);
