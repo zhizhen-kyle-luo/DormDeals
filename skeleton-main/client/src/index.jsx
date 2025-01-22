@@ -7,7 +7,6 @@ import Profile from "./components/pages/Profile";
 import Home from "./components/pages/Home";
 import NewPage from "./components/pages/NewPage";
 import Cart from "./components/pages/Cart";
-import ItemCard from "./components/pages/ItemCard.jsx";
 
 import {
   createBrowserRouter,

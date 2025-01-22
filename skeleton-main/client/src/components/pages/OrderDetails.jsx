@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { get } from "../../utilities";
 import "./OrderDetails.css";
@@ -6,11 +6,14 @@ import "./OrderDetails.css";
 const OrderDetails = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     get(`/api/order`, { orderId: orderId }).then((orderObj) => {
       setOrder(orderObj);
+      if (orderObj && orderObj.images.length > 0) {
+        setSelectedImage(orderObj.images[0]);
+      }
     });
   }, [orderId]);
 
@@ -18,85 +21,49 @@ const OrderDetails = () => {
     return <div className="OrderDetails-loading">Loading...</div>;
   }
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === order.images.length - 1 ? 0 : prev + 1
-    );
+  const changeSelectedImage = (index) => {
+    setSelectedImage(order.images[index]);
   };
 
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? order.images.length - 1 : prev - 1
+  const createImageIcon = (image, index) => {
+    return (
+      <img
+        key={index}
+        src={image}
+        className={image === selectedImage ? "Selected-image" : "Single-image"}
+        alt="Item Image"
+        onClick={() => changeSelectedImage(index)}
+      />
     );
   };
 
   return (
-    <div className="OrderDetails-container">
-      <div className="OrderDetails-content">
-        <div className="OrderDetails-imageSection">
-          <div className="OrderDetails-imageContainer">
-            {order.images.length > 1 && (
-              <button className="OrderDetails-imageNav prev" onClick={prevImage}>
-                ‹
-              </button>
-            )}
-            <img
-              src={order.images[currentImageIndex]}
-              alt={`${order.itemName} - Image ${currentImageIndex + 1}`}
-              className="OrderDetails-mainImage"
-            />
-            {order.images.length > 1 && (
-              <button className="OrderDetails-imageNav next" onClick={nextImage}>
-                ›
-              </button>
-            )}
+    <div className="Item-page">
+      <div className="Item-main-container">
+        <div className="Item-images-container">
+          <div className="Images-list-container">
+            {order.images.map((image, index) => createImageIcon(image, index))}
           </div>
-          {order.images.length > 1 && (
-            <div className="OrderDetails-thumbnails">
-              {order.images.map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`Thumbnail ${index + 1}`}
-                  className={`OrderDetails-thumbnail ${index === currentImageIndex ? 'active' : ''}`}
-                  onClick={() => setCurrentImageIndex(index)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="OrderDetails-info">
-          <h1 className="OrderDetails-title">{order.itemName}</h1>
-          
-          <div className="OrderDetails-price">
-            <span className="label">Price:</span>
-            <span className="value">${order.price}</span>
-          </div>
-
-          <div className="OrderDetails-metadata">
-            <div className="metadata-item">
-              <span className="label">Category:</span>
-              <span className="value">{order.category}</span>
-            </div>
-            <div className="metadata-item">
-              <span className="label">Condition:</span>
-              <span className="value">{order.condition}</span>
-            </div>
-          </div>
-
-          <div className="OrderDetails-description">
-            <h2>Description</h2>
-            <p>{order.description}</p>
-          </div>
-
-          <div className="OrderDetails-contact">
-            <h2>Contact Seller</h2>
-            <button className="OrderDetails-contactButton">
-              Message Seller
-            </button>
+          <div className="Main-image-container">
+            <img src={selectedImage} className="Main-image" alt={order.itemName} />
           </div>
         </div>
+        <div className="Item-information">
+          <>
+            <h1 className="Item-name">{order.itemName}</h1>
+            <h1 className="Item-cost">${order.price}</h1>
+          </>
+          <div className="Item-seller">Seller: {order.seller}</div>
+          <div className="Item-tags">
+            <div className="Item-category">{order.category}</div>
+            <div className="Item-condition">{order.condition}</div>
+          </div>
+          <button className="Cart-button">Add to Cart</button>
+        </div>
+      </div>
+      <div className="Item-description-container">
+        <h1 className="Item-description-header">Item Description</h1>
+        <div className="Item-description">{order.description}</div>
       </div>
     </div>
   );
