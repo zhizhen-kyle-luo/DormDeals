@@ -98,6 +98,35 @@ router.post("/edituser", (req, res) => {
     });
 });
 
+// Order endpoints
+router.post("/orders", auth.ensureLoggedIn, (req, res) => {
+  const newItem = new Item({
+    seller: req.user.name,
+    seller_id: req.user._id,
+    name: req.body.itemName,
+    price: parseFloat(req.body.price),
+    category: req.body.category,
+    condition: req.body.condition,
+    description: req.body.description,
+    images: req.body.images || [],
+  });
+
+  newItem.save()
+    .then((savedItem) => {
+      res.status(201).send(savedItem);
+    })
+    .catch((err) => {
+      console.log("Failed to save item:", err);
+      res.status(500).send({ error: "Failed to create order" });
+    });
+});
+
+router.get("/orders", (req, res) => {
+  Item.find({}).then((items) => {
+    res.send(items);
+  });
+});
+
 // anything else falls to this "not found" case
 
 router.all("*", (req, res) => {
