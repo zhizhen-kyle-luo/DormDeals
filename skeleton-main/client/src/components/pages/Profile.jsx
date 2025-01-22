@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import "./Profile.css";
 import backgroundimg from "../../assets/mit-dome.jpg";
-/*import defaultpfpimg from "../../assets/blank-profile.png";*/
+import defaultpfpimg from "../../assets/blank-profile.png";
 import editicon from "../../assets/edit-symbol.png";
 
 const Profile = () => {
@@ -14,7 +14,10 @@ const Profile = () => {
   const [userItems, setUserItems] = useState([]); /*The items the user is selling */
 
   useEffect(() => {
-    get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
+    get(`/api/user`, { userid: props.userId }).then((userObj) => {
+      setUser(userObj);
+      handleImageUpload(userObj[1].picture);
+    });
   }, []);
 
   useEffect(() => {
@@ -38,17 +41,36 @@ const Profile = () => {
     document.getElementById("Form").style.display = "none";
   };
 
+  function handleImageUpload(pfpImage) {
+    var reader = new FileReader();
+    if (pfpImage === null) {
+      reader.onload = function (e) {
+        document.getElementById("Profile-avatar").src = defaultpfpimg;
+      };
+    } else {
+      reader.onload = function (e) {
+        document.getElementById("Profile-avatar").src = e.target.result;
+      };
+      reader.readAsDataURL(pfpImage);
+    }
+  }
+
   const saveEdits = () => {
     const newDescription = document.getElementById("Description-input").value;
     const newEmail = document.getElementById("Email-input").value;
-    const newPicture = document.getElementById("Picture-input").value;
+    const newPictureObj = document.getElementById("Picture-input").files[0];
+    const formData = new FormData();
+    formData.append("file", newPictureObj);
     const body = {
       userid: props.userId,
       description: newDescription,
       email: newEmail,
-      picture: newPicture,
+      picture: newPictureObj,
     };
-    post("/api/edituser", body).then((profile) => setUser([user, profile]));
+    post("/api/edituser", body).then((profile) => {
+      handleImageUpload(newPictureObj);
+      setUser([user, profile]);
+    });
   };
 
   if (!user) {
@@ -81,7 +103,7 @@ const Profile = () => {
         <div className="Profile-content">
           <div className="Profile-and-edit-container">
             <div className="Profile-avatarContainer">
-              <img src={user.picture} alt="Profile" className="Profile-avatar" />
+              <img src="" alt="Profile" id="Profile-avatar" />
             </div>
             <div
               className={`Edit-avatarContainer ${editVisible}`}

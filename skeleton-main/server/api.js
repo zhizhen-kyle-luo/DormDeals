@@ -70,7 +70,7 @@ router.get("/user", (req, res) => {
             user: user,
             description: "Blank",
             email: "Blank",
-            picture: "../client/src/assets/blank-profile.png",
+            picture: null,
           });
         }
         userProfile.save().then(res.send([userProfile.user, userProfile]));
