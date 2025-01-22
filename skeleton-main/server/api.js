@@ -91,7 +91,6 @@ router.post("/edituser", (req, res) => {
         email: req.body.email,
         picture: req.body.picture,
       });
-      console.log(editedProfile);
       editedProfile.save().then(res.send(editedProfile));
     })
     .catch((err) => {

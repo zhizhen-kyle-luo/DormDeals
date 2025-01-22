@@ -27,7 +27,6 @@ const router = createBrowserRouter(
       <Route path="/profile/:userId" element={<Profile />} />
       <Route path="/NewPage/:userId" element={<NewPage />} />
       <Route path="/Cart/:userId" element={<Cart />} />
-      <Route path="/testitem" element={<ItemCard />} /> {/*Test item; will remove later*/}
     </Route>
   )
 );
