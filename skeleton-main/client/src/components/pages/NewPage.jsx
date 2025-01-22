@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { post } from "../../utilities";
+import { useNavigate } from "react-router-dom";
 import "./NewPage.css";
 
-const NewPage = (props) => {
+const NewPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     itemName: "",
     price: "",
     category: "",
     description: "",
     images: [],
-    condition: "used", // default value
+    condition: "used",
   });
+  const [submitStatus, setSubmitStatus] = useState(""); // For success/error messages
 
   const categories = [
     "Textbooks",
@@ -39,6 +42,7 @@ const NewPage = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSubmitStatus("Submitting...");
     
     const formDataToSend = new FormData();
     formDataToSend.append("itemName", formData.itemName);
@@ -52,16 +56,38 @@ const NewPage = (props) => {
     });
 
     try {
-      await post("/api/orders", formDataToSend);
-      // Redirect to home page or show success message
+      const newOrder = await post("/api/orders", formDataToSend);
+      setSubmitStatus("Order posted successfully!");
+      
+      // Clear form
+      setFormData({
+        itemName: "",
+        price: "",
+        category: "",
+        description: "",
+        images: [],
+        condition: "used",
+      });
+
+      // Show success message for 2 seconds then redirect
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
+
     } catch (error) {
       console.error("Failed to create order:", error);
+      setSubmitStatus("Failed to create order. Please try again.");
     }
   };
 
   return (
     <div className="NewPage-container">
       <h1>Create New Order</h1>
+      {submitStatus && (
+        <div className={`NewPage-status ${submitStatus.includes("Failed") ? "error" : "success"}`}>
+          {submitStatus}
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="NewPage-form">
         <div className="NewPage-formGroup">
           <label htmlFor="itemName">Item Name *</label>
