@@ -52,7 +52,7 @@ const NewPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitStatus("Submitting...");
-    
+
     try {
       const formDataToSend = {
         itemName: formData.itemName,
@@ -64,10 +64,10 @@ const NewPage = () => {
       };
 
       const newOrder = await post("/api/orders", formDataToSend);
-      
+
       if (newOrder) {
         setSubmitStatus("Order posted successfully!");
-        
+
         // Clear form
         setFormData({
           itemName: "",
@@ -184,7 +184,9 @@ const NewPage = () => {
         </button>
 
         {submitStatus && (
-          <div className={`NewPage-status ${submitStatus.includes("Failed") ? "error" : "success"}`}>
+          <div
+            className={`NewPage-status ${submitStatus.includes("Failed") ? "error" : "success"}`}
+          >
             {submitStatus}
           </div>
         )}

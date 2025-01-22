@@ -55,6 +55,10 @@ mongoose
 const app = express();
 app.use(validator.checkRoutes);
 
+// allow larger images to be used
+var bodyParser = require("body-parser");
+app.use(bodyParser.json({ limit: "100mb" }));
+
 // allow us to process POST requests
 app.use(express.json());
 
