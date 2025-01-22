@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 
 const ItemSchema = new mongoose.Schema({
-  name: String,
   seller: String,
   seller_id: String,
-  description: String,
-  image: String,
+  name: String,
   price: Number,
-  tags: Array,
+  category: String,
+  condition: String,
+  description: String,
+  images: Array,
 });
 
 // compile model from schema
