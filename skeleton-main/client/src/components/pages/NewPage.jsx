@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { post } from "../../utilities";
+import { useNavigate } from "react-router-dom";
 import "./NewPage.css";
 
-const NewPage = (props) => {
+const NewPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     itemName: "",
     price: "",
     category: "",
     description: "",
     images: [],
-    condition: "used", // default value
+    condition: "used",
   });
+  const [submitStatus, setSubmitStatus] = useState(""); // For success/error messages
 
   const categories = [
     "Textbooks",
@@ -29,33 +32,60 @@ const NewPage = (props) => {
     }));
   };
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
+    const imagePromises = files.map((file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    });
+
+    const base64Images = await Promise.all(imagePromises);
     setFormData((prev) => ({
       ...prev,
-      images: files,
+      images: base64Images,
     }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSubmitStatus("Submitting...");
     
-    const formDataToSend = new FormData();
-    formDataToSend.append("itemName", formData.itemName);
-    formDataToSend.append("price", formData.price);
-    formDataToSend.append("category", formData.category);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("condition", formData.condition);
-    
-    formData.images.forEach((image) => {
-      formDataToSend.append("images", image);
-    });
-
     try {
-      await post("/api/orders", formDataToSend);
-      // Redirect to home page or show success message
+      const formDataToSend = {
+        itemName: formData.itemName,
+        price: formData.price,
+        category: formData.category,
+        description: formData.description,
+        condition: formData.condition,
+        images: formData.images,
+      };
+
+      const newOrder = await post("/api/orders", formDataToSend);
+      
+      if (newOrder) {
+        setSubmitStatus("Order posted successfully!");
+        
+        // Clear form
+        setFormData({
+          itemName: "",
+          price: "",
+          category: "",
+          description: "",
+          images: [],
+          condition: "used",
+        });
+
+        // Show success message for 2 seconds then redirect
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      }
     } catch (error) {
       console.error("Failed to create order:", error);
+      setSubmitStatus("Failed to create order. Please try again.");
     }
   };
 
@@ -152,6 +182,12 @@ const NewPage = (props) => {
         <button type="submit" className="NewPage-submit">
           Post Order
         </button>
+
+        {submitStatus && (
+          <div className={`NewPage-status ${submitStatus.includes("Failed") ? "error" : "success"}`}>
+            {submitStatus}
+          </div>
+        )}
       </form>
     </div>
   );

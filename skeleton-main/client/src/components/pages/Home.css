@@ -1,4 +1,29 @@
 .Home-container {
-  padding: 20px;
-  /* Add your styling here */
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.Home-container h1 {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.Home-orderGrid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -1rem;  /* Compensate for card margins */
+}
+
+/* Responsive grid */
+@media (max-width: 1024px) {
+  .OrderCard-container {
+    width: calc(50% - 2rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .OrderCard-container {
+    width: calc(100% - 2rem);
+  }
 }
