@@ -1,6 +1,5 @@
 import React from 'react';
 import './OrderCard.css';
-import NewPage from './NewPage.jsx';
 
 const OrderCard = ({ order }) => {
   const handleClick = () => {

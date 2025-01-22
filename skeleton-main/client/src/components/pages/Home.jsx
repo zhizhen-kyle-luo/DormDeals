@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div className="Home-container">
-      <h1>Available Items</h1>
+      <h1>All Items</h1>
       <div className="Home-orderGrid">
         {orders.map((order) => (
           <OrderCard key={order._id} order={order} />
