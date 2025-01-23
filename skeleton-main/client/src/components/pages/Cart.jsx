@@ -5,7 +5,7 @@ import "./itemCart.css";
 const Cart = ({ user }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  useEffect(() => {
+  const fetchCartItems = () => {
     if (user?._id) {
       fetch("/api/cart")
         .then((res) => res.json())
@@ -17,6 +17,15 @@ const Cart = ({ user }) => {
           console.error("Error fetching cart:", err);
         });
     }
+  };
+
+  useEffect(() => {
+    fetchCartItems();
+    // Set up an interval to refresh cart items every 30 seconds
+    const intervalId = setInterval(fetchCartItems, 30000);
+    
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
   }, [user]);
 
   const handleRemoveFromCart = (itemId) => {
