@@ -5,44 +5,40 @@ import "./ItemCart.css";
  * Component for displaying a single item in the shopping cart
  *
  * Proptypes
- * @param {Object} item - The cart item object containing details like id, name, price, image
+ * @param {Object} cartItem - The cart item object containing itemId (reference to item) and quantity
  * @param {Object} user - The current user object
  * @param {Function} onRemoveFromCart - Callback function to remove item from cart
  */
-const ItemCart = ({ item, user, onRemoveFromCart }) => {
+const ItemCart = ({ cartItem, user, onRemoveFromCart }) => {
+  const item = cartItem.itemId; // The actual item data is in itemId due to population
+
   const handleRemove = () => {
-    fetch(`/api/cart/${item._id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then(() => {
-        // updating the state 
-        onRemoveFromCart(item._id);
-      })
-      .catch((error) => {
-        console.error("Error removing item from cart:", error);
-      });
+    onRemoveFromCart(item._id);
   };
 
+  if (!item) {
+    return null; // Don't render if item data isn't loaded
+  }
+
   return (
-    <div className="container">
-      <div className="card">
-        <div className="image">
+    <div className="cart-item-container">
+      <div className="cart-item-card">
+        <div className="cart-item-image">
           <img 
             src={item.images?.[0] || "../../assets/bg.jpg"} 
             alt={item.name} 
           />
         </div>
-        <div className="content">
+        <div className="cart-item-content">
           <h2>{item.name}</h2>
           <p>Price: ${item.price}</p>
           <p>Category: {item.category}</p>
           <p>Condition: {item.condition}</p>
+          <p>Quantity: {cartItem.quantity}</p>
           <p>{item.description}</p>
-          <button onClick={handleRemove}>Remove</button>
+          <button onClick={handleRemove} className="remove-button">
+            Remove from Cart
+          </button>
         </div>
       </div>
     </div>
