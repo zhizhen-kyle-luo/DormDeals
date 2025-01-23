@@ -48,6 +48,7 @@
   overflow: hidden;
   border: 4px solid white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .Edit-avatar {
@@ -92,6 +93,10 @@
 }
 
 .userItems {
+  margin: 10px 0px;
+}
+
+.userItems-container {
   display: block;
 }
 
@@ -99,6 +104,19 @@
   width: 100px;
   height: 60px;
   object-fit: contain;
+}
+
+.userItems-button {
+  background-color: blue;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 12px 15px;
+  border: none;
+  cursor: pointer;
+  width: 60%;
+  opacity: 0.8;
+  border-radius: 10px;
 }
 
 .edit-Form-popup {

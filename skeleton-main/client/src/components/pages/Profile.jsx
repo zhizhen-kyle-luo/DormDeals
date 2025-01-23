@@ -80,6 +80,10 @@ const Profile = () => {
     });
   };
 
+  const displayAllItems = () => {
+    window.location.href = `/AllItems/${props.userId}`;
+  };
+
   if (!user) {
     return <div>Please log in</div>;
   }
@@ -92,11 +96,23 @@ const Profile = () => {
   }
 
   const userHasItems = userItems.length > 0;
-  let userItemsDisplay;
+  let userItemsDisplay = null;
   if (userHasItems) {
-    userItemsDisplay = userItems.map((itemObj) => {
-      <img src={itemObj.images[0]} className="userItem" alt="Item" />;
-    });
+    /* Only display 12 items */
+    userItemsDisplay = (
+      <>
+        <div className="userItems-container">
+          {userItems.slice(0, 12).map((itemObj) => (
+            <a href={`/OrderDetails/${itemObj._id}`}>
+              <img src={itemObj.images[0]} className="userItem" alt="Item" />
+            </a>
+          ))}
+        </div>
+        <button className="userItems-button" onClick={displayAllItems}>
+          View all Items
+        </button>
+      </>
+    );
   } else {
     userItemsDisplay = <div className="Profile-description">No Items!</div>;
   }
@@ -135,7 +151,7 @@ const Profile = () => {
             </div>
             <div className="Profile-subContainer u-textCenter">
               <h1 className="Profile-subtitle">My Items</h1>
-              <div className="userItems">Still in works{userItemsDisplay}</div>
+              <div className="userItems">{userItemsDisplay}</div>
             </div>
           </div>
         </div>
