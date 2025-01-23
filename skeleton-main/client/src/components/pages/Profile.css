@@ -76,6 +76,16 @@
   margin: 10px 0;
 }
 
+.Email-container {
+  display: inline-flex;
+}
+
+.Email-icon {
+  width: 25px;
+  margin: 10px 5px;
+  object-fit: contain;
+}
+
 .Profile-email {
   color: #888;
   font-size: 0.9rem;

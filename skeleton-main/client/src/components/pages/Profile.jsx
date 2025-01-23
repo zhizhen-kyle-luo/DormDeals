@@ -6,6 +6,7 @@ import "./Profile.css";
 import backgroundimg from "../../assets/mit-dome.jpg";
 import defaultpfpimg from "../../assets/blank-profile.png";
 import editicon from "../../assets/edit-symbol.png";
+import emailicon from "../../assets/email.png";
 
 const Profile = () => {
   let props = useParams();
@@ -127,7 +128,10 @@ const Profile = () => {
             </div>
             <div className="Profile-subContainer u-textCenter">
               <h1 className="Profile-subtitle">{user.name}</h1>
-              <p className="Profile-email">{userinformation.email}</p>
+              <div className="Email-container">
+                <img src={emailicon} alt="Email icon" className="Email-icon" />
+                <p className="Profile-email">{userinformation.email}</p>
+              </div>
             </div>
             <div className="Profile-subContainer u-textCenter">
               <h1 className="Profile-subtitle">My Items</h1>
