@@ -16,6 +16,33 @@ const ItemCart = ({ cartItem, user, onRemoveFromCart }) => {
     onRemoveFromCart(item._id);
   };
 
+  const handleCheckout = () => {
+    // Create email content for this specific item
+    const emailBody = `Hello,
+
+I'm interested in purchasing the following item from your marketplace:
+
+${item.name}
+Price: $${item.price}
+Category: ${item.category}
+Condition: ${item.condition}
+Quantity: ${cartItem.quantity}
+
+My contact information:
+Name: ${user.name}
+Email: ${user.email}
+
+Please let me know how to proceed with the purchase.
+
+Thank you!`;
+
+    // Create mailto URL
+    const mailtoUrl = `mailto:?subject=Purchase Request - ${item.name}&body=${encodeURIComponent(emailBody)}`;
+    
+    // Open default email client
+    window.location.href = mailtoUrl;
+  };
+
   if (!item) {
     return null; // Don't render if item data isn't loaded
   }
@@ -36,9 +63,14 @@ const ItemCart = ({ cartItem, user, onRemoveFromCart }) => {
           <p>Condition: {item.condition}</p>
           <p>Quantity: {cartItem.quantity}</p>
           <p>{item.description}</p>
-          <button onClick={handleRemove} className="remove-button">
-            Remove from Cart
-          </button>
+          <div className="cart-item-actions">
+            <button onClick={handleRemove} className="remove-button">
+              Remove from Cart
+            </button>
+            <button onClick={handleCheckout} className="checkout-button">
+              Checkout This Item
+            </button>
+          </div>
         </div>
       </div>
     </div>
