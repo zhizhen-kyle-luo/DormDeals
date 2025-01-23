@@ -1,1 +1,87 @@
+.Login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
 
+.floating-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: black;
+}
+
+.floating-text {
+  position: absolute;
+  color: rgb(214, 49, 49);
+  font-size: 24px;
+  font-weight: bold;
+  animation: float 15s linear infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@keyframes float {
+  0% {
+    transform: translateZ(0) translateY(100vh) rotateX(0deg);
+  }
+  100% {
+    transform: translateZ(500px) translateY(-100vh) rotateX(360deg);
+  }
+}
+
+.floating-text:nth-child(1) {
+  top: 20%;
+  left: 30%;
+}
+
+.floating-text:nth-child(2) {
+  top: 40%;
+  left: 50%;
+}
+
+.floating-text:nth-child(3) {
+  top: 60%;
+  left: 20%;
+}
+
+.floating-text:nth-child(4) {
+  top: 80%;
+  left: 40%;
+}
+
+.floating-text:nth-child(5) {
+  top: 10%;
+  left: 60%;
+}
+
+.main_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 500px; 
+  height: auto; 
+  align-items: center;
+  justify-content: center;
+  padding: 70px;
+  border-radius: 15px; 
+  background: transparent;
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  box-shadow: 0 8px 32px rgba(238, 2, 2, 0.3); 
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  line-height: 1.5;
+  z-index: 2;
+}

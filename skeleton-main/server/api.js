@@ -143,6 +143,53 @@ router.get("/order", (req, res) => {
     });
 });
 
+// Cart endpoints
+router.get("/cart", auth.ensureLoggedIn, (req, res) => {
+  User.findById(req.user._id)
+    .populate('cart')
+    .then((user) => {
+      res.send(user.cart || []);
+    })
+    .catch((err) => {
+      console.log("Failed to fetch cart:", err);
+      // res.status(500).send({ error: "Failed to fetch cart" });
+    });
+});
+
+router.post("/cart/:itemId", auth.ensureLoggedIn, (req, res) => {
+  const itemId = req.params.itemId;
+  User.findByIdAndUpdate(
+    req.user._id,
+    { $addToSet: { cart: itemId } },
+    { new: true }
+  )
+    .populate('cart')
+    .then((user) => {
+      res.send(user.cart);
+    })
+    .catch((err) => {
+      console.log("Failed to add item to cart:", err);
+      res.status(500).send({ error: "Failed to add item to cart" });
+    });
+});
+
+router.delete("/cart/:itemId", auth.ensureLoggedIn, (req, res) => {
+  const itemId = req.params.itemId;
+  User.findByIdAndUpdate(
+    req.user._id,
+    { $pull: { cart: itemId } },
+    { new: true }
+  )
+    .populate('cart')
+    .then((user) => {
+      res.send(user.cart);
+    })
+    .catch((err) => {
+      console.log("Failed to remove item from cart:", err);
+      res.status(500).send({ error: "Failed to remove item from cart" });
+    });
+});
+
 // anything else falls to this "not found" case
 
 router.all("*", (req, res) => {

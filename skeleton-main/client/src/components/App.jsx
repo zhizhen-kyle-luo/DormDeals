@@ -1,7 +1,8 @@
 import React, { useState, useEffect, createContext } from "react";
 import { get, post } from "../utilities";
 import { socket } from "../client-socket";
-import Skeleton from "./pages/Skeleton.jsx";
+import { Outlet, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
 import "../utilities.css";
 
 export const UserContext = createContext(null);
@@ -12,7 +13,6 @@ const App = () => {
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
-        // they are registed in the database, and currently logged in.
         setUserId(user._id);
       }
     });
@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={authContextValue}>
-      <Skeleton />
+      {userId ? <Outlet /> : <Navigate to="/Login" />}
     </UserContext.Provider>
   );
 };
