@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={authContextValue}>
-      <Outlet />
+      {userId ? <Outlet /> : <Navigate to="/Login" />}
     </UserContext.Provider>
   );
 };
