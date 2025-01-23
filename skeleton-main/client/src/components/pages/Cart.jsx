@@ -4,6 +4,7 @@ import "./itemCart.css";
 
 const Cart = ({ user }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const fetchCartItems = () => {
     if (user?._id) {
@@ -12,6 +13,9 @@ const Cart = ({ user }) => {
         .then((items) => {
           console.log("Cart items:", items);
           setCartItems(items);
+          // Calculate total price
+          const total = items.reduce((sum, item) => sum + (item.price || 0), 0);
+          setTotalPrice(total);
         })
         .catch((err) => {
           console.error("Error fetching cart:", err);
@@ -41,6 +45,35 @@ const Cart = ({ user }) => {
       });
   };
 
+  const handleCheckout = () => {
+    // Create email content
+    const itemsList = cartItems.map(item => 
+      `- ${item.name}: $${item.price}`
+    ).join('\n');
+
+    const emailBody = `Hello,
+
+I'm interested in purchasing the following items from your marketplace:
+
+${itemsList}
+
+Total: $${totalPrice.toFixed(2)}
+
+My contact information:
+Name: ${user.name}
+Email: ${user.email}
+
+Please let me know how to proceed with the purchase.
+
+Thank you!`;
+
+    // Create mailto URL
+    const mailtoUrl = `mailto:?subject=Purchase Request - Marketplace Items&body=${encodeURIComponent(emailBody)}`;
+    
+    // Open default email client
+    window.location.href = mailtoUrl;
+  };
+
   return (
     <div className="cart-container">
       <h1>Shopping Cart</h1>
@@ -49,15 +82,29 @@ const Cart = ({ user }) => {
       ) : cartItems.length === 0 ? (
         <div>Your cart is empty</div>
       ) : (
-        <div className="cart-items">
-          {cartItems.map((cartItem) => (
-            <ItemCart
-              key={cartItem._id}
-              cartItem={cartItem}
-              user={user}
-              onRemoveFromCart={handleRemoveFromCart}
-            />
-          ))}
+        <div className="cart-content">
+          <div className="cart-items">
+            {cartItems.map((cartItem) => (
+              <ItemCart
+                key={cartItem._id}
+                cartItem={cartItem}
+                user={user}
+                onRemoveFromCart={handleRemoveFromCart}
+              />
+            ))}
+          </div>
+          <div className="cart-summary">
+            <div className="cart-total">
+              <span>Total:</span>
+              <span>${totalPrice.toFixed(2)}</span>
+            </div>
+            <button 
+              className="checkout-button"
+              onClick={handleCheckout}
+            >
+              Checkout
+            </button>
+          </div>
         </div>
       )}
     </div>
