@@ -65,12 +65,16 @@ router.get("/user", (req, res) => {
         */
         if (existsProfile === true) {
           userProfile = userObj[0];
+          if (userProfile.rating.length === 0) {
+            userProfile.rating = ["0.0", "0"];
+          }
         } else {
           userProfile = new UserProfile({
             user: user,
             description: "Blank",
             email: "Blank",
             picture: req.query.picture,
+            rating: ["0.0", "0"],
           });
         }
         userProfile.save().then(res.send([userProfile.user, userProfile]));
@@ -90,6 +94,7 @@ router.post("/edituser", (req, res) => {
         description: req.body.description,
         email: req.body.email,
         picture: req.body.picture,
+        rating: req.body.rating,
       });
       editedProfile.save().then(res.send(editedProfile));
     })

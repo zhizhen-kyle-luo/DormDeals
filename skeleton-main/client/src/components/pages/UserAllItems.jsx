@@ -24,9 +24,9 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="Home-container">
+    <div className="Items-container">
       <h1>{seller}</h1>
-      <div className="Home-orderGrid">
+      <div className="Items-grid">
         {orders.map((order) => (
           <OrderCard key={order._id} order={order} />
         ))}

@@ -1,12 +1,13 @@
 import { React, useState, useEffect } from "react";
 import { get, post } from "../../utilities";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import "./Profile.css";
 import backgroundimg from "../../assets/mit-dome.jpg";
 import defaultpfpimg from "../../assets/blank-profile.png";
 import editicon from "../../assets/edit-symbol.png";
 import emailicon from "../../assets/email.png";
+import ratingstaricon from "../../assets/rating-star.png";
 
 const Profile = () => {
   let props = useParams();
@@ -74,6 +75,7 @@ const Profile = () => {
       description: newDescription,
       email: newEmail,
       picture: newPictureObj[0],
+      rating: userinformation.rating,
     };
     await post("/api/edituser", body).then((profile) => {
       setUser([user, profile]);
@@ -117,6 +119,8 @@ const Profile = () => {
     userItemsDisplay = <div className="Profile-description">No Items!</div>;
   }
 
+  console.log(userinformation);
+
   return (
     <>
       <div className="Profile-container">
@@ -144,6 +148,14 @@ const Profile = () => {
             </div>
             <div className="Profile-subContainer u-textCenter">
               <h1 className="Profile-subtitle">{user.name}</h1>
+              <div className="Rating-container">
+                <img src={ratingstaricon} alt="Rating icon" className="Rating-icon" />
+                <Link
+                  to={`/UserReviews/${props.userId}`}
+                  className="Profile-rating"
+                >{`${userinformation.rating[0]} (${userinformation.rating[1]})`}</Link>
+              </div>
+              <div />
               <div className="Email-container">
                 <img src={emailicon} alt="Email icon" className="Email-icon" />
                 <p className="Profile-email">{userinformation.email}</p>

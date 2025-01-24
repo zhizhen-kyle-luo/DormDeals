@@ -8,6 +8,7 @@ const UserProfileSchema = new mongoose.Schema({
   description: String,
   email: String,
   picture: Object,
+  rating: Array,
 });
 
 // compile model from schema

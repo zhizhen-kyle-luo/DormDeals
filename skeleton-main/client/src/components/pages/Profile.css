@@ -64,6 +64,7 @@
 .Profile-subContainer {
   flex-grow: 1;
   flex-basis: 0;
+  display: block;
 }
 
 .Profile-subtitle {
@@ -77,12 +78,58 @@
   margin: 10px 0;
 }
 
+.Rating-container {
+  display: inline-flex;
+  margin: 0 auto;
+}
+
+.Rating-icon {
+  width: 20px;
+  margin: 10px 5px;
+  object-fit: contain;
+}
+
+.Profile-rating {
+  color: #888;
+  font-size: 0.9rem;
+  display: block;
+  line-height: 50px;
+}
+
+.Profile-rating:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.Profile-rating::after {
+  content: "See All Reviews";
+  position: absolute;
+  bottom: 17.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  line-height: 20px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+}
+
+.Profile-rating:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
 .Email-container {
   display: inline-flex;
 }
 
 .Email-icon {
-  width: 25px;
+  width: 20px;
   margin: 10px 5px;
   object-fit: contain;
 }

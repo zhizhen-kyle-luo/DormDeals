@@ -10,6 +10,7 @@ import Cart from "./components/pages/Cart";
 import OrderDetails from "./components/pages/OrderDetails";
 import Login from "./components/pages/Login";
 import UserAllItems from "./components/pages/UserAllItems.jsx";
+import UserReviews from "./components/pages/UserReviews.jsx";
 
 import {
   createBrowserRouter,
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
         <Route path="Cart/:userId" element={<Cart />} />
         <Route path="OrderDetails/:orderId" element={<OrderDetails />} />
         <Route path="UserAllItems/:userId" element={<UserAllItems />} />
+        <Route path="UserReviews/:userId" element={<UserReviews />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Route>
