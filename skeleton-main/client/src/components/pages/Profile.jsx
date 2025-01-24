@@ -119,8 +119,6 @@ const Profile = () => {
     userItemsDisplay = <div className="Profile-description">No Items!</div>;
   }
 
-  console.log(userinformation);
-
   return (
     <>
       <div className="Profile-container">
