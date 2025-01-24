@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { GoogleLogin } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
-import { post } from "../../utilities";
+import { UserContext } from "../App.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { userId, handleLogin } = useContext(UserContext);
+
+  useEffect(() => {
+    if (userId) {
+      // Navigate to the page they tried to visit or home
+      const from = location.state?.from?.pathname || "/home";
+      navigate(from, { replace: true });
+    }
+  }, [userId, navigate, location]);
 
   const getRandomStyle = () => ({
     left: `${Math.random() * 100}%`,
@@ -17,18 +27,7 @@ const Login = () => {
 
   const handleLoginSuccess = (credentialResponse) => {
     console.log("Google login success, got credential:", credentialResponse);
-    const userToken = credentialResponse.credential;
-    post("/api/login", { token: userToken })
-      .then((user) => {
-        console.log("Login API response:", user);
-        if (user._id) {
-          console.log("Login successful, navigating to home");
-          navigate("/home");
-        }
-      })
-      .catch((err) => {
-        console.error("Login API error:", err);
-      });
+    handleLogin(credentialResponse);
   };
 
   return (

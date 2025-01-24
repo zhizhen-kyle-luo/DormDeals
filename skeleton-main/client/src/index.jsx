@@ -19,22 +19,21 @@ import {
 } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const GOOGLE_CLIENT_ID = "190074658805-371tjs3v0qjskhk7taih29hb9230t857.apps.googleusercontent.com";
+// Use localhost Client ID
+const GOOGLE_CLIENT_ID = "389341642898-aifd0k55aa53c4g1uvvh6krv1480956r.apps.googleusercontent.com";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
+    <Route element={<App />}>
       <Route path="/login" element={<Login />} />
-      <Route element={<App />}>
-        <Route element={<Skeleton />}>
-          <Route index element={<Home />} />
-          <Route path="home" element={<Home />} />
-          <Route path="profile/:userId" element={<Profile />} />
-          <Route path="NewPage/:userId" element={<NewPage />} />
-          <Route path="Cart/:userId" element={<Cart />} />
-          <Route path="OrderDetails/:orderId" element={<OrderDetails />} />
-          <Route path="userallitems/:userId" element={<UserAllItems />} />
-        </Route>
+      <Route element={<Skeleton />}>
+        <Route index element={<Home />} />
+        <Route path="home" element={<Home />} />
+        <Route path="Profile/:userId" element={<Profile />} />
+        <Route path="NewPage/:userId" element={<NewPage />} />
+        <Route path="Cart/:userId" element={<Cart />} />
+        <Route path="OrderDetails/:orderId" element={<OrderDetails />} />
+        <Route path="UserAllItems/:userId" element={<UserAllItems />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Route>

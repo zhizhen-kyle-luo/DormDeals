@@ -1,14 +1,14 @@
 import React, { useState, useEffect, createContext } from "react";
 import { get, post } from "../utilities";
 import { socket } from "../client-socket";
-import { Outlet, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
+import { Outlet, Navigate, useLocation } from "react-router-dom";
 import "../utilities.css";
 
 export const UserContext = createContext(null);
 
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+  const location = useLocation();
 
   useEffect(() => {
     console.log("App: Checking current user");
@@ -43,10 +43,21 @@ const App = () => {
     handleLogout,
   };
 
-  console.log("App: Current userId:", userId);
+  console.log("App: Current userId:", userId, "Current location:", location.pathname);
+
+  // If we're already at /login, just render the login page
+  if (location.pathname === "/login") {
+    return (
+      <UserContext.Provider value={authContextValue}>
+        <Outlet />
+      </UserContext.Provider>
+    );
+  }
+
+  // For all other routes, check authentication
   return (
     <UserContext.Provider value={authContextValue}>
-      {userId ? <Outlet /> : <Navigate to="/login" />}
+      {userId ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />}
     </UserContext.Provider>
   );
 };
