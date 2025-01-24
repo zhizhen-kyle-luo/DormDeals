@@ -33,6 +33,7 @@ const router = createBrowserRouter(
           <Route path="NewPage/:userId" element={<NewPage />} />
           <Route path="Cart/:userId" element={<Cart />} />
           <Route path="OrderDetails/:orderId" element={<OrderDetails />} />
+          <Route path="userallitems/:userId" element={<UserAllItems />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
