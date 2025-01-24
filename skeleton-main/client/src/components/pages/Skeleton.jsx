@@ -11,7 +11,7 @@ import Cart from "./Cart.jsx";
 import NewPage from "./NewPage.jsx";
 import NavBar from "../modules/NavBar.jsx";
 import OrderDetails from "./OrderDetails.jsx";
-import AllItems from "./AllItems.jsx";
+import UserAllItems from "./UserAllItems.jsx";
 
 const Skeleton = () => {
   const { userId, handleLogin, handleLogout } = useContext(UserContext);
@@ -34,7 +34,7 @@ const Skeleton = () => {
         <Route path="/" element={userId ? <Home /> : <div>Please log in</div>} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile/:userId" element={<Profile />} />
-        <Route path="/AllItems/:userId" element={<AllItems />} />
+        <Route path="/UserAllItems/:userId" element={<UserAllItems />} />
         <Route path="/NewPage/:userId" element={<NewPage />} />
         <Route path="/Cart/:userId" element={<Cart />} />
         <Route path="/OrderDetails/:orderId" element={<OrderDetails />} />

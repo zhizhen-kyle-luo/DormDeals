@@ -98,6 +98,12 @@ router.post("/edituser", (req, res) => {
     });
 });
 
+router.get("/userallitems", (req, res) => {
+  Item.find({ seller_id: req.query.seller_id }).then((items) => {
+    res.send(items);
+  });
+});
+
 // Order endpoints
 router.post("/orders", auth.ensureLoggedIn, (req, res) => {
   const newItem = new Item({
@@ -146,7 +152,7 @@ router.get("/order", (req, res) => {
 // Cart endpoints
 router.get("/cart", auth.ensureLoggedIn, (req, res) => {
   User.findById(req.user._id)
-    .populate('cart')
+    .populate("cart")
     .then((user) => {
       res.send(user.cart || []);
     })
@@ -158,12 +164,8 @@ router.get("/cart", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/cart/:itemId", auth.ensureLoggedIn, (req, res) => {
   const itemId = req.params.itemId;
-  User.findByIdAndUpdate(
-    req.user._id,
-    { $addToSet: { cart: itemId } },
-    { new: true }
-  )
-    .populate('cart')
+  User.findByIdAndUpdate(req.user._id, { $addToSet: { cart: itemId } }, { new: true })
+    .populate("cart")
     .then((user) => {
       res.send(user.cart);
     })
@@ -175,12 +177,8 @@ router.post("/cart/:itemId", auth.ensureLoggedIn, (req, res) => {
 
 router.delete("/cart/:itemId", auth.ensureLoggedIn, (req, res) => {
   const itemId = req.params.itemId;
-  User.findByIdAndUpdate(
-    req.user._id,
-    { $pull: { cart: itemId } },
-    { new: true }
-  )
-    .populate('cart')
+  User.findByIdAndUpdate(req.user._id, { $pull: { cart: itemId } }, { new: true })
+    .populate("cart")
     .then((user) => {
       res.send(user.cart);
     })

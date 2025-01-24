@@ -81,7 +81,7 @@ const Profile = () => {
   };
 
   const displayAllItems = () => {
-    window.location.href = `/AllItems/${props.userId}`;
+    window.location.href = `/UserAllItems/${props.userId}`;
   };
 
   if (!user) {
