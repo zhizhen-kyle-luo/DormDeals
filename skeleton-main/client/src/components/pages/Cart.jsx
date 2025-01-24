@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ItemCart from "./ItemCart";
-import "./itemCart.css";
+import "./Cart.css";
 
 const Cart = ({ user }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -27,7 +27,7 @@ const Cart = ({ user }) => {
     fetchCartItems();
     // Set up an interval to refresh cart items every 30 seconds
     const intervalId = setInterval(fetchCartItems, 30000);
-    
+
     // Cleanup interval on component unmount
     return () => clearInterval(intervalId);
   }, [user]);
@@ -47,9 +47,7 @@ const Cart = ({ user }) => {
 
   const handleCheckout = () => {
     // Create email content
-    const itemsList = cartItems.map(item => 
-      `- ${item.name}: $${item.price}`
-    ).join('\n');
+    const itemsList = cartItems.map((item) => `- ${item.name}: $${item.price}`).join("\n");
 
     const emailBody = `Hello,
 
@@ -68,8 +66,10 @@ Please let me know how to proceed with the purchase.
 Thank you!`;
 
     // Create mailto URL
-    const mailtoUrl = `mailto:?subject=Purchase Request - Marketplace Items&body=${encodeURIComponent(emailBody)}`;
-    
+    const mailtoUrl = `mailto:?subject=Purchase Request - Marketplace Items&body=${encodeURIComponent(
+      emailBody
+    )}`;
+
     // Open default email client
     window.location.href = mailtoUrl;
   };
@@ -98,10 +98,7 @@ Thank you!`;
               <span>Total:</span>
               <span>${totalPrice.toFixed(2)}</span>
             </div>
-            <button 
-              className="checkout-button"
-              onClick={handleCheckout}
-            >
+            <button className="checkout-button" onClick={handleCheckout}>
               Checkout
             </button>
           </div>
