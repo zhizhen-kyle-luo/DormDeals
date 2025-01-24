@@ -23,22 +23,24 @@ const GOOGLE_CLIENT_ID = "190074658805-371tjs3v0qjskhk7taih29hb9230t857.apps.goo
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route element={<Skeleton />}>
-        <Route index element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="profile/:userId" element={<Profile />} />
-        <Route path="newpage/:userId" element={<NewPage />} />
-        <Route path="cart/:userId" element={<Cart />} />
-        <Route path="orderdetails/:orderId" element={<OrderDetails />} />
-        <Route path="allitems/:userId" element={<AllItems />} />
+    <Route>
+      <Route path="/login" element={<Login />} />
+      <Route element={<App />}>
+        <Route element={<Skeleton />}>
+          <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
+          <Route path="profile/:userId" element={<Profile />} />
+          <Route path="NewPage/:userId" element={<NewPage />} />
+          <Route path="Cart/:userId" element={<Cart />} />
+          <Route path="OrderDetails/:orderId" element={<OrderDetails />} />
+        </Route>
       </Route>
-      <Route path="/" element={<Login />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
 
+// renders React Component "Root" into the DOM element with ID "root"
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
     <RouterProvider router={router} />

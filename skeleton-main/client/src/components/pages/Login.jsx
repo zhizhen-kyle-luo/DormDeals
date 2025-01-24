@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
-import { UserContext } from "../App.jsx";
-import "./Login.css";
+import React from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
+import { post } from "../../utilities";
 
 const Login = () => {
-  const { userId, handleLogin, handleLogout } = useContext(UserContext);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const getRandomStyle = () => ({
     left: `${Math.random() * 100}%`,
@@ -16,42 +15,39 @@ const Login = () => {
     fontSize: `${25 + Math.random() * 10}px`,
   });
 
-  // React.useEffect(() => {
-  //   if (userId) {
-  //     navigate("/home");
-  //   }
-  // }, [userId, navigate]);
+  const handleLoginSuccess = (credentialResponse) => {
+    console.log("Google login success, got credential:", credentialResponse);
+    const userToken = credentialResponse.credential;
+    post("/api/login", { token: userToken })
+      .then((user) => {
+        console.log("Login API response:", user);
+        if (user._id) {
+          console.log("Login successful, navigating to home");
+          navigate("/home");
+        }
+      })
+      .catch((err) => {
+        console.error("Login API error:", err);
+      });
+  };
 
   return (
     <div className="Login-container">
       <div className="floating-background">
         {[...Array(20)].map((_, index) => (
           <span key={index} className="floating-text" style={getRandomStyle()}>MIT🦫</span>
-          
         ))}
       </div>
       <div className="electric-border">
-      <div className="main_div">
-      <h1 style={{color: "red"}}>Login to MIT Marketplace</h1>
-      <div className="Login-google">
-        {userId ? (
-          <button
-            className="Login-logout"
-            onClick={() => {
-              googleLogout();
-              handleLogout();
-            }}
-          >
-            Logout
-          </button>
-        ) : (
-          <GoogleLogin
-            onSuccess={handleLogin}
-            onError={(err) => console.log("Login Failed:", err)}
-          />
-        )}
-      </div>
-      </div>
+        <div className="main_div">
+          <h1 style={{color: "red"}}>Login to MIT Marketplace</h1>
+          <div className="Login-google">
+            <GoogleLogin
+              onSuccess={handleLoginSuccess}
+              onError={(err) => console.log("Google Login Failed:", err)}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
