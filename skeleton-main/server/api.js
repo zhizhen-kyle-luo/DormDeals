@@ -46,6 +46,7 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+// Profile endpoints
 router.get("/useritems", (req, res) => {
   Item.find({ seller_id: req.query.userid }).then((userItemsObj) => {
     res.send(userItemsObj);
@@ -110,6 +111,11 @@ router.get("/userallitems", (req, res) => {
   });
 });
 
+router.post("/removeitem", (req, res) => {
+  Item.deleteOne({ _id: req.body.orderId }).then();
+  res.end();
+});
+
 // Order endpoints
 router.post("/orders", auth.ensureLoggedIn, (req, res) => {
   const newItem = new Item({
@@ -170,7 +176,7 @@ router.post("/cart/add", auth.ensureLoggedIn, async (req, res) => {
   try {
     const { item } = req.body;
     let cart = await Cart.findOne({ userId: req.user._id });
-    
+
     if (!cart) {
       cart = new Cart({
         userId: req.user._id,
@@ -179,10 +185,10 @@ router.post("/cart/add", auth.ensureLoggedIn, async (req, res) => {
     }
 
     // Check if item already exists in cart
-    const existingItemIndex = cart.items.findIndex(i => 
-      i.itemId.toString() === (item.itemId || item._id).toString()
+    const existingItemIndex = cart.items.findIndex(
+      (i) => i.itemId.toString() === (item.itemId || item._id).toString()
     );
-    
+
     if (existingItemIndex > -1) {
       // Increment quantity if item exists
       cart.items[existingItemIndex].quantity += 1;
@@ -212,7 +218,7 @@ router.delete("/cart/remove/:itemId", auth.ensureLoggedIn, async (req, res) => {
       return res.status(404).send({ error: "Cart not found" });
     }
 
-    cart.items = cart.items.filter(item => item.itemId.toString() !== req.params.itemId);
+    cart.items = cart.items.filter((item) => item.itemId.toString() !== req.params.itemId);
     await cart.save();
     res.send(cart.items);
   } catch (err) {

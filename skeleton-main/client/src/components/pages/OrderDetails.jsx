@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 import { CartContext } from "../App.jsx";
 import "./OrderDetails.css";
 
@@ -8,9 +8,14 @@ const OrderDetails = (props) => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [viewingUser, setViewingUser] = useState();
   const navigate = useNavigate();
-  
+
   const { cartItems, addToCart } = useContext(CartContext);
+
+  useEffect(() => {
+    get(`/api/whoami`).then((viewingUserObj) => setViewingUser(viewingUserObj));
+  }, []);
 
   useEffect(() => {
     get(`/api/order`, { orderId: orderId }).then((orderObj) => {
@@ -29,12 +34,25 @@ const OrderDetails = (props) => {
       price: order.price,
       images: order.images,
       discription: order.description,
-    }
+    };
     addToCart(cartItem);
     navigate("/cart");
   };
 
   if (!order) return <div>Loading...</div>;
+
+  const removeItem = () => {
+    post("/api/removeitem", { orderId: orderId });
+
+    navigate("/home");
+  };
+
+  let removeItemVisible;
+  if (order.seller_id === viewingUser._id) {
+    removeItemVisible = "u-visible";
+  } else {
+    removeItemVisible = "u-invisible";
+  }
 
   return (
     <div className="OrderDetails-container">
@@ -70,10 +88,19 @@ const OrderDetails = (props) => {
           </div>
 
           <div className="OrderDetails-actions">
-            <button className="OrderDetails-button OrderDetails-addToCart" onClick={handleAddToCart}>
+            <button
+              className="OrderDetails-button OrderDetails-addToCart"
+              onClick={handleAddToCart}
+            >
               Add to Cart
             </button>
             <button className="OrderDetails-button OrderDetails-contact">Contact Seller</button>
+            <button
+              className={`OrderDetails-button OrderDetails-remove ${removeItemVisible}`}
+              onClick={removeItem}
+            >
+              Mark as Sold/Remove Item
+            </button>
           </div>
         </div>
       </div>

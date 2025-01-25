@@ -11,6 +11,8 @@ import OrderDetails from "./components/pages/OrderDetails";
 import Login from "./components/pages/Login";
 import UserAllItems from "./components/pages/UserAllItems.jsx";
 import UserReviews from "./components/pages/UserReviews.jsx";
+import UserPurchases from "./components/pages/UserPurchases.jsx";
+import Instructions from "./components/pages/Instructions.jsx";
 
 import {
   createBrowserRouter,
@@ -28,15 +30,17 @@ const router = createBrowserRouter(
     <Route element={<App />}>
       <Route path="/login" element={<Login />} />
       {/* <Route element={<Skeleton />}> */}
-      
-        <Route index element={<Home />} />
-        <Route path="home" element={<Home />} />
-        <Route path="Profile/:userId" element={<Profile />} />
-        <Route path="NewPage/:userId" element={<NewPage />} />
-        <Route path="OrderDetails/:orderId" element={<OrderDetails />} />
-        <Route path="UserAllItems/:userId" element={<UserAllItems />} />
-        <Route path="UserReviews/:userId" element={<UserReviews />} />
-        <Route path="cart/" element={<Cart />} />
+
+      <Route index element={<Home />} />
+      <Route path="home" element={<Home />} />
+      <Route path="Profile/:userId" element={<Profile />} />
+      <Route path="NewPage/:userId" element={<NewPage />} />
+      <Route path="OrderDetails/:orderId" element={<OrderDetails />} />
+      <Route path="UserAllItems/:userId" element={<UserAllItems />} />
+      <Route path="UserReviews/:userId" element={<UserReviews />} />
+      <Route path="UserPurchases/:userId" element={<UserPurchases />} />
+      <Route path="Instructions" element={<Instructions />} />
+      <Route path="cart/" element={<Cart />} />
       {/* </Route> */}
       <Route path="*" element={<NotFound />} />
     </Route>

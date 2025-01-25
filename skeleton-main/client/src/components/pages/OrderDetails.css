@@ -135,11 +135,20 @@
   background: #e0e0e0;
 }
 
+.OrderDetails-remove {
+  background: #d90000;
+  color: white;
+}
+
+.OrderDetails-remove:hover {
+  background: #af0000;
+}
+
 @media (max-width: 768px) {
   .OrderDetails-content {
     grid-template-columns: 1fr;
   }
-  
+
   .OrderDetails-actions {
     flex-direction: column;
   }

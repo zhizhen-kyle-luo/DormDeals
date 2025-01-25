@@ -48,7 +48,10 @@
 
 .Cart-icon,
 .New-order-icon,
-.Profile-icon {
+.Profile-icon,
+.Shop-icon,
+.Bag-icon,
+.Question-icon {
   width: 24px;
   height: 24px;
   object-fit: contain;
@@ -90,4 +93,3 @@
   opacity: 1;
   visibility: visible;
 }
-
