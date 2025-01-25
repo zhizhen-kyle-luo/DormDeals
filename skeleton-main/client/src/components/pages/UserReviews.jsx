@@ -11,13 +11,13 @@ const UserReviews = () => {
 
   useEffect(() => {
     get(`/api/user`, { userid: props.userId, picture: defaultpfpimg }).then((sellerObj) => {
-      setSeller(`Reviews of ${sellerObj[0].name}`);
+      setSeller(sellerObj[0].name);
     });
   }, []);
 
   return (
     <div className="Reviews-container">
-      <h1>{seller}</h1>
+      <h1>Reviews for {seller}</h1>
       <div>Reviews here</div>
     </div>
   );
