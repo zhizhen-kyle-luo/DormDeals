@@ -111,11 +111,6 @@ router.get("/userallitems", (req, res) => {
   });
 });
 
-router.post("/removeitem", (req, res) => {
-  Item.deleteOne({ _id: req.body.orderId }).then();
-  res.end();
-});
-
 // Order endpoints
 router.post("/orders", auth.ensureLoggedIn, (req, res) => {
   const newItem = new Item({
@@ -127,6 +122,7 @@ router.post("/orders", auth.ensureLoggedIn, (req, res) => {
     condition: req.body.condition,
     description: req.body.description,
     images: req.body.images || [],
+    sold: false,
   });
 
   newItem
@@ -141,7 +137,7 @@ router.post("/orders", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/orders", (req, res) => {
-  Item.find({}).then((items) => {
+  Item.find({ sold: false }).then((items) => {
     res.send(items);
   });
 });
@@ -158,6 +154,22 @@ router.get("/order", (req, res) => {
     .catch((err) => {
       console.log("Failed to fetch order:", err);
       res.status(500).send({ error: "Failed to fetch order" });
+    });
+});
+
+router.post("/removeitem", (req, res) => {
+  Item.deleteOne({ _id: req.body.orderId }).then();
+  res.end();
+});
+
+router.post("/sellitem", (req, res) => {
+  Item.findById(req.body.orderId)
+    .then((order) => {
+      order.sold = !order.sold;
+      order.save().then(res.send(order));
+    })
+    .catch((err) => {
+      res.status(500).send("Failed to change item status");
     });
 });
 

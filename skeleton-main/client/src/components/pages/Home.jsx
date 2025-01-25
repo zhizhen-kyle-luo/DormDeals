@@ -9,7 +9,7 @@ const Home = () => {
   const [filters, setFilters] = useState({
     priceRange: { min: "", max: "" },
     category: "all",
-    condition: "all"
+    condition: "all",
   });
 
   // Updated categories to match new order form
@@ -20,18 +20,11 @@ const Home = () => {
     "Furniture",
     "Clothing",
     "School Supplies",
-    "Other"
+    "Other",
   ];
 
   // Updated conditions to match new order form
-  const conditions = [
-    "All",
-    "New",
-    "Like New",
-    "Good",
-    "Fair",
-    "Poor"
-  ];
+  const conditions = ["All", "New", "Like New", "Good", "Fair", "Poor"];
 
   useEffect(() => {
     get("/api/orders").then((orderObjs) => {
@@ -43,16 +36,16 @@ const Home = () => {
   useEffect(() => {
     // Apply filters whenever filters state changes
     const filtered = orders.filter((order) => {
-      const matchesPrice = 
+      const matchesPrice =
         (!filters.priceRange.min || order.price >= Number(filters.priceRange.min)) &&
         (!filters.priceRange.max || order.price <= Number(filters.priceRange.max));
-      
-      const matchesCategory = 
-        filters.category === "all" || 
+
+      const matchesCategory =
+        filters.category === "all" ||
         order.category.toLowerCase() === filters.category.toLowerCase();
-      
-      const matchesCondition = 
-        filters.condition === "all" || 
+
+      const matchesCondition =
+        filters.condition === "all" ||
         order.condition.toLowerCase() === filters.condition.toLowerCase();
 
       return matchesPrice && matchesCategory && matchesCondition;
@@ -63,14 +56,14 @@ const Home = () => {
 
   const handleFilterChange = (type, value) => {
     if (type === "priceRange") {
-      setFilters(prev => ({
+      setFilters((prev) => ({
         ...prev,
-        priceRange: { ...prev.priceRange, ...value }
+        priceRange: { ...prev.priceRange, ...value },
       }));
     } else {
-      setFilters(prev => ({
+      setFilters((prev) => ({
         ...prev,
-        [type]: value.toLowerCase()
+        [type]: value.toLowerCase(),
       }));
     }
   };
@@ -79,7 +72,7 @@ const Home = () => {
     setFilters({
       priceRange: { min: "", max: "" },
       category: "all",
-      condition: "all"
+      condition: "all",
     });
   };
 
@@ -89,7 +82,7 @@ const Home = () => {
         <div className="sidebar-header">
           <h2>Filter By</h2>
         </div>
-        
+
         <div className="sidebar-section">
           <h3>Price Range</h3>
           <div className="price-inputs">
@@ -145,9 +138,7 @@ const Home = () => {
           Clear Filters
         </button>
 
-        <div className="filter-stats">
-          {filteredOrders.length} items found
-        </div>
+        <div className="filter-stats">{filteredOrders.length} items found</div>
       </div>
 
       <div className="Home-content">

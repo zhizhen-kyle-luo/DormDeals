@@ -9,6 +9,9 @@ const OrderDetails = (props) => {
   const [order, setOrder] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [viewingUser, setViewingUser] = useState();
+  const [status, setStatus] = useState("");
+  const [statusColor, setStatusColor] = useState("");
+  const [statusButton, setStatusButton] = useState("");
   const navigate = useNavigate();
 
   const { cartItems, addToCart } = useContext(CartContext);
@@ -22,6 +25,15 @@ const OrderDetails = (props) => {
       setOrder(orderObj);
       if (orderObj && orderObj.images.length > 0) {
         setSelectedImage(orderObj.images[0]);
+      }
+      if (orderObj.sold) {
+        setStatus("Sold");
+        setStatusColor("u-red");
+        setStatusButton("Put back on market");
+      } else {
+        setStatus("Active");
+        setStatusColor("u-green");
+        setStatusButton("Mark as sold");
       }
     });
   }, [orderId]);
@@ -41,9 +53,23 @@ const OrderDetails = (props) => {
 
   if (!order) return <div>Loading...</div>;
 
+  const sellItem = () => {
+    post("/api/sellitem", { orderId: orderId }).then((orderObj) => {
+      setOrder(orderObj);
+      if (orderObj.sold) {
+        setStatus("Sold");
+        setStatusColor("u-red");
+        setStatusButton("Put back on market");
+      } else {
+        setStatus("Active");
+        setStatusColor("u-green");
+        setStatusButton("Mark as sold");
+      }
+    });
+  };
+
   const removeItem = () => {
     post("/api/removeitem", { orderId: orderId });
-
     navigate("/home");
   };
 
@@ -76,6 +102,7 @@ const OrderDetails = (props) => {
           <h1 className="OrderDetails-title">{order.name}</h1>
           <div className="OrderDetails-price">${order.price}</div>
           <div className="OrderDetails-seller">Seller: {order.seller}</div>
+          <div className={`OrderDetails-status ${statusColor}`}>{status}</div>
 
           <div className="OrderDetails-tags">
             <span className="OrderDetails-category">{order.category}</span>
@@ -95,8 +122,11 @@ const OrderDetails = (props) => {
               Add to Cart
             </button>
             <button className="OrderDetails-button OrderDetails-contact">Contact Seller</button>
-            <button className={`OrderDetails-button OrderDetails-sold ${removeItemVisible}`}>
-              Mark as Sold
+            <button
+              className={`OrderDetails-button OrderDetails-sold ${removeItemVisible}`}
+              onClick={sellItem}
+            >
+              {statusButton}
             </button>
             <button
               className={`OrderDetails-button OrderDetails-remove ${removeItemVisible}`}

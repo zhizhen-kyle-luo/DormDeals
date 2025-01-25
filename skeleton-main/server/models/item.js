@@ -9,6 +9,7 @@ const ItemSchema = new mongoose.Schema({
   condition: String,
   description: String,
   images: Array,
+  sold: Boolean,
 });
 
 // compile model from schema

@@ -73,6 +73,10 @@
   color: #666;
 }
 
+.OrderDetails-status {
+  font-weight: bold;
+}
+
 .OrderDetails-tags {
   display: flex;
   gap: 10px;
