@@ -1,29 +1,135 @@
 .Home-container {
+  display: grid;
+  grid-template-columns: 280px 1fr 1fr;
+  gap: 2rem;
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
+  min-height: calc(100vh - 4rem);
 }
 
-.Home-container h1 {
+.Home-sidebar {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  height: fit-content;
+  position: sticky;
+  top: 2rem;
+}
+
+.sidebar-header h2 {
   color: #333;
-  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.sidebar-section {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-section h3 {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.price-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-input-row input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  width: calc(100% - 30px);
+}
+
+.price-input-row span {
+  color: #666;
+  width: 20px;
+}
+
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: white;
+  cursor: pointer;
+}
+
+.clear-filters {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  color: #666;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 1rem;
+}
+
+.clear-filters:hover {
+  background-color: #e0e0e0;
+}
+
+.filter-stats {
+  color: #666;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.Home-content {
+  grid-column: 2 / span 2;
 }
 
 .Home-orderGrid {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -1rem;  /* Compensate for card margins */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
-/* Responsive grid */
-@media (max-width: 1024px) {
-  .OrderCard-container {
-    width: calc(50% - 2rem);
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .Home-container {
+    grid-template-columns: 280px 1fr;
+  }
+
+  .Home-content {
+    grid-column: 2;
+  }
+
+  .Home-orderGrid {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 640px) {
-  .OrderCard-container {
-    width: calc(100% - 2rem);
+@media (max-width: 768px) {
+  .Home-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .Home-sidebar {
+    position: static;
+  }
+
+  .Home-content {
+    grid-column: 1;
   }
 }
