@@ -95,11 +95,14 @@ const OrderDetails = (props) => {
               Add to Cart
             </button>
             <button className="OrderDetails-button OrderDetails-contact">Contact Seller</button>
+            <button className={`OrderDetails-button OrderDetails-sold ${removeItemVisible}`}>
+              Mark as Sold
+            </button>
             <button
               className={`OrderDetails-button OrderDetails-remove ${removeItemVisible}`}
               onClick={removeItem}
             >
-              Mark as Sold/Remove Item
+              Remove Item
             </button>
           </div>
         </div>
