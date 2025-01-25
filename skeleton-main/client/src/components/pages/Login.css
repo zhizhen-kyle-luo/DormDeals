@@ -15,7 +15,12 @@
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: black;
+  background-color: white;
+}
+.rubik-vinyl-regular {
+  font-family: "Rubik Vinyl", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .floating-text {
@@ -26,6 +31,7 @@
   animation: float 15s linear infinite;
   transform-style: preserve-3d;
   will-change: transform;
+  font-family:;
 }
 
 @keyframes float {
@@ -77,7 +83,7 @@
   background: transparent;
   backdrop-filter: blur(20px) saturate(200%);
   -webkit-backdrop-filter: blur(20px) saturate(200%);
-  box-shadow: 0 8px 32px rgba(238, 2, 2, 0.3); 
+  box-shadow: 0 8px 32px rgba(183, 160, 160, 0.984); 
   border: 1px solid rgba(255, 255, 255, 0.2); 
   color: #fff;
   font-family: Arial, sans-serif;

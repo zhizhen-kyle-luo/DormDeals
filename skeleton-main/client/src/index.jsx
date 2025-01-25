@@ -27,16 +27,17 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<App />}>
       <Route path="/login" element={<Login />} />
-      <Route element={<Skeleton />}>
+      {/* <Route element={<Skeleton />}> */}
+      
         <Route index element={<Home />} />
         <Route path="home" element={<Home />} />
         <Route path="Profile/:userId" element={<Profile />} />
         <Route path="NewPage/:userId" element={<NewPage />} />
-        <Route path="Cart/:userId" element={<Cart />} />
         <Route path="OrderDetails/:orderId" element={<OrderDetails />} />
         <Route path="UserAllItems/:userId" element={<UserAllItems />} />
         <Route path="UserReviews/:userId" element={<UserReviews />} />
-      </Route>
+        <Route path="cart/" element={<Cart />} />
+      {/* </Route> */}
       <Route path="*" element={<NotFound />} />
     </Route>
   )

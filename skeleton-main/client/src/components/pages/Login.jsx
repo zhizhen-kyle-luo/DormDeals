@@ -22,7 +22,7 @@ const Login = () => {
     top: `${Math.random() * 100}%`,
     animationDuration: `${15 + Math.random() * 10}s`,
     animationDelay: `${Math.random() * 5}s`,
-    fontSize: `${25 + Math.random() * 10}px`,
+    fontSize: `${20 + Math.random() * 10}px`,
   });
 
   const handleLoginSuccess = (credentialResponse) => {
@@ -34,7 +34,7 @@ const Login = () => {
     <div className="Login-container">
       <div className="floating-background">
         {[...Array(20)].map((_, index) => (
-          <span key={index} className="floating-text" style={getRandomStyle()}>MIT🦫</span>
+          <span key={index} className="floating-text rubik-vinyl-regular" style={getRandomStyle()}>MIT🦫</span>
         ))}
       </div>
       <div className="electric-border">
