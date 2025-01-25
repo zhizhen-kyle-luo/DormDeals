@@ -31,7 +31,7 @@
   animation: float 15s linear infinite;
   transform-style: preserve-3d;
   will-change: transform;
-  font-family:;
+  font-family: "Rubik Vinyl", serif;
 }
 
 @keyframes float {
