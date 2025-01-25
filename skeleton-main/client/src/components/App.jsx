@@ -2,9 +2,13 @@ import React, { useState, useEffect, createContext } from "react";
 import { get, post } from "../utilities";
 import { socket } from "../client-socket";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import "../utilities.css";
+import NavBar from "./modules/NavBar.jsx";
 
 export const UserContext = createContext(null);
+
+export const CartContext = createContext();
 
 const App = () => {
   const [userId, setUserId] = useState(undefined);
@@ -43,6 +47,46 @@ const App = () => {
     handleLogout,
   };
 
+  // Load cart items from database when user logs in
+  useEffect(() => {
+    if (userId) {
+      get("/api/cart").then((items) => {
+        setCartItems(items);
+      });
+    } else {
+      setCartItems([]); // Clear cart when user logs out
+    }
+  }, [userId]);
+
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = async (item) => {
+    try {
+      const updatedItems = await post("/api/cart/add", { item });
+      setCartItems(updatedItems);
+    } catch (err) {
+      console.log("Failed to add item to cart:", err);
+    }
+  };
+
+  const removeFromCart = async (itemId) => {
+    try {
+      const updatedItems = await post("/api/cart/remove/" + itemId, {}, { method: "DELETE" });
+      setCartItems(updatedItems);
+    } catch (err) {
+      console.log("Failed to remove item from cart:", err);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      await post("/api/cart/clear");
+      setCartItems([]);
+    } catch (err) {
+      console.log("Failed to clear cart:", err);
+    }
+  };
+
   console.log("App: Current userId:", userId, "Current location:", location.pathname);
 
   // If we're already at /login, just render the login page
@@ -56,9 +100,27 @@ const App = () => {
 
   // For all other routes, check authentication
   return (
-    <UserContext.Provider value={authContextValue}>
+    <div className="App-container">
+      {userId ? (
+        <>
+        <NavBar userId={userId} />
+        <button
+          onClick={() => {
+            googleLogout();
+            handleLogout();
+          }}
+        >
+          Logout
+        </button></>
+      ) : (
+        <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
+      )}
+      <UserContext.Provider value={authContextValue}>
+      <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
       {userId ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />}
+    </CartContext.Provider>
     </UserContext.Provider>
+    </div>
   );
 };
 

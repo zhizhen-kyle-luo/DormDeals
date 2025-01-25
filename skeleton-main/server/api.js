@@ -13,6 +13,7 @@ const express = require("express");
 const User = require("./models/user");
 const UserProfile = require("./models/user-profile");
 const Item = require("./models/item");
+const Cart = require("./models/cart");
 
 // import authentication library
 const auth = require("./auth");
@@ -155,42 +156,83 @@ router.get("/order", (req, res) => {
 });
 
 // Cart endpoints
-router.get("/cart", auth.ensureLoggedIn, (req, res) => {
-  User.findById(req.user._id)
-    .populate("cart")
-    .then((user) => {
-      res.send(user.cart || []);
-    })
-    .catch((err) => {
-      console.log("Failed to fetch cart:", err);
-      // res.status(500).send({ error: "Failed to fetch cart" });
-    });
+router.get("/cart", auth.ensureLoggedIn, async (req, res) => {
+  try {
+    const cart = await Cart.findOne({ userId: req.user._id });
+    res.send(cart ? cart.items : []);
+  } catch (err) {
+    console.log("Failed to fetch cart:", err);
+    res.status(500).send({ error: "Failed to fetch cart" });
+  }
 });
 
-router.post("/cart/:itemId", auth.ensureLoggedIn, (req, res) => {
-  const itemId = req.params.itemId;
-  User.findByIdAndUpdate(req.user._id, { $addToSet: { cart: itemId } }, { new: true })
-    .populate("cart")
-    .then((user) => {
-      res.send(user.cart);
-    })
-    .catch((err) => {
-      console.log("Failed to add item to cart:", err);
-      res.status(500).send({ error: "Failed to add item to cart" });
-    });
+router.post("/cart/add", auth.ensureLoggedIn, async (req, res) => {
+  try {
+    const { item } = req.body;
+    let cart = await Cart.findOne({ userId: req.user._id });
+    
+    if (!cart) {
+      cart = new Cart({
+        userId: req.user._id,
+        items: [],
+      });
+    }
+
+    // Check if item already exists in cart
+    const existingItemIndex = cart.items.findIndex(i => 
+      i.itemId.toString() === (item.itemId || item._id).toString()
+    );
+    
+    if (existingItemIndex > -1) {
+      // Increment quantity if item exists
+      cart.items[existingItemIndex].quantity += 1;
+    } else {
+      // Add new item if it doesn't exist
+      cart.items.push({
+        itemId: item.itemId || item._id,
+        name: item.name,
+        price: item.price,
+        images: item.images,
+        quantity: 1,
+      });
+    }
+
+    await cart.save();
+    res.send(cart.items);
+  } catch (err) {
+    console.log("Failed to add item to cart:", err);
+    res.status(500).send({ error: "Failed to add item to cart" });
+  }
 });
 
-router.delete("/cart/:itemId", auth.ensureLoggedIn, (req, res) => {
-  const itemId = req.params.itemId;
-  User.findByIdAndUpdate(req.user._id, { $pull: { cart: itemId } }, { new: true })
-    .populate("cart")
-    .then((user) => {
-      res.send(user.cart);
-    })
-    .catch((err) => {
-      console.log("Failed to remove item from cart:", err);
-      res.status(500).send({ error: "Failed to remove item from cart" });
-    });
+router.delete("/cart/remove/:itemId", auth.ensureLoggedIn, async (req, res) => {
+  try {
+    const cart = await Cart.findOne({ userId: req.user._id });
+    if (!cart) {
+      return res.status(404).send({ error: "Cart not found" });
+    }
+
+    cart.items = cart.items.filter(item => item.itemId.toString() !== req.params.itemId);
+    await cart.save();
+    res.send(cart.items);
+  } catch (err) {
+    console.log("Failed to remove item from cart:", err);
+    res.status(500).send({ error: "Failed to remove item from cart" });
+  }
+});
+
+router.post("/cart/clear", auth.ensureLoggedIn, async (req, res) => {
+  try {
+    const cart = await Cart.findOne({ userId: req.user._id });
+    if (cart) {
+      cart.items = [];
+      await cart.save();
+    }
+    res.send([]);
+  } catch (err) {
+    console.log("Failed to clear cart:", err);
+    res.status(500).send({ error: "Failed to clear cart" });
+  }
 });
 
 // anything else falls to this "not found" case
