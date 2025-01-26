@@ -13,6 +13,7 @@ import UserAllItems from "./components/pages/UserAllItems.jsx";
 import UserReviews from "./components/pages/UserReviews.jsx";
 import UserPurchases from "./components/pages/UserPurchases.jsx";
 import Instructions from "./components/pages/Instructions.jsx";
+import Purchase from "./components/pages/purchase.jsx";
 
 import {
   createBrowserRouter,
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
       <Route path="UserPurchases/:userId" element={<UserPurchases />} />
       <Route path="Instructions" element={<Instructions />} />
       <Route path="cart/" element={<Cart />} />
+      <Route path="purchase" element={<Purchase />} />
       {/* </Route> */}
       <Route path="*" element={<NotFound />} />
     </Route>

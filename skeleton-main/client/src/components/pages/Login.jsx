@@ -39,7 +39,7 @@ const Login = () => {
       </div>
       <div className="electric-border">
         <div className="main_div">
-          <h1 style={{color: "red"}}>Login to MIT Marketplace</h1>
+          <h1 style={{color: "red"}}>Login to DormDeals</h1>
           <div className="Login-google">
             <GoogleLogin
               onSuccess={handleLoginSuccess}

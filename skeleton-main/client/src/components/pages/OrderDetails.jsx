@@ -52,6 +52,21 @@ const OrderDetails = (props) => {
     navigate("/cart");
   };
 
+  const handlePurchaseNow = () => {
+    navigate("/purchase", { 
+      state: { 
+        items: [{
+          _id: order._id,
+          itemName: order.name,
+          price: order.price,
+          image: selectedImage,
+          category: order.category,
+          condition: order.condition
+        }]
+      } 
+    });
+  };
+
   if (!order) return <div>Loading...</div>;
 
   const sellItem = () => {
@@ -122,7 +137,12 @@ const OrderDetails = (props) => {
             >
               Add to Cart
             </button>
-            <button className="OrderDetails-button OrderDetails-contact">Contact Seller</button>
+            <button 
+              className="OrderDetails-button OrderDetails-purchaseNow" 
+              onClick={handlePurchaseNow}
+            >
+              Purchase Now
+            </button>
             <button
               className={`OrderDetails-button OrderDetails-sold ${removeItemVisible}`}
               onClick={sellItem}

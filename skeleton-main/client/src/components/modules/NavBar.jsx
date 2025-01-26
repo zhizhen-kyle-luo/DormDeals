@@ -15,7 +15,7 @@ const NavBar = ({ userId }) => {
     <nav className="NavBar-container">
       <div className="NavBar-title">
         <Link to="/" className="NavBar-link" title="Home">
-          MIT Marketplace
+          DormDeals
         </Link>
       </div>
       <div className="NavBar-linkContainer">

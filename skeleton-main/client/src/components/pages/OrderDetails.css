@@ -130,13 +130,13 @@
   background: #c86206;
 }
 
-.OrderDetails-contact {
-  background: #f0f0f0;
-  color: #333;
+.OrderDetails-purchaseNow {
+  background: #080500;
+  color: white;
 }
 
-.OrderDetails-contact:hover {
-  background: #e0e0e0;
+.OrderDetails-purchaseNow:hover {
+  background: #c86206;
 }
 
 .OrderDetails-sold {
