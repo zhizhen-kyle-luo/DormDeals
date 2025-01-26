@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from "../App.jsx";
 import { CartContext } from "../App.jsx";
+import { post } from "../../utilities";
 import './purchase.css';
 
 const Purchase = () => {
@@ -16,22 +17,31 @@ const Purchase = () => {
   const handleConfirmPurchase = async () => {
     setIsProcessing(true);
     try {
-      // Update item status to "Under Transaction" and add to user's purchases
-      for (const item of items) {
-        await fetch(`/api/items/${item._id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ 
-            status: 'Under Transaction',
-            buyer_id: userId,
-            purchaseDate: new Date().toISOString()
-          }),
-        });
-      }
+      console.log('Starting purchase process for items:', items);
+      // Update each item's status to "Under Transaction" and add buyer info
+      const updatePromises = items.map(item => 
+        post("/api/items/update", { 
+          itemId: item.itemId || item._id,
+          status: 'Under Transaction',
+          buyer_id: userId,
+          purchaseDate: new Date().toISOString()
+        }).then(response => {
+          console.log('Updated item:', response);
+          return response;
+        })
+      );
+
+      const updatedItems = await Promise.all(updatePromises);
+      console.log('All items updated:', updatedItems);
+      
       // Clear the cart after successful purchase
       await clearCart();
+      console.log('Cart cleared');
+      
+      // Reset processing state before navigation
+      setIsProcessing(false);
+      
+      // Navigate to user purchases page
       navigate(`/UserPurchases/${userId}`);
     } catch (error) {
       console.error('Error processing purchase:', error);
@@ -49,10 +59,10 @@ const Purchase = () => {
           {items.map((item) => (
             <div key={item._id} className="purchase-item">
               <div className="item-image">
-                <img src={item.images[0]} alt={item.title} />
+                <img src={item.images[0]} alt={item.name} />
               </div>
               <div className="item-details">
-                <h3>{item.title}</h3>
+                <h3>{item.name}</h3>
                 <div className="item-category">{item.category}</div>
                 <div className="item-condition">{item.condition}</div>
               </div>

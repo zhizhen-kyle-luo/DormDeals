@@ -14,7 +14,11 @@ const UserPurchases = () => {
     // Only fetch purchases if viewing own purchases
     if (userId === currentUserId) {
       get("/api/purchases", { userId }).then((purchasedItems) => {
-        setPurchases(purchasedItems);
+        console.log('Fetched purchases:', purchasedItems);
+        setPurchases(Array.isArray(purchasedItems) ? purchasedItems : []); // Ensure we always have an array
+      }).catch(error => {
+        console.error('Error fetching purchases:', error);
+        setPurchases([]);
       });
     }
   }, [userId, currentUserId]);
