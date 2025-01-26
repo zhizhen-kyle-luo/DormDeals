@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../App.jsx";
 import { CartContext } from "../App.jsx";
 import { post } from "../../utilities";
-import './purchase.css';
+import "./Purchase.css";
 
 const Purchase = () => {
   const location = useLocation();
@@ -17,30 +17,30 @@ const Purchase = () => {
   const handleConfirmPurchase = async () => {
     setIsProcessing(true);
     try {
-      console.log('Starting purchase process for items:', items);
+      console.log("Starting purchase process for items:", items);
       // Update each item's status to "Under Transaction" and add buyer info
-      const updatePromises = items.map(item => 
-        post("/api/items/update", { 
+      const updatePromises = items.map((item) =>
+        post("/api/items/update", {
           itemId: item.itemId || item._id,
-          status: 'Under Transaction',
+          status: "Under Transaction",
           buyer_id: userId,
-          purchaseDate: new Date().toISOString()
-        }).then(response => {
-          console.log('Updated item:', response);
+          purchaseDate: new Date().toISOString(),
+        }).then((response) => {
+          console.log("Updated item:", response);
           return response;
         })
       );
 
       const updatedItems = await Promise.all(updatePromises);
-      console.log('All items updated:', updatedItems);
-      
+      console.log("All items updated:", updatedItems);
+
       // Clear the cart after successful purchase
       await clearCart();
-      console.log('Cart cleared');
-      
+      console.log("Cart cleared");
+
       // Reset processing state before navigation
       setIsProcessing(false);
-      
+
       // Navigate to user purchases page
       navigate(`/UserPurchases/${userId}`);
     } catch (error) {
