@@ -71,7 +71,12 @@ const App = () => {
 
   const removeFromCart = async (itemId) => {
     try {
-      const updatedItems = await post("/api/cart/remove/" + itemId, {}, { method: "DELETE" });
+      const updatedItems = await fetch(`/api/cart/remove/${itemId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(res => res.json());
       setCartItems(updatedItems);
     } catch (err) {
       console.log("Failed to remove item from cart:", err);

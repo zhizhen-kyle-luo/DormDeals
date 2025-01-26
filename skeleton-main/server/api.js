@@ -122,7 +122,7 @@ router.post("/orders", auth.ensureLoggedIn, (req, res) => {
     condition: req.body.condition,
     description: req.body.description,
     images: req.body.images || [],
-    sold: false,
+    status: 'Active'
   });
 
   newItem
@@ -137,7 +137,17 @@ router.post("/orders", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/orders", (req, res) => {
-  Item.find({ sold: false }).then((items) => {
+  Item.find({ status: 'Active' }).then((items) => {
+    res.send(items);
+  });
+});
+
+// Get user's purchases
+router.get("/purchases", auth.ensureLoggedIn, (req, res) => {
+  Item.find({ 
+    buyer_id: req.query.userId,
+    status: { $in: ['Under Transaction', 'Sold'] }
+  }).then((items) => {
     res.send(items);
   });
 });
@@ -180,7 +190,7 @@ router.post("/removeitem", (req, res) => {
 router.post("/sellitem", (req, res) => {
   Item.findById(req.body.orderId)
     .then((order) => {
-      order.sold = !order.sold;
+      order.status = order.status === 'Sold' ? 'Active' : 'Sold';
       order.save().then(res.send(order));
     })
     .catch((err) => {
@@ -227,7 +237,7 @@ router.post("/cart/add", auth.ensureLoggedIn, async (req, res) => {
         price: item.price,
         images: item.images,
         quantity: 1,
-        sold: item.sold,
+        status: item.status || 'Active'
       });
     }
 

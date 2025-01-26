@@ -5,27 +5,16 @@ const CartSchema = new mongoose.Schema({
 
   items: [
     {
-      itemId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-      },
-      name: {
+      itemId: mongoose.Schema.Types.ObjectId,
+      name: String,
+      price: Number,
+      images: Array,
+      quantity: Number,
+      status: {
         type: String,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      images: [
-        {
-          type: String,
-        },
-      ],
-      sold: {
-        type: Boolean,
-        required: true,
-      },
+        enum: ['Active', 'Under Transaction', 'Sold'],
+        default: 'Active'
+      }
     },
   ],
   // createdAt: {

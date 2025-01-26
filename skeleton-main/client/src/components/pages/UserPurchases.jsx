@@ -13,33 +13,69 @@ const UserPurchases = () => {
   useEffect(() => {
     // Only fetch purchases if viewing own purchases
     if (userId === currentUserId) {
-      get("/api/purchases", { userId: userId }).then((purchasedItems) => {
+      get("/api/purchases", { userId }).then((purchasedItems) => {
         setPurchases(purchasedItems);
       });
     }
   }, [userId, currentUserId]);
 
+  // Separate ongoing and past orders
+  const ongoingOrders = purchases.filter(item => item.status === 'Under Transaction');
+  const pastOrders = purchases.filter(item => item.status === 'Sold');
+
   return (
     <div className="Purchases-container">
       <h1>My Purchases</h1>
-      <div className="Purchases-grid">
-        {purchases.map((item) => (
-          <div key={item._id} className="Purchase-item">
-            <OrderCard order={item} />
-            <div className="Purchase-status">
-              Status: {item.status}
+      
+      <div className="Purchases-section">
+        <h2>Ongoing Orders</h2>
+        <div className="Purchases-grid">
+          {ongoingOrders.map((item) => (
+            <div key={item._id} className="Purchase-item">
+              <OrderCard order={item} />
+              <div className="Purchase-status">
+                Status: {item.status}
+              </div>
+              <div className="Purchase-date">
+                Purchased: {new Date(item.purchaseDate).toLocaleDateString()}
+              </div>
             </div>
-            <div className="Purchase-date">
-              Purchased: {new Date(item.purchaseDate).toLocaleDateString()}
+          ))}
+          {ongoingOrders.length === 0 && (
+            <div className="No-purchases">
+              <p>No ongoing orders.</p>
             </div>
-          </div>
-        ))}
-        {purchases.length === 0 && (
-          <div className="No-purchases">
-            <p>You haven't made any purchases yet.</p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+
+      <div className="Purchases-section">
+        <h2>Past Orders</h2>
+        <div className="Purchases-grid">
+          {pastOrders.map((item) => (
+            <div key={item._id} className="Purchase-item">
+              <OrderCard order={item} />
+              <div className="Purchase-status">
+                Status: {item.status}
+              </div>
+              <div className="Purchase-date">
+                Purchased: {new Date(item.purchaseDate).toLocaleDateString()}
+              </div>
+            </div>
+          ))}
+          {pastOrders.length === 0 && (
+            <div className="No-purchases">
+              <p>No past orders.</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {purchases.length === 0 && (
+        <div className="No-purchases">
+          <p>You haven't made any purchases yet.</p>
+        </div>
+      )}
     </div>
   );
 };

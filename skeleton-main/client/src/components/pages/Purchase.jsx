@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from "../App.jsx";
+import { CartContext } from "../App.jsx";
 import './purchase.css';
 
 const Purchase = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { userId } = useContext(UserContext);
+  const { clearCart } = useContext(CartContext);
   const [isProcessing, setIsProcessing] = useState(false);
   const items = location.state?.items || [];
   const total = items.reduce((sum, item) => sum + parseFloat(item.price), 0);
@@ -28,6 +30,8 @@ const Purchase = () => {
           }),
         });
       }
+      // Clear the cart after successful purchase
+      await clearCart();
       navigate(`/UserPurchases/${userId}`);
     } catch (error) {
       console.error('Error processing purchase:', error);

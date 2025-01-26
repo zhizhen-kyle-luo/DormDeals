@@ -9,7 +9,13 @@ const ItemSchema = new mongoose.Schema({
   condition: String,
   description: String,
   images: Array,
-  sold: Boolean,
+  status: {
+    type: String,
+    enum: ['Active', 'Under Transaction', 'Sold'],
+    default: 'Active'
+  },
+  buyer_id: String,
+  purchaseDate: Date
 });
 
 // compile model from schema

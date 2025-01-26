@@ -5,7 +5,7 @@ import "./Cart.css";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { cartItems, removeFromCart } = useContext(CartContext);
+  const { cartItems = [], removeFromCart } = useContext(CartContext);
   const [selectedItems, setSelectedItems] = useState(new Set());
   const [savedForLater, setSavedForLater] = useState(new Set());
 
@@ -33,7 +33,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    const itemsToCheckout = cartItems.filter(item => selectedItems.has(item._id));
+    const itemsToCheckout = cartItems.filter(item => selectedItems.has(item.itemId));
     if (itemsToCheckout.length === 0) {
       alert("Please select items to purchase");
       return;
@@ -43,12 +43,12 @@ const Cart = () => {
 
   const calculateSubtotal = () => {
     return cartItems
-      .filter(item => selectedItems.has(item._id))
+      .filter(item => selectedItems.has(item.itemId))
       .reduce((sum, item) => sum + item.price, 0);
   };
 
-  const activeItems = cartItems.filter(item => !savedForLater.has(item._id));
-  const savedItems = cartItems.filter(item => savedForLater.has(item._id));
+  const activeItems = cartItems.filter(item => !savedForLater.has(item.itemId));
+  const savedItems = cartItems.filter(item => savedForLater.has(item.itemId));
 
   return (
     <div className="cart-container">
@@ -61,26 +61,24 @@ const Cart = () => {
 
           <div className="cart-items">
             {activeItems.map((item) => (
-              <div key={item._id} className="cart-item">
+              <div key={item.itemId} className="cart-item">
                 <div className="item-select">
                   <input
                     type="checkbox"
-                    checked={selectedItems.has(item._id)}
-                    onChange={() => toggleItemSelection(item._id)}
+                    checked={selectedItems.has(item.itemId)}
+                    onChange={() => toggleItemSelection(item.itemId)}
                   />
                 </div>
                 <div className="item-image">
-                  <img src={item.image} alt={item.itemName} />
+                  <img src={item.images[0]} alt={item.name} />
                 </div>
                 <div className="item-details">
-                  <h3>{item.itemName}</h3>
-                  <p className="item-category">{item.category}</p>
-                  <p className="item-condition">Condition: {item.condition}</p>
+                  <h3>{item.name}</h3>
                   <div className="item-actions">
-                    <button onClick={() => toggleSaveForLater(item._id)}>
+                    <button onClick={() => toggleSaveForLater(item.itemId)}>
                       Save for later
                     </button>
-                    <button onClick={() => removeFromCart(item._id)}>
+                    <button onClick={() => removeFromCart(item.itemId)}>
                       Remove
                     </button>
                   </div>
@@ -94,19 +92,17 @@ const Cart = () => {
             <div className="saved-for-later">
               <h2>Saved for Later</h2>
               {savedItems.map((item) => (
-                <div key={item._id} className="cart-item">
+                <div key={item.itemId} className="cart-item">
                   <div className="item-image">
-                    <img src={item.image} alt={item.itemName} />
+                    <img src={item.images[0]} alt={item.name} />
                   </div>
                   <div className="item-details">
-                    <h3>{item.itemName}</h3>
-                    <p className="item-category">{item.category}</p>
-                    <p className="item-condition">Condition: {item.condition}</p>
+                    <h3>{item.name}</h3>
                     <div className="item-actions">
-                      <button onClick={() => toggleSaveForLater(item._id)}>
+                      <button onClick={() => toggleSaveForLater(item.itemId)}>
                         Move to Cart
                       </button>
-                      <button onClick={() => removeFromCart(item._id)}>
+                      <button onClick={() => removeFromCart(item.itemId)}>
                         Remove
                       </button>
                     </div>
