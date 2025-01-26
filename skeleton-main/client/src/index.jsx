@@ -13,7 +13,7 @@ import UserAllItems from "./components/pages/UserAllItems.jsx";
 import UserReviews from "./components/pages/UserReviews.jsx";
 import UserPurchases from "./components/pages/UserPurchases.jsx";
 import Instructions from "./components/pages/Instructions.jsx";
-import Purchase from "./components/pages/purchase.jsx";
+import Purchase from "./components/pages/Purchase.jsx";
 
 import {
   createBrowserRouter,
