@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../App.jsx";
 import { CartContext } from "../App.jsx";
 import { post } from "../../utilities";
@@ -44,7 +44,7 @@ const Purchase = () => {
       // Navigate to user purchases page
       navigate(`/UserPurchases/${userId}`);
     } catch (error) {
-      console.error('Error processing purchase:', error);
+      console.error("Error processing purchase:", error);
       setIsProcessing(false);
     }
   };
@@ -53,7 +53,7 @@ const Purchase = () => {
     <div className="purchase-container">
       <div className="purchase-content">
         <h1>Purchase Summary</h1>
-        
+
         <div className="purchase-items">
           <h2>Items</h2>
           {items.map((item) => (
@@ -77,25 +77,21 @@ const Purchase = () => {
             <span>${total.toFixed(2)}</span>
           </div>
           <div className="transaction-note">
-            Note: After confirming your purchase, the item will be marked as "Under Transaction". 
+            Note: After confirming your purchase, the item will be marked as "Under Transaction".
             The seller will mark it as "Sold" after the in-person exchange is completed.
           </div>
         </div>
 
         <div className="purchase-actions">
-          <button 
-            className="back-button" 
-            onClick={() => navigate(-1)}
-            disabled={isProcessing}
-          >
+          <button className="back-button" onClick={() => navigate(-1)} disabled={isProcessing}>
             Back
           </button>
-          <button 
-            className="confirm-button" 
+          <button
+            className="confirm-button"
             onClick={handleConfirmPurchase}
             disabled={isProcessing}
           >
-            {isProcessing ? 'Processing...' : 'Confirm Purchase'}
+            {isProcessing ? "Processing..." : "Confirm Purchase"}
           </button>
         </div>
       </div>
