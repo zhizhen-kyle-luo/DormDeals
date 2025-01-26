@@ -26,12 +26,12 @@ const OrderDetails = (props) => {
       if (orderObj && orderObj.images.length > 0) {
         setSelectedImage(orderObj.images[0]);
       }
-      if (orderObj.sold) {
+      if (orderObj.status === "Sold") {
         setStatus("Sold");
         setStatusColor("u-red");
         setStatusButton("Put back on market");
       } else {
-        setStatus("Active");
+        setStatus(orderObj.status);
         setStatusColor("u-green");
         setStatusButton("Mark as sold");
       }
@@ -53,26 +53,30 @@ const OrderDetails = (props) => {
   };
 
   const handlePurchaseNow = () => {
-    navigate("/purchase", { 
-      state: { 
-        items: [{
-          _id: order._id,
-          itemName: order.name,
-          price: order.price,
-          image: selectedImage,
-          category: order.category,
-          condition: order.condition
-        }]
-      } 
+    navigate("/purchase", {
+      state: {
+        items: [
+          {
+            _id: order._id,
+            itemName: order.name,
+            price: order.price,
+            image: selectedImage,
+            category: order.category,
+            condition: order.condition,
+          },
+        ],
+      },
     });
   };
 
   if (!order) return <div>Loading...</div>;
 
   const sellItem = () => {
+    console.log("hi");
     post("/api/sellitem", { orderId: orderId }).then((orderObj) => {
       setOrder(orderObj);
-      if (orderObj.sold) {
+      console.log(orderObj);
+      if (orderObj.status === "Sold") {
         setStatus("Sold");
         setStatusColor("u-red");
         setStatusButton("Put back on market");
@@ -137,8 +141,8 @@ const OrderDetails = (props) => {
             >
               Add to Cart
             </button>
-            <button 
-              className="OrderDetails-button OrderDetails-purchaseNow" 
+            <button
+              className="OrderDetails-button OrderDetails-purchaseNow"
               onClick={handlePurchaseNow}
             >
               Purchase Now

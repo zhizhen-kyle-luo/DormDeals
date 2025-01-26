@@ -1,6 +1,5 @@
 .Items-container {
   padding: 2rem;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -10,13 +9,13 @@
 }
 
 .Items-grid {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -1rem; /* Compensate for card margins */
-  width: 30%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
 
 /* Responsive grid */
+
 @media (max-width: 1024px) {
   .OrderCard-container {
     width: calc(50% - 2rem);

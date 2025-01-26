@@ -28,7 +28,7 @@ const Home = () => {
       <h1>{seller}</h1>
       <div className="Items-grid">
         {orders.map((order) => (
-          <OrderCard key={order._id} order={order} />
+          <OrderCard className="Item" key={order._id} order={order} />
         ))}
       </div>
     </div>

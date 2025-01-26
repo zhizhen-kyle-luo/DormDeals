@@ -33,7 +33,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    const itemsToCheckout = cartItems.filter(item => selectedItems.has(item.itemId));
+    const itemsToCheckout = cartItems.filter((item) => selectedItems.has(item.itemId));
     if (itemsToCheckout.length === 0) {
       alert("Please select items to purchase");
       return;
@@ -43,12 +43,12 @@ const Cart = () => {
 
   const calculateSubtotal = () => {
     return cartItems
-      .filter(item => selectedItems.has(item.itemId))
+      .filter((item) => selectedItems.has(item.itemId))
       .reduce((sum, item) => sum + item.price, 0);
   };
 
-  const activeItems = cartItems.filter(item => !savedForLater.has(item.itemId));
-  const savedItems = cartItems.filter(item => savedForLater.has(item.itemId));
+  const activeItems = cartItems.filter((item) => !savedForLater.has(item.itemId));
+  const savedItems = cartItems.filter((item) => savedForLater.has(item.itemId));
 
   return (
     <div className="cart-container">
@@ -75,12 +75,8 @@ const Cart = () => {
                 <div className="item-details">
                   <h3>{item.name}</h3>
                   <div className="item-actions">
-                    <button onClick={() => toggleSaveForLater(item.itemId)}>
-                      Save for later
-                    </button>
-                    <button onClick={() => removeFromCart(item.itemId)}>
-                      Remove
-                    </button>
+                    <button onClick={() => toggleSaveForLater(item.itemId)}>Save for later</button>
+                    <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
                   </div>
                 </div>
                 <div className="item-price">${item.price}</div>
@@ -99,12 +95,8 @@ const Cart = () => {
                   <div className="item-details">
                     <h3>{item.name}</h3>
                     <div className="item-actions">
-                      <button onClick={() => toggleSaveForLater(item.itemId)}>
-                        Move to Cart
-                      </button>
-                      <button onClick={() => removeFromCart(item.itemId)}>
-                        Remove
-                      </button>
+                      <button onClick={() => toggleSaveForLater(item.itemId)}>Move to Cart</button>
+                      <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
                     </div>
                   </div>
                   <div className="item-price">${item.price}</div>
@@ -124,7 +116,7 @@ const Cart = () => {
             <span>Subtotal</span>
             <span>${calculateSubtotal().toFixed(2)}</span>
           </div>
-          <button 
+          <button
             className="checkout-button"
             onClick={handleCheckout}
             disabled={selectedItems.size === 0}

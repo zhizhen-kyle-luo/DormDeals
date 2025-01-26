@@ -20,22 +20,20 @@ const UserPurchases = () => {
   }, [userId, currentUserId]);
 
   // Separate ongoing and past orders
-  const ongoingOrders = purchases.filter(item => item.status === 'Under Transaction');
-  const pastOrders = purchases.filter(item => item.status === 'Sold');
+  const ongoingOrders = purchases.filter((item) => item.status === "Under Transaction");
+  const pastOrders = purchases.filter((item) => item.status === "Sold");
 
   return (
     <div className="Purchases-container">
       <h1>My Purchases</h1>
-      
+
       <div className="Purchases-section">
         <h2>Ongoing Orders</h2>
         <div className="Purchases-grid">
           {ongoingOrders.map((item) => (
             <div key={item._id} className="Purchase-item">
               <OrderCard order={item} />
-              <div className="Purchase-status">
-                Status: {item.status}
-              </div>
+              <div className="Purchase-status">Status: {item.status}</div>
               <div className="Purchase-date">
                 Purchased: {new Date(item.purchaseDate).toLocaleDateString()}
               </div>
@@ -55,9 +53,7 @@ const UserPurchases = () => {
           {pastOrders.map((item) => (
             <div key={item._id} className="Purchase-item">
               <OrderCard order={item} />
-              <div className="Purchase-status">
-                Status: {item.status}
-              </div>
+              <div className="Purchase-status">Status: {item.status}</div>
               <div className="Purchase-date">
                 Purchased: {new Date(item.purchaseDate).toLocaleDateString()}
               </div>

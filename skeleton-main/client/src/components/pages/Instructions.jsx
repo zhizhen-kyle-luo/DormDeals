@@ -56,8 +56,11 @@ const Instructions = () => {
         <div className="Instructions-textContainer">
           <h3 className="Instructions-subtitle">Checkout/Buying</h3>
           <div className="Instructions-text">
-            See something you want to buy? Click the checkout button on that item in your cart,
-            which will redirect you to ...
+            See something you want to buy? Select all the items you want to checkout and by clicking
+            the "Proceed to Checkout" button, it will redirect you to the purchase page, where you
+            can confirm your orders. It is now up to you to contact the seller about your purchase
+            and agree on a place and time to exchange. After confirming your purchase, you will be
+            taken to your "My Purchases" page, where you can see the status of all your items.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>

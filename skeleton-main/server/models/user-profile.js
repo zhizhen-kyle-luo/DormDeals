@@ -8,7 +8,7 @@ const UserProfileSchema = new mongoose.Schema({
   description: String,
   email: String,
   picture: Object,
-  rating: Array,
+  rating: Array /*[Rating, Number of Reviews]*/,
 });
 
 // compile model from schema
