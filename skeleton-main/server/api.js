@@ -14,6 +14,7 @@ const User = require("./models/user");
 const UserProfile = require("./models/user-profile");
 const Item = require("./models/item");
 const Cart = require("./models/cart");
+const Review = require("./models/review");
 
 // import authentication library
 const auth = require("./auth");
@@ -122,7 +123,7 @@ router.post("/orders", auth.ensureLoggedIn, (req, res) => {
     condition: req.body.condition,
     description: req.body.description,
     images: req.body.images || [],
-    status: 'Active'
+    status: "Active",
   });
 
   newItem
@@ -137,17 +138,18 @@ router.post("/orders", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/orders", (req, res) => {
-  Item.find({ status: 'Active' }).then((items) => {
+  Item.find({ status: "Active" }).then((items) => {
     res.send(items);
   });
 });
 
 // Get user's purchases and handle purchase updates
-router.route("/purchases/:itemId?")
+router
+  .route("/purchases/:itemId?")
   .get(auth.ensureLoggedIn, (req, res) => {
-    Item.find({ 
+    Item.find({
       buyer_id: req.query.userId,
-      status: { $in: ['Under Transaction', 'Sold'] }
+      status: { $in: ["Under Transaction", "Sold"] },
     }).then((items) => {
       res.send(items);
     });
@@ -227,7 +229,7 @@ router.post("/removeitem", (req, res) => {
 router.post("/sellitem", (req, res) => {
   Item.findById(req.body.orderId)
     .then((order) => {
-      order.status = order.status === 'Sold' ? 'Active' : 'Sold';
+      order.status = order.status === "Sold" ? "Active" : "Sold";
       order.save().then(res.send(order));
     })
     .catch((err) => {
@@ -274,7 +276,7 @@ router.post("/cart/add", auth.ensureLoggedIn, async (req, res) => {
         price: item.price,
         images: item.images,
         quantity: 1,
-        status: item.status || 'Active'
+        status: item.status || "Active",
       });
     }
 
@@ -329,7 +331,7 @@ router.post("/items/update", auth.ensureLoggedIn, async (req, res) => {
     item.purchaseDate = req.body.purchaseDate;
 
     await item.save();
-    console.log('Item updated:', item);
+    console.log("Item updated:", item);
     res.send(item);
   } catch (err) {
     console.log("Failed to update item:", err);
@@ -339,16 +341,39 @@ router.post("/items/update", auth.ensureLoggedIn, async (req, res) => {
 
 // Get user's purchases
 router.get("/purchases", auth.ensureLoggedIn, (req, res) => {
-  Item.find({ 
+  Item.find({
     buyer_id: req.query.userId,
-    status: { $in: ['Under Transaction', 'Sold'] }
-  }).then((items) => {
-    console.log('Fetched purchases for user:', req.query.userId, items);
-    res.send(items);
-  }).catch(err => {
-    console.log("Failed to fetch purchases:", err);
-    res.status(500).send({ error: "Failed to fetch purchases" });
+    status: { $in: ["Under Transaction", "Sold"] },
+  })
+    .then((items) => {
+      console.log("Fetched purchases for user:", req.query.userId, items);
+      res.send(items);
+    })
+    .catch((err) => {
+      console.log("Failed to fetch purchases:", err);
+      res.status(500).send({ error: "Failed to fetch purchases" });
+    });
+});
+
+//Post Review
+router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
+  const newReview = new Review({
+    reviewer: { name: req.user.name, _id: req.user._id },
+    seller: req.body.seller,
+    itemId: req.body.itemId,
+    rating: req.body.rating,
+    review: req.body.review,
   });
+
+  newReview
+    .save()
+    .then((savedReview) => {
+      res.status(201).send(savedReview);
+    })
+    .catch((err) => {
+      console.log("Failed to save review:", err);
+      res.status(500).send({ error: "Failed to leave a review" });
+    });
 });
 
 // anything else falls to this "not found" case

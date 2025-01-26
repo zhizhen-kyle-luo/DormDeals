@@ -107,7 +107,8 @@ const Instructions = () => {
             One feature includes having the ability to mark items as sold or removing them
             completely. To do this, navigate to your item page (most easily done by going to My
             Items) and selecting the appropriate button. You are able to unlist an item as sold but
-            are unable to retrieve a deleted item.
+            are unable to retrieve a deleted item. Be sure to list an item as sold once you hand it
+            to the buyer!
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
