@@ -146,7 +146,7 @@ router.get("/order", (req, res) => {
   Item.findById(req.query.orderId)
     .then((order) => {
       if (!order) {
-        res.send({ error: "Order not found" });
+        res.status(404).send({ error: "Order not found" });
       } else {
         res.send(order);
       }

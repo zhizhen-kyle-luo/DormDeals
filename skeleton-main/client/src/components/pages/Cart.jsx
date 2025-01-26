@@ -14,7 +14,9 @@ const Cart = () => {
     get("/api/existsorder", { orderId: item.itemId }).then((exists) => setExistsItem(exists));
 
     // item.sold does not show up/is not transferred to cart; using this method for now
-    get("/api/order", { orderId: item.itemId }).then((orderObj) => setItemSold(orderObj.sold));
+    if (existsItem) {
+      get("/api/order", { orderId: item.itemId }).then((orderObj) => setItemSold(orderObj.sold));
+    }
 
     if (!existsItem) {
       status = "Deleted";
