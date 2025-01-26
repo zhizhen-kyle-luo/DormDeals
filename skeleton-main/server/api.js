@@ -142,15 +142,52 @@ router.get("/orders", (req, res) => {
   });
 });
 
-// Get user's purchases
-router.get("/purchases", auth.ensureLoggedIn, (req, res) => {
-  Item.find({ 
-    buyer_id: req.query.userId,
-    status: { $in: ['Under Transaction', 'Sold'] }
-  }).then((items) => {
-    res.send(items);
+// Get user's purchases and handle purchase updates
+router.route("/purchases/:itemId?")
+  .get(auth.ensureLoggedIn, (req, res) => {
+    Item.find({ 
+      buyer_id: req.query.userId,
+      status: { $in: ['Under Transaction', 'Sold'] }
+    }).then((items) => {
+      res.send(items);
+    });
+  })
+  .patch(auth.ensureLoggedIn, async (req, res) => {
+    try {
+      const item = await Item.findById(req.params.itemId);
+      if (!item) {
+        return res.status(404).send({ error: "Item not found" });
+      }
+
+      item.status = req.body.status;
+      item.buyer_id = req.body.buyer_id;
+      item.purchaseDate = req.body.purchaseDate;
+
+      await item.save();
+      res.send(item);
+    } catch (err) {
+      console.log("Failed to update item:", err);
+      res.status(500).send({ error: "Failed to update item" });
+    }
+  })
+  .post(auth.ensureLoggedIn, async (req, res) => {
+    try {
+      const item = await Item.findById(req.params.itemId);
+      if (!item) {
+        return res.status(404).send({ error: "Item not found" });
+      }
+
+      item.status = req.body.status;
+      item.buyer_id = req.body.buyer_id;
+      item.purchaseDate = req.body.purchaseDate;
+
+      await item.save();
+      res.send(item);
+    } catch (err) {
+      console.log("Failed to update item:", err);
+      res.status(500).send({ error: "Failed to update item" });
+    }
   });
-});
 
 router.get("/order", (req, res) => {
   Item.findById(req.query.orderId)
@@ -277,6 +314,41 @@ router.post("/cart/clear", auth.ensureLoggedIn, async (req, res) => {
     console.log("Failed to clear cart:", err);
     res.status(500).send({ error: "Failed to clear cart" });
   }
+});
+
+// Update item status and buyer info
+router.post("/items/update", auth.ensureLoggedIn, async (req, res) => {
+  try {
+    const item = await Item.findById(req.body.itemId);
+    if (!item) {
+      return res.status(404).send({ error: "Item not found" });
+    }
+
+    item.status = req.body.status;
+    item.buyer_id = req.body.buyer_id;
+    item.purchaseDate = req.body.purchaseDate;
+
+    await item.save();
+    console.log('Item updated:', item);
+    res.send(item);
+  } catch (err) {
+    console.log("Failed to update item:", err);
+    res.status(500).send({ error: "Failed to update item" });
+  }
+});
+
+// Get user's purchases
+router.get("/purchases", auth.ensureLoggedIn, (req, res) => {
+  Item.find({ 
+    buyer_id: req.query.userId,
+    status: { $in: ['Under Transaction', 'Sold'] }
+  }).then((items) => {
+    console.log('Fetched purchases for user:', req.query.userId, items);
+    res.send(items);
+  }).catch(err => {
+    console.log("Failed to fetch purchases:", err);
+    res.status(500).send({ error: "Failed to fetch purchases" });
+  });
 });
 
 // anything else falls to this "not found" case
