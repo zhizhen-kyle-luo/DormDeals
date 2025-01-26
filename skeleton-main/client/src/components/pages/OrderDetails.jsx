@@ -45,7 +45,8 @@ const OrderDetails = (props) => {
       name: order.name,
       price: order.price,
       images: order.images,
-      discription: order.description,
+      description: order.description,
+      sold: order.sold,
     };
     addToCart(cartItem);
     navigate("/cart");

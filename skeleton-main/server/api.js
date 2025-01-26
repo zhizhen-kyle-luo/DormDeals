@@ -146,9 +146,24 @@ router.get("/order", (req, res) => {
   Item.findById(req.query.orderId)
     .then((order) => {
       if (!order) {
-        res.status(404).send({ error: "Order not found" });
+        res.send({ error: "Order not found" });
       } else {
         res.send(order);
+      }
+    })
+    .catch((err) => {
+      console.log("Failed to fetch order:", err);
+      res.status(500).send({ error: "Failed to fetch order" });
+    });
+});
+
+router.get("/existsorder", (req, res) => {
+  Item.findById(req.query.orderId)
+    .then((order) => {
+      if (!order) {
+        res.send(false);
+      } else {
+        res.send(true);
       }
     })
     .catch((err) => {
@@ -212,6 +227,7 @@ router.post("/cart/add", auth.ensureLoggedIn, async (req, res) => {
         price: item.price,
         images: item.images,
         quantity: 1,
+        sold: item.sold,
       });
     }
 
