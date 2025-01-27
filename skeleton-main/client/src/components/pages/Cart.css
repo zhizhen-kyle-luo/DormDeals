@@ -189,6 +189,29 @@
   margin: 0 0 1.5rem 0;
 }
 
+.item-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+}
+
+.item-status[data-status="Under Transaction"] {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.item-status[data-status="Sold"] {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.item-select input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media (max-width: 1024px) {
   .cart-content {
     grid-template-columns: 1fr;

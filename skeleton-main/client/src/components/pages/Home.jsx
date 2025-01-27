@@ -8,11 +8,13 @@ const Home = () => {
   const { userId } = useContext(UserContext);
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
     priceRange: { min: "", max: "" },
     category: "all",
     condition: "all",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   // Updated categories to match new order form
   const categories = [
@@ -29,20 +31,32 @@ const Home = () => {
   const conditions = ["All", "New", "Like New", "Good", "Fair", "Poor"];
 
   useEffect(() => {
-    get("/api/orders").then((orderObjs) => {
-      // Filter out items being sold by the current user and non-active items
-      const filteredOrderObjs = orderObjs.filter(order => 
-        order.seller_id !== userId && 
-        order.status === "Active"
-      );
-      setOrders(filteredOrderObjs);
-      setFilteredOrders(filteredOrderObjs);
-    });
+    // Fetch orders from the server
+    fetch("/api/orders")
+      .then((res) => res.json())
+      .then((ordersData) => {
+        // Filter out orders that are sold or under transaction
+        const activeOrders = ordersData.filter(order => 
+          order.status !== "Sold" && 
+          order.status !== "Under Transaction" &&
+          order.seller_id !== userId
+        );
+        setOrders(activeOrders);
+        setFilteredOrders(activeOrders);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching orders:", err);
+        setIsLoading(false);
+      });
   }, [userId]);
 
   useEffect(() => {
-    // Apply filters whenever filters state changes
+    // Apply filters and search whenever filters, search query, or orders change
     const filtered = orders.filter((order) => {
+      const matchesSearch = order.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          order.description.toLowerCase().includes(searchQuery.toLowerCase());
+
       const matchesPrice =
         (!filters.priceRange.min || order.price >= Number(filters.priceRange.min)) &&
         (!filters.priceRange.max || order.price <= Number(filters.priceRange.max));
@@ -55,11 +69,11 @@ const Home = () => {
         filters.condition === "all" ||
         order.condition.toLowerCase() === filters.condition.toLowerCase();
 
-      return matchesPrice && matchesCategory && matchesCondition;
+      return matchesSearch && matchesPrice && matchesCategory && matchesCondition;
     });
 
     setFilteredOrders(filtered);
-  }, [filters, orders]);
+  }, [filters, searchQuery, orders]);
 
   const handleFilterChange = (type, value) => {
     if (type === "priceRange") {
@@ -81,6 +95,7 @@ const Home = () => {
       category: "all",
       condition: "all",
     });
+    setSearchQuery("");
   };
 
   return (
@@ -88,6 +103,17 @@ const Home = () => {
       <div className="Home-sidebar">
         <div className="sidebar-header">
           <h2>Filter By</h2>
+        </div>
+
+        <div className="sidebar-section">
+          <h3>Search</h3>
+          <input
+            type="text"
+            placeholder="Search for items..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
         </div>
 
         <div className="sidebar-section">
@@ -142,18 +168,30 @@ const Home = () => {
         </div>
 
         <button className="clear-filters" onClick={clearFilters}>
-          Clear Filters
+          Clear All
         </button>
 
         <div className="filter-stats">{filteredOrders.length} items found</div>
       </div>
 
       <div className="Home-content">
-        <div className="Home-orderGrid">
-          {filteredOrders.map((order) => (
-            <OrderCard key={order._id} order={order} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="Home-loading">
+            <div className="spinner"></div>
+            <p>Loading items...</p>
+          </div>
+        ) : filteredOrders.length > 0 ? (
+          <div className="Home-orderGrid">
+            {filteredOrders.map((order) => (
+              <OrderCard key={order._id} order={order} />
+            ))}
+          </div>
+        ) : (
+          <div className="Home-empty">
+            <p>No items found matching your criteria.</p>
+            <button onClick={clearFilters}>Clear all filters</button>
+          </div>
+        )}
       </div>
     </div>
   );

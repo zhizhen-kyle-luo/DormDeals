@@ -71,6 +71,7 @@ const Cart = () => {
                     type="checkbox"
                     checked={selectedItems.has(item.itemId)}
                     onChange={() => toggleItemSelection(item.itemId)}
+                    disabled={item.status === "Under Transaction" || item.status === "Sold"}
                   />
                 </div>
                 <div 
@@ -86,6 +87,11 @@ const Cart = () => {
                   style={{ cursor: 'pointer' }}
                 >
                   <h3>{item.name}</h3>
+                  {(item.status === "Under Transaction" || item.status === "Sold") && (
+                    <div className="item-status" data-status={item.status}>
+                      {item.status}
+                    </div>
+                  )}
                   <div className="item-actions">
                     <button onClick={(e) => { e.stopPropagation(); toggleSaveForLater(item.itemId); }}>
                       Save for later

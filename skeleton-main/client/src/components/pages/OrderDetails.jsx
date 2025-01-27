@@ -158,18 +158,22 @@ const OrderDetails = (props) => {
           </div>
 
           <div className="OrderDetails-actions">
-            <button
-              className="OrderDetails-button OrderDetails-addToCart"
-              onClick={handleAddToCart}
-            >
-              Add to Cart
-            </button>
-            <button
-              className="OrderDetails-button OrderDetails-purchaseNow"
-              onClick={handlePurchaseNow}
-            >
-              Purchase Now
-            </button>
+            {order.status !== "Under Transaction" && order.status !== "Sold" && (
+              <>
+                <button
+                  className="OrderDetails-button OrderDetails-addToCart"
+                  onClick={handleAddToCart}
+                >
+                  Add to Cart
+                </button>
+                <button
+                  className="OrderDetails-button OrderDetails-purchaseNow"
+                  onClick={handlePurchaseNow}
+                >
+                  Purchase Now
+                </button>
+              </>
+            )}
             <button
               className={`OrderDetails-button OrderDetails-sold ${removeItemVisible}`}
               onClick={sellItem}
