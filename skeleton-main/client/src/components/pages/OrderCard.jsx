@@ -21,16 +21,20 @@ const OrderCard = ({ order }) => {
         />
       </div>
       <div className="OrderCard-info">
-        <h3 className="OrderCard-title">{order.name}</h3>
-        <div className="OrderCard-meta">
-          <span className="OrderCard-seller">
-            <i className="fas fa-user"></i> {order.seller}
-          </span>
-          <span className="OrderCard-condition">{order.condition}</span>
+        <div className="OrderCard-mainInfo">
+          <h3 className="OrderCard-title">{order.name}</h3>
+          <div className="OrderCard-meta">
+            <span className="OrderCard-seller">
+              <i className="fas fa-user"></i> {order.seller}
+            </span>
+          </div>
         </div>
         <div className="OrderCard-details">
           <span className="OrderCard-price">${order.price}</span>
-          <span className="OrderCard-category">{order.category}</span>
+          <div className="OrderCard-category-container">
+            <span className="OrderCard-category">{order.category}</span>
+            <span className="OrderCard-condition">{order.condition}</span>
+          </div>
         </div>
       </div>
     </div>

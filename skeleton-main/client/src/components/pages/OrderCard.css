@@ -1,8 +1,8 @@
 .OrderCard-container {
   width: 100%;
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -10,11 +10,12 @@
   flex-direction: column;
   height: 100%;
   position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .OrderCard-container:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
 }
 
 .OrderCard-badge {
@@ -30,6 +31,7 @@
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .badge-transaction {
@@ -65,121 +67,108 @@
 }
 
 .OrderCard-info {
-  padding: 1rem;
+  padding: 1.25rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.OrderCard-mainInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: center;
+  text-align: center;
 }
 
 .OrderCard-title {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #1a1a1a;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   line-height: 1.4;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  max-width: 90%;
 }
 
 .OrderCard-meta {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: #6b7280;
+  justify-content: center;
 }
 
 .OrderCard-seller {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.35rem;
+  color: #4b5563;
 }
 
 .OrderCard-seller i {
   font-size: 0.875rem;
+  color: #e07007;
 }
 
 .OrderCard-condition {
-  padding: 2px 8px;
-  background: #f3f4f6;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  color: #065f46;
+  font-size: 0.875rem;
+  padding: 4px 10px;
+  background: #ecfdf5;
+  border-radius: 6px;
+  font-family: 'Playfair Display', serif;
 }
 
 .OrderCard-details {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto;
-  padding-top: 0.5rem;
+  padding-top: 0.75rem;
   border-top: 1px solid #f3f4f6;
+  margin-top: auto;
 }
 
 .OrderCard-price {
   font-weight: 700;
   color: #e07007;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
+  font-family: 'Playfair Display', serif;
+  padding-left: 0.125rem;
+}
+
+.OrderCard-category-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .OrderCard-category {
-  color: #6b7280;
+  color: #4b5563;
   font-size: 0.875rem;
-  padding: 4px 8px;
+  padding: 4px 10px;
   background: #f3f4f6;
-  border-radius: 4px;
-  max-width: 40%;
+  border-radius: 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: 'Playfair Display', serif;
 }
 
-.OrderCard {
-  font-family: 'Playfair Display', serif;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-
-.OrderCard-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0.5rem 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.OrderCard-price {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #1a1a1a;
-}
-
-.OrderCard-category,
-.OrderCard-condition {
-  font-family: 'Playfair Display', serif;
+.OrderCard-new {
+  color: #065f46;
   font-size: 0.875rem;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.OrderCard-badge {
-  font-family: 'Playfair Display', serif;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 4px 10px;
+  background: #ecfdf5;
   border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-family: 'Playfair Display', serif;
 }
