@@ -8,17 +8,29 @@ import "./UserReviews.css";
 const UserReviews = () => {
   let props = useParams();
   const [seller, setSeller] = useState("");
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     get(`/api/user`, { userid: props.userId, picture: defaultpfpimg }).then((sellerObj) => {
       setSeller(sellerObj[0].name);
+      get(`/api/reviews`, { name: sellerObj[0].name, _id: props.userId }).then((reviewsObj) => {
+        setReviews(reviewsObj);
+      });
     });
   }, []);
 
   return (
     <div className="Reviews-container">
       <h1>Reviews for {seller}</h1>
-      <div>Reviews here</div>
+      <div className="Reviews-grid">
+        {reviews.map((review) => (
+          <div className="Review-card">
+            <h3 className="Review-author">{review.reviewer.name}</h3>
+            <div className="Review-rating">Rating: {review.rating}</div>
+            <div className="Review-main">{review.review}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

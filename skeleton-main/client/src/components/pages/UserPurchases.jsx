@@ -68,6 +68,7 @@ const UserPurchases = () => {
         rating: reviewData.rating,
         review: reviewData.review,
       };
+      console.log("success");
 
       await post("/api/newreview", reviewDataToSend);
       closeReview();
@@ -110,6 +111,9 @@ const UserPurchases = () => {
         <div className="Purchases-grid">
           {pastOrders.map((item) => (
             <div key={item._id} className="Purchase-item">
+              <button className="Purchase-review" onClick={() => submitReview(item)}>
+                Leave a Review
+              </button>
               <OrderCard order={item} />
               <div className="Purchase-status" data-status={item.status}>
                 {item.status}
@@ -133,7 +137,15 @@ const UserPurchases = () => {
       {purchases.length === 0 && (
         <div className="No-purchases">
           <p>You haven't made any purchases yet.</p>
-          <Link to="/" style={{ color: '#e07007', textDecoration: 'none', marginTop: '1rem', display: 'inline-block' }}>
+          <Link
+            to="/"
+            style={{
+              color: "#e07007",
+              textDecoration: "none",
+              marginTop: "1rem",
+              display: "inline-block",
+            }}
+          >
             Start Shopping
           </Link>
         </div>
@@ -143,12 +155,7 @@ const UserPurchases = () => {
         <div className="Form-container">
           <h1>Review Your Purchase</h1>
           <h3>Rate your experience with {reviewingItem.seller}</h3>
-          <select
-            name="rating"
-            value={reviewData.rating}
-            onChange={handleInputChange}
-            required
-          >
+          <select name="rating" value={reviewData.rating} onChange={handleInputChange} required>
             <option value="5">★★★★★ (5) Excellent</option>
             <option value="4">★★★★☆ (4) Good</option>
             <option value="3">★★★☆☆ (3) Average</option>

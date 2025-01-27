@@ -365,6 +365,18 @@ router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
     review: req.body.review,
   });
 
+  let sellerRating = null;
+  UserProfile.find({ user: req.body.seller }).then((seller) => {
+    sellerRating = [Number(seller[0].rating[0]), Number(seller[0].rating[1])];
+    sellerRating[1] = String(sellerRating[1] + 1);
+    sellerRating[0] = Math.round(
+      (sellerRating[0] + Number(newReview.rating)) / sellerRating[1]
+    ).toFixed(1);
+    console.log(sellerRating);
+    seller[0].rating = sellerRating;
+    seller[0].save();
+  });
+
   newReview
     .save()
     .then((savedReview) => {
@@ -374,6 +386,12 @@ router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
       console.log("Failed to save review:", err);
       res.status(500).send({ error: "Failed to leave a review" });
     });
+});
+
+router.get("/reviews", (req, res) => {
+  Review.find({ seller: { name: req.query.name, _id: req.query._id } }).then((reviews) => {
+    res.send(reviews);
+  });
 });
 
 // anything else falls to this "not found" case

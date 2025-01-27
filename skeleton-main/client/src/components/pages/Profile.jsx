@@ -19,13 +19,7 @@ const Profile = () => {
     get(`/api/user`, { userid: props.userId, picture: defaultpfpimg }).then((userObj) => {
       setUser(userObj);
     });
-  }, []);
-
-  useEffect(() => {
     get(`/api/whoami`).then((viewingUserObj) => setViewingUser(viewingUserObj));
-  }, []);
-
-  useEffect(() => {
     get(`/api/useritems`, { userid: props.userId }).then((userItemsObj) =>
       setUserItems(userItemsObj)
     );
