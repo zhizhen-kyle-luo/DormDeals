@@ -120,23 +120,13 @@ const App = () => {
   // For all other routes, check authentication
   return (
     <div className="App-container">
-      {userId ? (
-        <>
-          <NavBar userId={userId} />
-          <button
-            onClick={() => {
-              googleLogout();
-              handleLogout();
-            }}
-          >
-            Logout
-          </button>
-        </>
-      ) : location.pathname !== "/instructions" && (
-        <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
-      )}
       <UserContext.Provider value={authContextValue}>
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+          {userId ? (
+            <NavBar userId={userId} />
+          ) : location.pathname !== "/instructions" && (
+            <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
+          )}
           {userId || location.pathname === "/instructions" ? (
             <Outlet />
           ) : (

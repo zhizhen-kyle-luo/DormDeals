@@ -46,12 +46,17 @@
   background-color: #f1f3f4;
 }
 
+.NavBar-logout {
+  display: none;
+}
+
 .Cart-icon,
 .New-order-icon,
 .Profile-icon,
 .Shop-icon,
 .Bag-icon,
-.Question-icon {
+.Question-icon,
+.Logout-icon {
   width: 24px;
   height: 24px;
   object-fit: contain;
@@ -62,7 +67,11 @@
 
 .Cart-icon:hover,
 .New-order-icon:hover,
-.Profile-icon:hover {
+.Profile-icon:hover,
+.Shop-icon:hover,
+.Bag-icon:hover,
+.Question-icon:hover,
+.Logout-icon:hover {
   transform: scale(1.1);
   opacity: 1;
 }
@@ -92,4 +101,14 @@
 .NavBar-link:hover::after {
   opacity: 1;
   visibility: visible;
+}
+
+.NavBar-link:hover .Cart-icon,
+.NavBar-link:hover .New-order-icon,
+.NavBar-link:hover .Profile-icon,
+.NavBar-link:hover .Shop-icon,
+.NavBar-link:hover .Bag-icon,
+.NavBar-link:hover .Question-icon,
+.NavBar-link:hover .Logout-icon {
+  opacity: 1;
 }
