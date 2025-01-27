@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { get, post } from "../../utilities";
 import { CartContext } from "../App.jsx";
 import "./OrderDetails.css";
@@ -54,7 +54,7 @@ const OrderDetails = (props) => {
 
   const handleAddToCart = () => {
     if (!viewingUser || !order) return;
-    
+
     // Prevent adding own items
     if (order.seller_id === viewingUser._id) {
       alert("You cannot add your own items to cart");
@@ -62,7 +62,7 @@ const OrderDetails = (props) => {
     }
 
     // Check if item is already in cart
-    const isInCart = cartItems.some(item => item.itemId === order._id);
+    const isInCart = cartItems.some((item) => item.itemId === order._id);
     if (isInCart) {
       alert("This item is already in your cart");
       return;
@@ -110,7 +110,7 @@ const OrderDetails = (props) => {
 
   const sellItem = () => {
     if (!order) return;
-    
+
     post("/api/sellitem", { orderId: orderId }).then((orderObj) => {
       setOrder(orderObj);
       if (orderObj.status === "Sold") {
@@ -128,7 +128,11 @@ const OrderDetails = (props) => {
   const removeItem = () => {
     if (!order) return;
 
-    if (window.confirm("Warning: This will permanently delete this item from the database. This action cannot be undone. Are you sure you want to proceed?")) {
+    if (
+      window.confirm(
+        "Warning: This will permanently delete this item from the database. This action cannot be undone. Are you sure you want to proceed?"
+      )
+    ) {
       post("/api/removeitem", { orderId: orderId });
       navigate("/home");
     }
@@ -190,7 +194,9 @@ const OrderDetails = (props) => {
         <div className="OrderDetails-info">
           <h1 className="OrderDetails-title">{order.name}</h1>
           <div className="OrderDetails-price">${order.price}</div>
-          <div className="OrderDetails-seller">Seller: {order.seller}</div>
+          <Link to={`/profile/${order.seller_id}`} className="OrderDetails-seller">
+            Seller: {order.seller}
+          </Link>
           <div className={`OrderDetails-status ${statusColor}`}>{status}</div>
           {order.purchaseDate && (
             <div className="OrderDetails-purchase-date">

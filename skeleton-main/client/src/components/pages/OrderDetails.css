@@ -2,7 +2,7 @@
   padding: 2rem;
   background-color: #fdf9f6;
   min-height: calc(100vh - 4rem);
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
 
 .OrderDetails-content {
@@ -82,7 +82,7 @@
 }
 
 .OrderDetails-title {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 2rem;
   color: #1a1a1a;
   margin: 0 0 1rem;
@@ -91,7 +91,7 @@
 }
 
 .OrderDetails-price {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.75rem;
   color: #1a1a1a;
   font-weight: 600;
@@ -99,10 +99,12 @@
 }
 
 .OrderDetails-seller {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.6);
   margin-bottom: 1rem;
+  text-decoration: none;
+  width: fit-content;
 }
 
 .OrderDetails-status {
@@ -128,14 +130,14 @@
 }
 
 .OrderDetails-description h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.25rem;
   color: #1a1a1a;
   margin: 1.5rem 0 1rem;
 }
 
 .OrderDetails-description p {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.8);
   line-height: 1.6;
@@ -148,7 +150,7 @@
 }
 
 .OrderDetails-button {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1rem;
   font-weight: 500;
   padding: 12px 25px;
@@ -227,14 +229,14 @@
 }
 
 .ReviewForm-content h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.5rem;
   color: #1a1a1a;
   margin: 0 0 1.5rem 0;
 }
 
 .ReviewForm-content h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1rem;
   color: #4b5563;
   margin: 1rem 0 0.5rem 0;
@@ -248,7 +250,7 @@
   border-radius: 8px;
   font-size: 1rem;
   margin-bottom: 1rem;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
 
 .ReviewForm-content textarea {
@@ -270,7 +272,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   flex: 1;
 }
 
