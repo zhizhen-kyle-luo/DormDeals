@@ -8,12 +8,14 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  font-family: 'Playfair Display', serif;
 }
 
 .NavBar-title {
   font-size: 1.5rem;
   font-weight: bold;
   color: #e07007;
+  font-family: 'Playfair Display', serif;
 }
 
 .NavBar-title .NavBar-link {
@@ -96,6 +98,7 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s;
+  font-family: 'Playfair Display', serif;
 }
 
 .NavBar-link:hover::after {

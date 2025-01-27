@@ -1,10 +1,50 @@
 .NewPage-container {
-  max-width: 800px;
-  margin: 2rem auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-height: calc(100vh - 64px);
+  font-family: 'Playfair Display', serif;
+  background-color: #fdf9f6;
+}
+
+.NewPage-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 2rem 0;
+  letter-spacing: -0.02em;
+}
+
+.NewPage-form label {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.NewPage-form input,
+.NewPage-form select,
+.NewPage-form textarea {
+  font-family: 'Playfair Display', serif;
+}
+
+.NewPage-dropzone {
+  font-family: 'Playfair Display', serif;
+}
+
+.NewPage-dropzone-content p {
+  font-family: 'Playfair Display', serif;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.NewPage-imageGrid p {
+  font-family: 'Playfair Display', serif;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.NewPage-button {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 }
 
 .NewPage-container h1 {

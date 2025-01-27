@@ -1,0 +1,45 @@
+.NavBar {
+  background-color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-family: 'Playfair Display', serif;
+}
+
+.NavBar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.NavBar-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.NavBar-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.NavBar-link {
+  font-family: 'Playfair Display', serif;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.NavBar-link:hover {
+  color: #1a1a1a;
+}
+
+.NavBar-logout {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+} 

@@ -1,7 +1,10 @@
 .purchase-container {
-  min-height: calc(100vh - 64px);
-  background-color: #f9fafb;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem;
+  min-height: calc(100vh - 64px);
+  font-family: 'Playfair Display', serif;
+  background-color: #fdf9f6;
 }
 
 .purchase-content {
@@ -14,12 +17,12 @@
 }
 
 .purchase-content h1 {
-  color: #1f2937;
-  font-size: 1.75rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
   font-weight: 600;
+  color: #1a1a1a;
   margin: 0 0 2rem 0;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  letter-spacing: -0.02em;
 }
 
 .purchase-items {
@@ -27,10 +30,11 @@
 }
 
 .purchase-items h2 {
-  color: #4b5563;
-  font-size: 1.25rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin: 0 0 1rem 0;
+  color: #1a1a1a;
+  margin: 0 0 1.5rem 0;
 }
 
 .purchase-item {
@@ -64,10 +68,11 @@
 }
 
 .item-details h3 {
-  margin: 0;
+  font-family: 'Playfair Display', serif;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #1a1a1a;
+  margin: 0;
 }
 
 .item-category,
@@ -82,9 +87,10 @@
 }
 
 .item-price {
+  font-family: 'Playfair Display', serif;
   font-size: 1.25rem;
-  font-weight: 700;
-  color: #e07007;
+  font-weight: 600;
+  color: #1a1a1a;
 }
 
 .purchase-summary {
@@ -94,6 +100,14 @@
   margin-bottom: 2rem;
 }
 
+.purchase-summary h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 1.5rem 0;
+}
+
 .summary-row {
   display: flex;
   justify-content: space-between;
@@ -101,6 +115,7 @@
   margin-bottom: 1rem;
   color: #6b7280;
   font-size: 0.875rem;
+  font-family: 'Playfair Display', serif;
 }
 
 .summary-row.total {
@@ -119,8 +134,11 @@
   border: 1px solid #fde68a;
   border-radius: 8px;
   color: #92400e;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   line-height: 1.5;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .purchase-actions {
@@ -154,6 +172,8 @@
   border: none;
   color: white;
   flex: 1;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 }
 
 .confirm-button:hover {

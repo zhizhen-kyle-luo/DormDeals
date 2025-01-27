@@ -3,13 +3,17 @@
   margin: 0 auto;
   padding: 2rem;
   min-height: calc(100vh - 64px);
+  font-family: 'Playfair Display', serif;
+  background-color: #fdf9f6;
 }
 
 .Purchases-container h1 {
-  color: #1f2937;
-  font-size: 1.75rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
   font-weight: 600;
+  color: #1a1a1a;
   margin: 0 0 2rem 0;
+  letter-spacing: -0.02em;
 }
 
 .Purchases-section {
@@ -17,12 +21,11 @@
 }
 
 .Purchases-section h2 {
-  color: #4b5563;
-  font-size: 1.25rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid #f3f4f6;
+  color: #1a1a1a;
+  margin: 0 0 1.5rem 0;
 }
 
 .Purchases-grid {
@@ -44,6 +47,21 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
+.Purchase-item h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.Purchase-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
 .Purchase-status {
   margin: 1rem;
   padding: 0.5rem 1rem;
@@ -53,6 +71,7 @@
   text-align: center;
   background: #f3f4f6;
   color: #4b5563;
+  font-family: 'Playfair Display', serif;
 }
 
 .Purchase-status[data-status="Under Transaction"] {
@@ -67,9 +86,10 @@
 
 .Purchase-date {
   margin: 0.5rem 1rem;
-  color: #6b7280;
+  color: rgba(0, 0, 0, 0.6);
   font-size: 0.875rem;
   text-align: center;
+  font-family: 'Playfair Display', serif;
 }
 
 #Purchase-review {
@@ -85,6 +105,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
+  font-family: 'Playfair Display', serif;
 }
 
 .Purchase-review:hover {
@@ -97,7 +118,8 @@
   padding: 3rem;
   background: #f9fafb;
   border-radius: 12px;
-  color: #6b7280;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: 'Playfair Display', serif;
 }
 
 .edit-Form-popup {
@@ -123,12 +145,14 @@
   font-size: 1.5rem;
   color: #1f2937;
   margin-bottom: 1.5rem;
+  font-family: 'Playfair Display', serif;
 }
 
 .Form-container h3 {
   font-size: 1rem;
   color: #4b5563;
   margin-bottom: 0.75rem;
+  font-family: 'Playfair Display', serif;
 }
 
 .Form-container select {
@@ -139,6 +163,7 @@
   margin-bottom: 1.5rem;
   font-size: 1rem;
   color: #1f2937;
+  font-family: 'Playfair Display', serif;
 }
 
 .Form-container textarea {
@@ -151,6 +176,7 @@
   color: #1f2937;
   resize: vertical;
   min-height: 120px;
+  font-family: 'Playfair Display', serif;
 }
 
 .Form-container button {
@@ -163,6 +189,7 @@
   cursor: pointer;
   margin-bottom: 0.75rem;
   transition: background-color 0.2s;
+  font-family: 'Playfair Display', serif;
 }
 
 .Cancel-button {

@@ -2,9 +2,11 @@
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  font-family: 'Playfair Display', serif;
 }
 
 .Reviews-container h1 {
   color: #333;
   margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
 }
