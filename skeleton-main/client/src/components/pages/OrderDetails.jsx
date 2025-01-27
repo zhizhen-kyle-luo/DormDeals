@@ -8,10 +8,15 @@ const OrderDetails = (props) => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [viewingUser, setViewingUser] = useState();
+  const [viewingUser, setViewingUser] = useState(null);
   const [status, setStatus] = useState("");
   const [statusColor, setStatusColor] = useState("");
   const [statusButton, setStatusButton] = useState("");
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewData, setReviewData] = useState({
+    rating: "5",
+    review: "",
+  });
   const navigate = useNavigate();
 
   const { cartItems, addToCart } = useContext(CartContext);
@@ -38,7 +43,18 @@ const OrderDetails = (props) => {
     });
   }, [orderId]);
 
+  useEffect(() => {
+    if (order && order.reviewed) {
+      setReviewData({
+        rating: order.review.rating.toString(),
+        review: order.review.text || "",
+      });
+    }
+  }, [order]);
+
   const handleAddToCart = () => {
+    if (!viewingUser || !order) return;
+    
     // Prevent adding own items
     if (order.seller_id === viewingUser._id) {
       alert("You cannot add your own items to cart");
@@ -67,6 +83,8 @@ const OrderDetails = (props) => {
   };
 
   const handlePurchaseNow = () => {
+    if (!viewingUser || !order) return;
+
     // Prevent purchasing own items
     if (order.seller_id === viewingUser._id) {
       alert("You cannot purchase your own items");
@@ -78,9 +96,9 @@ const OrderDetails = (props) => {
         items: [
           {
             _id: order._id,
-            name: order.name,
+            itemName: order.name,
             price: order.price,
-            images: order.images,
+            image: selectedImage,
             category: order.category,
             condition: order.condition,
             seller_id: order.seller_id,
@@ -90,13 +108,11 @@ const OrderDetails = (props) => {
     });
   };
 
-  if (!order) return <div>Loading...</div>;
-
   const sellItem = () => {
-    console.log("hi");
+    if (!order) return;
+    
     post("/api/sellitem", { orderId: orderId }).then((orderObj) => {
       setOrder(orderObj);
-      console.log(orderObj);
       if (orderObj.status === "Sold") {
         setStatus("Sold");
         setStatusColor("u-red");
@@ -110,18 +126,48 @@ const OrderDetails = (props) => {
   };
 
   const removeItem = () => {
+    if (!order) return;
+
     if (window.confirm("Warning: This will permanently delete this item from the database. This action cannot be undone. Are you sure you want to proceed?")) {
       post("/api/removeitem", { orderId: orderId });
       navigate("/home");
     }
   };
 
-  let removeItemVisible;
-  if (order.seller_id === viewingUser._id) {
-    removeItemVisible = "u-visible";
-  } else {
-    removeItemVisible = "u-invisible";
-  }
+  const handleReviewSubmit = async (event) => {
+    event.preventDefault();
+    if (!order || !viewingUser) return;
+
+    try {
+      const reviewDataToSend = {
+        seller: { name: order.seller, _id: order.seller_id },
+        itemId: order._id,
+        rating: reviewData.rating,
+        review: reviewData.review,
+      };
+
+      await post("/api/newreview", reviewDataToSend);
+      setShowReviewForm(false);
+      // Refresh order data
+      const updatedOrder = await get(`/api/order`, { orderId });
+      setOrder(updatedOrder);
+    } catch (error) {
+      console.error("Failed to submit review:", error);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setReviewData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  if (!order || !viewingUser) return <div>Loading...</div>;
+
+  const isSellerView = order.seller_id === viewingUser._id;
+  const removeItemVisible = isSellerView ? "u-visible" : "u-invisible";
 
   return (
     <div className="OrderDetails-container">
@@ -146,6 +192,11 @@ const OrderDetails = (props) => {
           <div className="OrderDetails-price">${order.price}</div>
           <div className="OrderDetails-seller">Seller: {order.seller}</div>
           <div className={`OrderDetails-status ${statusColor}`}>{status}</div>
+          {order.purchaseDate && (
+            <div className="OrderDetails-purchase-date">
+              Purchased on {new Date(order.purchaseDate).toLocaleDateString()}
+            </div>
+          )}
 
           <div className="OrderDetails-tags">
             <span className="OrderDetails-category">{order.category}</span>
@@ -174,6 +225,14 @@ const OrderDetails = (props) => {
                 </button>
               </>
             )}
+            {order.status === "Sold" && viewingUser._id === order.buyer_id && (
+              <button
+                className="OrderDetails-button OrderDetails-review"
+                onClick={() => setShowReviewForm(true)}
+              >
+                {order.reviewed ? "Edit Review" : "Leave a Review"}
+              </button>
+            )}
             <button
               className={`OrderDetails-button OrderDetails-sold ${removeItemVisible}`}
               onClick={sellItem}
@@ -189,6 +248,40 @@ const OrderDetails = (props) => {
           </div>
         </div>
       </div>
+
+      {showReviewForm && (
+        <div className="OrderDetails-reviewForm">
+          <div className="ReviewForm-content">
+            <h2>Review Your Purchase</h2>
+            <h3>Rate your experience with {order.seller}</h3>
+            <select name="rating" value={reviewData.rating} onChange={handleInputChange} required>
+              <option value="5">★★★★★ (5) Excellent</option>
+              <option value="4">★★★★☆ (4) Good</option>
+              <option value="3">★★★☆☆ (3) Average</option>
+              <option value="2">★★☆☆☆ (2) Poor</option>
+              <option value="1">★☆☆☆☆ (1) Very Poor</option>
+            </select>
+
+            <h3>Write your review</h3>
+            <textarea
+              name="review"
+              value={reviewData.review}
+              onChange={handleInputChange}
+              placeholder="Share your experience about the item and the seller..."
+              required
+            />
+
+            <div className="ReviewForm-actions">
+              <button className="ReviewForm-submit" onClick={handleReviewSubmit}>
+                Submit Review
+              </button>
+              <button className="ReviewForm-cancel" onClick={() => setShowReviewForm(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

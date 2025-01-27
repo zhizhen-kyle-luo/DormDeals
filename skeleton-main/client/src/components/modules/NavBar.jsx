@@ -36,7 +36,7 @@ const NavBar = ({ userId }) => {
         <Link to={`/cart`} className="NavBar-link" title="Shopping Cart">
           <img src={cartIcon} alt="Shopping Cart" className="Cart-icon" />
         </Link>
-        <Link to={`/UserAllItems/${userId}`} className="NavBar-link" title="My Items">
+        <Link to={`/UserAllItems/${userId}`} className="NavBar-link" title="My Sales">
           <img src={shopIcon} alt="Shop" className="Shop-icon" />
         </Link>
         <Link to={`/UserPurchases/${userId}`} className="NavBar-link" title="My Purchases">

@@ -203,3 +203,113 @@
     flex-direction: column;
   }
 }
+
+.OrderDetails-reviewForm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ReviewForm-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.ReviewForm-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin: 0 0 1.5rem 0;
+}
+
+.ReviewForm-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: #4b5563;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.ReviewForm-content select,
+.ReviewForm-content textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.ReviewForm-content textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.ReviewForm-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.ReviewForm-submit,
+.ReviewForm-cancel {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Playfair Display', serif;
+  flex: 1;
+}
+
+.ReviewForm-submit {
+  background: #e07007;
+  color: white;
+  border: none;
+}
+
+.ReviewForm-submit:hover {
+  background: #c86006;
+}
+
+.ReviewForm-cancel {
+  background: #f3f4f6;
+  color: #4b5563;
+  border: none;
+}
+
+.ReviewForm-cancel:hover {
+  background: #e5e7eb;
+}
+
+.OrderDetails-button.OrderDetails-review {
+  background: #e07007;
+  color: white;
+}
+
+.OrderDetails-button.OrderDetails-review:hover {
+  background: #c86006;
+}
+
+.OrderDetails-purchase-date {
+  font-family: "Playfair Display", serif;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  background: #f3f4f6;
+  border-radius: 8px;
+  display: inline-block;
+}

@@ -1,33 +1,28 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./OrderCard.css";
 
 const OrderCard = ({ order }) => {
-  const handleClick = () => {
-    // Open in new tab
-    window.open(`/OrderDetails/${order._id}`, "_blank");
-  };
-
   return (
-    <div className="OrderCard-container" onClick={handleClick}>
-      <div className="OrderCard-badge">
-        {order.status === "Under Transaction" && <span className="badge-transaction">Under Transaction</span>}
-        {order.status === "Sold" && <span className="badge-sold">Sold</span>}
-      </div>
-      <div className="OrderCard-imageContainer">
+    <Link to={`/OrderDetails/${order._id}`} className="OrderCard-container">
+      <div className="OrderCard-image">
         <img
           src={order.images[0]} // First image as cover
           alt={order.name}
-          className="OrderCard-image"
         />
+        <div className="OrderCard-badges">
+          {order.status === "Sold" && (
+            <>
+              <span className="OrderCard-badge sold">SOLD</span>
+              {!order.reviewed && <span className="OrderCard-badge not-reviewed">Not Reviewed</span>}
+            </>
+          )}
+        </div>
       </div>
       <div className="OrderCard-info">
         <div className="OrderCard-mainInfo">
           <h3 className="OrderCard-title">{order.name}</h3>
-          <div className="OrderCard-meta">
-            <span className="OrderCard-seller">
-              <i className="fas fa-user"></i> {order.seller}
-            </span>
-          </div>
+          <p className="OrderCard-seller">by {order.seller}</p>
         </div>
         <div className="OrderCard-details">
           <span className="OrderCard-price">${order.price}</span>
@@ -37,7 +32,7 @@ const OrderCard = ({ order }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

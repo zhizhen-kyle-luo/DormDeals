@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
-import { get, post } from "../../utilities";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { get } from "../../utilities";
+import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../App.jsx";
 import OrderCard from "./OrderCard";
 import "./UserPurchases.css";
@@ -8,16 +8,8 @@ import "./UserPurchases.css";
 const UserPurchases = () => {
   const { userId } = useParams();
   const { userId: currentUserId } = useContext(UserContext);
-  const navigate = useNavigate();
   const [purchases, setPurchases] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [reviewingItem, setReviewingItem] = useState({});
-  const [reviewData, setReviewData] = useState({
-    seller: { name: "", _id: "" },
-    itemId: "",
-    rating: "5",
-    review: "",
-  });
 
   useEffect(() => {
     if (userId === currentUserId) {
@@ -40,64 +32,6 @@ const UserPurchases = () => {
   const ongoingOrders = purchases.filter((item) => item.status === "Under Transaction");
   const pastOrders = purchases.filter((item) => item.status === "Sold");
 
-  const submitReview = (item) => {
-    setReviewingItem(item);
-    if (canLeaveReview(item) === true) {
-      document.getElementById("reviewForm").style.display = "block";
-    } else {
-      document.getElementById("Reviewed-popup").style.display = "block";
-    }
-  };
-
-  const closeReview = (ID) => {
-    setReviewingItem({});
-    setReviewData({
-      seller: { name: "", _id: "" },
-      itemId: "",
-      rating: "5",
-      review: "",
-    });
-    document.getElementById(ID).style.display = "none";
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setReviewData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const reviewDataToSend = {
-        seller: { name: reviewingItem.seller, _id: reviewingItem.seller_id },
-        itemId: reviewingItem._id,
-        rating: reviewData.rating,
-        review: reviewData.review,
-      };
-
-      await post("/api/newreview", reviewDataToSend);
-      closeReview("reviewForm");
-      // Refresh purchases after submitting review
-      const updatedPurchases = await get("/api/purchases", { userId });
-      setPurchases(Array.isArray(updatedPurchases) ? updatedPurchases : []);
-    } catch (error) {
-      console.error("Failed to submit review:", error);
-    }
-  };
-
-  const canLeaveReview = async (item) => {
-    get("/api/review", { itemId: item._id }).then((itemObj) => {
-      if (itemObj) {
-        return false;
-      } else {
-        return true;
-      }
-    });
-  };
-
   if (isLoading) {
     return (
       <div className="Purchases-container">
@@ -119,14 +53,8 @@ const UserPurchases = () => {
             </div>
           ) : (
             ongoingOrders.map((item) => (
-              <div key={item._id} className="Purchase-item">
+              <div key={item._id}>
                 <OrderCard order={item} />
-                <div className="Purchase-status" data-status={item.status}>
-                  {item.status}
-                </div>
-                <div className="Purchase-date">
-                  Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
-                </div>
               </div>
             ))
           )}
@@ -142,17 +70,8 @@ const UserPurchases = () => {
             </div>
           ) : (
             pastOrders.map((item) => (
-              <div key={item._id} className="Purchase-item">
+              <div key={item._id}>
                 <OrderCard order={item} />
-                <div className="Purchase-status" data-status={item.status}>
-                  {item.status}
-                </div>
-                <div className="Purchase-date">
-                  Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
-                </div>
-                <button id="Purchase-review" onClick={() => submitReview(item)}>
-                  Leave a Review
-                </button>
               </div>
             ))
           )}
@@ -162,64 +81,11 @@ const UserPurchases = () => {
       {purchases.length === 0 && (
         <div className="No-purchases">
           <p>You haven't made any purchases yet.</p>
-          <Link
-            to="/"
-            style={{
-              color: "#e07007",
-              textDecoration: "none",
-              marginTop: "1rem",
-              display: "inline-block",
-            }}
-          >
+          <Link to="/" className="Start-shopping">
             Start Shopping
           </Link>
         </div>
       )}
-
-      <div id="reviewForm" className="edit-Form-popup">
-        <div className="Form-container">
-          <h1>Review Your Purchase</h1>
-          <h3>Rate your experience with {reviewingItem.seller}</h3>
-          <select name="rating" value={reviewData.rating} onChange={handleInputChange} required>
-            <option value="5">★★★★★ (5) Excellent</option>
-            <option value="4">★★★★☆ (4) Good</option>
-            <option value="3">★★★☆☆ (3) Average</option>
-            <option value="2">★★☆☆☆ (2) Poor</option>
-            <option value="1">★☆☆☆☆ (1) Very Poor</option>
-          </select>
-
-          <h3>Write your review</h3>
-          <textarea
-            name="review"
-            value={reviewData.review}
-            onChange={handleInputChange}
-            placeholder="Share your experience about the item and the seller..."
-            required
-          />
-
-          <button type="button" className="Submit-button" onClick={handleSubmit}>
-            Submit Review
-          </button>
-          <button type="button" className="Cancel-button" onClick={() => closeReview("reviewForm")}>
-            Cancel
-          </button>
-        </div>
-      </div>
-
-      <div id="Reviewed-popup" className="Reviewed-popup">
-        <div className="Form-container">
-          <h1>You have already reviewed this item.</h1>
-        </div>
-        <button
-          type="button"
-          className="Cancel-button"
-          onClick={() => {
-            closeReview("Reviewed-popup");
-          }}
-        >
-          Close
-        </button>
-      </div>
     </div>
   );
 };
