@@ -10,6 +10,7 @@ const UserPurchases = () => {
   const { userId: currentUserId } = useContext(UserContext);
   const navigate = useNavigate();
   const [purchases, setPurchases] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [reviewingItem, setReviewingItem] = useState({});
   const [reviewData, setReviewData] = useState({
     seller: { name: "", _id: "" },
@@ -20,6 +21,7 @@ const UserPurchases = () => {
 
   useEffect(() => {
     if (userId === currentUserId) {
+      setIsLoading(true);
       get("/api/purchases", { userId })
         .then((purchasedItems) => {
           console.log("Fetched purchases:", purchasedItems);
@@ -28,6 +30,9 @@ const UserPurchases = () => {
         .catch((error) => {
           console.error("Error fetching purchases:", error);
           setPurchases([]);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   }, [userId, currentUserId]);
@@ -80,6 +85,14 @@ const UserPurchases = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="Purchases-container">
+        <div className="Loading-spinner">Loading your purchases...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="Purchases-container">
       <h1>My Purchases</h1>
@@ -87,21 +100,22 @@ const UserPurchases = () => {
       <div className="Purchases-section">
         <h2>Ongoing Orders</h2>
         <div className="Purchases-grid">
-          {ongoingOrders.map((item) => (
-            <div key={item._id} className="Purchase-item">
-              <OrderCard order={item} />
-              <div className="Purchase-status" data-status={item.status}>
-                {item.status}
-              </div>
-              <div className="Purchase-date">
-                Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
-              </div>
-            </div>
-          ))}
-          {ongoingOrders.length === 0 && (
+          {ongoingOrders.length === 0 ? (
             <div className="No-purchases">
-              <p>No ongoing orders at the moment.</p>
+              <p>No ongoing orders.</p>
             </div>
+          ) : (
+            ongoingOrders.map((item) => (
+              <div key={item._id} className="Purchase-item">
+                <OrderCard order={item} />
+                <div className="Purchase-status" data-status={item.status}>
+                  {item.status}
+                </div>
+                <div className="Purchase-date">
+                  Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
+                </div>
+              </div>
+            ))
           )}
         </div>
       </div>
@@ -109,27 +123,25 @@ const UserPurchases = () => {
       <div className="Purchases-section">
         <h2>Past Orders</h2>
         <div className="Purchases-grid">
-          {pastOrders.map((item) => (
-            <div key={item._id} className="Purchase-item">
-              <button className="Purchase-review" onClick={() => submitReview(item)}>
-                Leave a Review
-              </button>
-              <OrderCard order={item} />
-              <div className="Purchase-status" data-status={item.status}>
-                {item.status}
-              </div>
-              <div className="Purchase-date">
-                Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
-              </div>
-              <button className="Purchase-review" onClick={() => submitReview(item)}>
-                Leave a Review
-              </button>
-            </div>
-          ))}
-          {pastOrders.length === 0 && (
+          {pastOrders.length === 0 ? (
             <div className="No-purchases">
               <p>No completed orders yet.</p>
             </div>
+          ) : (
+            pastOrders.map((item) => (
+              <div key={item._id} className="Purchase-item">
+                <OrderCard order={item} />
+                <div className="Purchase-status" data-status={item.status}>
+                  {item.status}
+                </div>
+                <div className="Purchase-date">
+                  Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
+                </div>
+                <button className="Purchase-review" onClick={() => submitReview(item)}>
+                  Leave a Review
+                </button>
+              </div>
+            ))
           )}
         </div>
       </div>

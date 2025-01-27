@@ -66,6 +66,11 @@ const App = () => {
 
   const addToCart = async (item) => {
     try {
+      // Prevent users from adding their own items to cart
+      if (item.seller_id === userId) {
+        console.log("Cannot add your own item to cart");
+        return;
+      }
       const updatedItems = await post("/api/cart/add", { item });
       setCartItems(updatedItems);
     } catch (err) {
@@ -115,24 +120,18 @@ const App = () => {
   // For all other routes, check authentication
   return (
     <div className="App-container">
-      {userId ? (
-        <>
-          <NavBar userId={userId} />
-          <button
-            onClick={() => {
-              googleLogout();
-              handleLogout();
-            }}
-          >
-            Logout
-          </button>
-        </>
-      ) : (
-        <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
-      )}
       <UserContext.Provider value={authContextValue}>
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
-          {userId ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />}
+          {userId ? (
+            <NavBar userId={userId} />
+          ) : location.pathname !== "/instructions" && (
+            <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
+          )}
+          {userId || location.pathname === "/instructions" ? (
+            <Outlet />
+          ) : (
+            <Navigate to="/login" state={{ from: location }} replace />
+          )}
         </CartContext.Provider>
       </UserContext.Provider>
     </div>

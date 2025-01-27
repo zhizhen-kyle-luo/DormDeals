@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { googleLogout } from "@react-oauth/google";
+import { UserContext } from "../App.jsx";
 import "./NavBar.css";
 import newOrderIcon from "../../assets/plus_sign.png";
 import cartIcon from "../../assets/shopping_cart.png";
@@ -7,8 +9,11 @@ import profileIcon from "../../assets/profile.webp";
 import shopIcon from "../../assets/shop.png";
 import bagIcon from "../../assets/shopping_bag.png";
 import questionIcon from "../../assets/question_mark.png";
+import logoutIcon from "../../assets/logoutIcon.png";
 
 const NavBar = ({ userId }) => {
+  const { handleLogout } = useContext(UserContext);
+  
   if (!userId) return null;
 
   return (
@@ -37,6 +42,17 @@ const NavBar = ({ userId }) => {
         <Link to={`/UserPurchases/${userId}`} className="NavBar-link" title="My Purchases">
           <img src={bagIcon} alt="Shopping Bag" className="Bag-icon" />
         </Link>
+        <div 
+          className="NavBar-link" 
+          title="Logout"
+          onClick={() => {
+            googleLogout();
+            handleLogout();
+          }}
+          style={{ cursor: 'pointer' }}
+        >
+          <img src={logoutIcon} alt="Logout" className="Logout-icon" />
+        </div>
       </div>
     </nav>
   );

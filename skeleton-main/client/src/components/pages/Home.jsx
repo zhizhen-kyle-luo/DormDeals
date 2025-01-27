@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { get } from "../../utilities";
 import OrderCard from "./OrderCard";
 import "./Home.css";
+import { UserContext } from "../App.jsx";
 
 const Home = () => {
+  const { userId } = useContext(UserContext);
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [filters, setFilters] = useState({
@@ -28,10 +30,15 @@ const Home = () => {
 
   useEffect(() => {
     get("/api/orders").then((orderObjs) => {
-      setOrders(orderObjs);
-      setFilteredOrders(orderObjs);
+      // Filter out items being sold by the current user and non-active items
+      const filteredOrderObjs = orderObjs.filter(order => 
+        order.seller_id !== userId && 
+        order.status === "Active"
+      );
+      setOrders(filteredOrderObjs);
+      setFilteredOrders(filteredOrderObjs);
     });
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     // Apply filters whenever filters state changes
