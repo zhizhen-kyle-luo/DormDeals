@@ -355,7 +355,7 @@ router.get("/purchases", auth.ensureLoggedIn, (req, res) => {
     });
 });
 
-//Post Review
+// Review endpoints
 router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
   const newReview = new Review({
     reviewer: { name: req.user.name, _id: req.user._id },
@@ -388,6 +388,17 @@ router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
     });
 });
 
+//Checks if there already exists a review for an item
+router.get("/review", (req, res) => {
+  Review.find({
+    reviewer: { name: req.user.name, _id: req.user._id },
+    itemId: req.query.itemId,
+  }).then((reviews) => {
+    res.send(reviews);
+  });
+});
+
+//Sends all reviews of a user
 router.get("/reviews", (req, res) => {
   Review.find({ seller: { name: req.query.name, _id: req.query._id } }).then((reviews) => {
     res.send(reviews);

@@ -72,7 +72,7 @@
   text-align: center;
 }
 
-.Purchase-review {
+#Purchase-review {
   display: block;
   width: calc(100% - 2rem);
   margin: 1rem;
@@ -181,6 +181,21 @@
 
 .Submit-button:hover {
   background: #c86006;
+}
+
+.Reviewed-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 2rem;
+  display: none;
+  z-index: 1000;
 }
 
 @media (max-width: 768px) {

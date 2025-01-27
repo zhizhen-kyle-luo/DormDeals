@@ -42,10 +42,14 @@ const UserPurchases = () => {
 
   const submitReview = (item) => {
     setReviewingItem(item);
-    document.getElementById("reviewForm").style.display = "block";
+    if (canLeaveReview(item) === true) {
+      document.getElementById("reviewForm").style.display = "block";
+    } else {
+      document.getElementById("Reviewed-popup").style.display = "block";
+    }
   };
 
-  const closeReview = () => {
+  const closeReview = (ID) => {
     setReviewingItem({});
     setReviewData({
       seller: { name: "", _id: "" },
@@ -53,7 +57,7 @@ const UserPurchases = () => {
       rating: "5",
       review: "",
     });
-    document.getElementById("reviewForm").style.display = "none";
+    document.getElementById(ID).style.display = "none";
   };
 
   const handleInputChange = (event) => {
@@ -73,16 +77,25 @@ const UserPurchases = () => {
         rating: reviewData.rating,
         review: reviewData.review,
       };
-      console.log("success");
 
       await post("/api/newreview", reviewDataToSend);
-      closeReview();
+      closeReview("reviewForm");
       // Refresh purchases after submitting review
       const updatedPurchases = await get("/api/purchases", { userId });
       setPurchases(Array.isArray(updatedPurchases) ? updatedPurchases : []);
     } catch (error) {
       console.error("Failed to submit review:", error);
     }
+  };
+
+  const canLeaveReview = async (item) => {
+    get("/api/review", { itemId: item._id }).then((itemObj) => {
+      if (itemObj) {
+        return false;
+      } else {
+        return true;
+      }
+    });
   };
 
   if (isLoading) {
@@ -137,7 +150,7 @@ const UserPurchases = () => {
                 <div className="Purchase-date">
                   Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
                 </div>
-                <button className="Purchase-review" onClick={() => submitReview(item)}>
+                <button id="Purchase-review" onClick={() => submitReview(item)}>
                   Leave a Review
                 </button>
               </div>
@@ -187,10 +200,25 @@ const UserPurchases = () => {
           <button type="button" className="Submit-button" onClick={handleSubmit}>
             Submit Review
           </button>
-          <button type="button" className="Cancel-button" onClick={closeReview}>
+          <button type="button" className="Cancel-button" onClick={() => closeReview("reviewForm")}>
             Cancel
           </button>
         </div>
+      </div>
+
+      <div id="Reviewed-popup" className="Reviewed-popup">
+        <div className="Form-container">
+          <h1>You have already reviewed this item.</h1>
+        </div>
+        <button
+          type="button"
+          className="Cancel-button"
+          onClick={() => {
+            closeReview("Reviewed-popup");
+          }}
+        >
+          Close
+        </button>
       </div>
     </div>
   );
