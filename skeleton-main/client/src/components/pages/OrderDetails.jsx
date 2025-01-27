@@ -78,9 +78,9 @@ const OrderDetails = (props) => {
         items: [
           {
             _id: order._id,
-            itemName: order.name,
+            name: order.name,
             price: order.price,
-            image: selectedImage,
+            images: order.images,
             category: order.category,
             condition: order.condition,
             seller_id: order.seller_id,
