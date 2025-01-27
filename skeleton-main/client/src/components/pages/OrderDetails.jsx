@@ -39,6 +39,19 @@ const OrderDetails = (props) => {
   }, [orderId]);
 
   const handleAddToCart = () => {
+    // Prevent adding own items
+    if (order.seller_id === viewingUser._id) {
+      alert("You cannot add your own items to cart");
+      return;
+    }
+
+    // Check if item is already in cart
+    const isInCart = cartItems.some(item => item.itemId === order._id);
+    if (isInCart) {
+      alert("This item is already in your cart");
+      return;
+    }
+
     const cartItem = {
       _id: order._id,
       itemId: order._id,
@@ -46,13 +59,20 @@ const OrderDetails = (props) => {
       price: order.price,
       images: order.images,
       description: order.description,
-      sold: order.sold,
+      seller_id: order.seller_id,
+      status: order.status,
     };
     addToCart(cartItem);
     navigate("/cart");
   };
 
   const handlePurchaseNow = () => {
+    // Prevent purchasing own items
+    if (order.seller_id === viewingUser._id) {
+      alert("You cannot purchase your own items");
+      return;
+    }
+
     navigate("/purchase", {
       state: {
         items: [
@@ -63,6 +83,7 @@ const OrderDetails = (props) => {
             image: selectedImage,
             category: order.category,
             condition: order.condition,
+            seller_id: order.seller_id,
           },
         ],
       },
@@ -89,8 +110,10 @@ const OrderDetails = (props) => {
   };
 
   const removeItem = () => {
-    post("/api/removeitem", { orderId: orderId });
-    navigate("/home");
+    if (window.confirm("Warning: This will permanently delete this item from the database. This action cannot be undone. Are you sure you want to proceed?")) {
+      post("/api/removeitem", { orderId: orderId });
+      navigate("/home");
+    }
   };
 
   let removeItemVisible;

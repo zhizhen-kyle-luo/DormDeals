@@ -66,6 +66,11 @@ const App = () => {
 
   const addToCart = async (item) => {
     try {
+      // Prevent users from adding their own items to cart
+      if (item.seller_id === userId) {
+        console.log("Cannot add your own item to cart");
+        return;
+      }
       const updatedItems = await post("/api/cart/add", { item });
       setCartItems(updatedItems);
     } catch (err) {
