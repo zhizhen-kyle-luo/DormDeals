@@ -132,12 +132,16 @@ const App = () => {
             Logout
           </button>
         </>
-      ) : (
+      ) : location.pathname !== "/instructions" && (
         <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
       )}
       <UserContext.Provider value={authContextValue}>
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
-          {userId ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />}
+          {userId || location.pathname === "/instructions" ? (
+            <Outlet />
+          ) : (
+            <Navigate to="/login" state={{ from: location }} replace />
+          )}
         </CartContext.Provider>
       </UserContext.Provider>
     </div>

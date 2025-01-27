@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { GoogleLogin } from "@react-oauth/google";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import "./Login.css";
 import { UserContext } from "../App.jsx";
 
@@ -39,13 +39,16 @@ const Login = () => {
       </div>
       <div className="electric-border">
         <div className="main_div">
-          <h1 style={{color: "red"}}>Login to DormDeals</h1>
+          <h1 style={{color: "red"}}>Welcome to DormDeals</h1>
           <div className="Login-google">
             <GoogleLogin
               onSuccess={handleLoginSuccess}
               onError={(err) => console.log("Google Login Failed:", err)}
             />
           </div>
+          <Link to="/instructions" className="Instructions-button">
+            How to use DormDeals
+          </Link>
         </div>
       </div>
     </div>
