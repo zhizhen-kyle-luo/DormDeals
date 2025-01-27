@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
-import { get } from "../../utilities";
-import { useParams, Link } from "react-router-dom";
+import { get, post } from "../../utilities";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../App.jsx";
 import OrderCard from "./OrderCard";
 import "./UserPurchases.css";
@@ -8,22 +8,22 @@ import "./UserPurchases.css";
 const UserPurchases = () => {
   const { userId } = useParams();
   const { userId: currentUserId } = useContext(UserContext);
+  const navigate = useNavigate();
   const [purchases, setPurchases] = useState([]);
   const [reviewingItem, setReviewingItem] = useState({});
   const [reviewData, setReviewData] = useState({
     seller: { name: "", _id: "" },
     itemId: "",
-    rating: "",
+    rating: "5",
     review: "",
   });
 
   useEffect(() => {
-    // Only fetch purchases if viewing own purchases
     if (userId === currentUserId) {
       get("/api/purchases", { userId })
         .then((purchasedItems) => {
           console.log("Fetched purchases:", purchasedItems);
-          setPurchases(Array.isArray(purchasedItems) ? purchasedItems : []); // Ensure we always have an array
+          setPurchases(Array.isArray(purchasedItems) ? purchasedItems : []);
         })
         .catch((error) => {
           console.error("Error fetching purchases:", error);
@@ -32,13 +32,12 @@ const UserPurchases = () => {
     }
   }, [userId, currentUserId]);
 
-  // Separate ongoing and past orders
   const ongoingOrders = purchases.filter((item) => item.status === "Under Transaction");
   const pastOrders = purchases.filter((item) => item.status === "Sold");
 
   const submitReview = (item) => {
     setReviewingItem(item);
-    document.getElementById("Form").style.display = "flex";
+    document.getElementById("reviewForm").style.display = "block";
   };
 
   const closeReview = () => {
@@ -46,10 +45,10 @@ const UserPurchases = () => {
     setReviewData({
       seller: { name: "", _id: "" },
       itemId: "",
-      rating: "",
+      rating: "5",
       review: "",
     });
-    document.getElementById("Form").style.display = "none";
+    document.getElementById("reviewForm").style.display = "none";
   };
 
   const handleInputChange = (event) => {
@@ -62,7 +61,6 @@ const UserPurchases = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const reviewDataToSend = {
         seller: { name: reviewingItem.seller, _id: reviewingItem.seller_id },
@@ -71,19 +69,13 @@ const UserPurchases = () => {
         review: reviewData.review,
       };
 
-      const newReview = await post("/api/newreview", reviewDataToSend);
-
-      if (newReview) {
-        // Clear form
-        closeReview();
-
-        // Show success message for 2 seconds then redirect
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
-      }
+      await post("/api/newreview", reviewDataToSend);
+      closeReview();
+      // Refresh purchases after submitting review
+      const updatedPurchases = await get("/api/purchases", { userId });
+      setPurchases(Array.isArray(updatedPurchases) ? updatedPurchases : []);
     } catch (error) {
-      console.error("Failed to submit a review:", error);
+      console.error("Failed to submit review:", error);
     }
   };
 
@@ -97,15 +89,17 @@ const UserPurchases = () => {
           {ongoingOrders.map((item) => (
             <div key={item._id} className="Purchase-item">
               <OrderCard order={item} />
-              <div className="Purchase-status">Status: {item.status}</div>
+              <div className="Purchase-status" data-status={item.status}>
+                {item.status}
+              </div>
               <div className="Purchase-date">
-                Purchased: {new Date(item.purchaseDate).toLocaleDateString()}
+                Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
               </div>
             </div>
           ))}
           {ongoingOrders.length === 0 && (
             <div className="No-purchases">
-              <p>No ongoing orders.</p>
+              <p>No ongoing orders at the moment.</p>
             </div>
           )}
         </div>
@@ -117,18 +111,20 @@ const UserPurchases = () => {
           {pastOrders.map((item) => (
             <div key={item._id} className="Purchase-item">
               <OrderCard order={item} />
-              <div className="Purchase-status">Status: {item.status}</div>
-              <div className="Purchase-date">
-                Purchased: {new Date(item.purchaseDate).toLocaleDateString()}
+              <div className="Purchase-status" data-status={item.status}>
+                {item.status}
               </div>
-              <button className="Purchase-review" onClick={submitReview.bind(this, item)}>
+              <div className="Purchase-date">
+                Purchased on {new Date(item.purchaseDate).toLocaleDateString()}
+              </div>
+              <button className="Purchase-review" onClick={() => submitReview(item)}>
                 Leave a Review
               </button>
             </div>
           ))}
           {pastOrders.length === 0 && (
             <div className="No-purchases">
-              <p>No past orders.</p>
+              <p>No completed orders yet.</p>
             </div>
           )}
         </div>
@@ -137,56 +133,45 @@ const UserPurchases = () => {
       {purchases.length === 0 && (
         <div className="No-purchases">
           <p>You haven't made any purchases yet.</p>
+          <Link to="/" style={{ color: '#e07007', textDecoration: 'none', marginTop: '1rem', display: 'inline-block' }}>
+            Start Shopping
+          </Link>
         </div>
       )}
-      <div id="Form" className="edit-Form-popup">
-        <form className="Form-container">
-          <h1>Leave a Review for {reviewingItem.name}</h1>
-          <h3>Plese rate your experience with {reviewingItem.seller} out of 5</h3>
+
+      <div id="reviewForm" className="edit-Form-popup">
+        <div className="Form-container">
+          <h1>Review Your Purchase</h1>
+          <h3>Rate your experience with {reviewingItem.seller}</h3>
           <select
-            id="rating"
             name="rating"
             value={reviewData.rating}
             onChange={handleInputChange}
             required
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            <option value="5">★★★★★ (5) Excellent</option>
+            <option value="4">★★★★☆ (4) Good</option>
+            <option value="3">★★★☆☆ (3) Average</option>
+            <option value="2">★★☆☆☆ (2) Poor</option>
+            <option value="1">★☆☆☆☆ (1) Very Poor</option>
           </select>
-          <h3>Write a Review</h3>
+
+          <h3>Write your review</h3>
           <textarea
-            cols="40"
-            rows="6"
-            placeholder={`How easy was the transaction process? Was the item as described? How did ${reviewingItem.seller} do?`}
-            id="review"
             name="review"
             value={reviewData.review}
             onChange={handleInputChange}
+            placeholder="Share your experience about the item and the seller..."
             required
           />
-          <button
-            className="Cancel-button"
-            type="button"
-            onClick={() => {
-              closeReview();
-            }}
-          >
+
+          <button type="button" className="Submit-button" onClick={handleSubmit}>
+            Submit Review
+          </button>
+          <button type="button" className="Cancel-button" onClick={closeReview}>
             Cancel
           </button>
-          <button
-            className="Submit-button"
-            type="button"
-            onClick={() => {
-              handleSubmit();
-              closeReview();
-            }}
-          >
-            Make Changes
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );

@@ -12,17 +12,23 @@ export const CartContext = createContext();
 
 const App = () => {
   const [userId, setUserId] = useState(undefined);
+  const [cartItems, setCartItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     console.log("App: Checking current user");
-    get("/api/whoami").then((user) => {
-      console.log("App: whoami response:", user);
-      if (user._id) {
-        console.log("App: Setting userId to", user._id);
-        setUserId(user._id);
-      }
-    });
+    get("/api/whoami")
+      .then((user) => {
+        console.log("App: whoami response:", user);
+        if (user._id) {
+          console.log("App: Setting userId to", user._id);
+          setUserId(user._id);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const handleLogin = (credentialResponse) => {
@@ -51,14 +57,12 @@ const App = () => {
   useEffect(() => {
     if (userId) {
       get("/api/cart").then((items) => {
-        setCartItems(items);
+        setCartItems(items || []);
       });
     } else {
       setCartItems([]); // Clear cart when user logs out
     }
   }, [userId]);
-
-  const [cartItems, setCartItems] = useState([]);
 
   const addToCart = async (item) => {
     try {
@@ -94,8 +98,13 @@ const App = () => {
 
   console.log("App: Current userId:", userId, "Current location:", location.pathname);
 
-  // If we're already at /login, just render the login page
-  if (location.pathname === "/login") {
+  // Show loading state
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // If we're already at /login and not logged in, just render the login page
+  if (location.pathname === "/login" && !userId) {
     return (
       <UserContext.Provider value={authContextValue}>
         <Outlet />
@@ -108,23 +117,24 @@ const App = () => {
     <div className="App-container">
       {userId ? (
         <>
-        <NavBar userId={userId} />
-        <button
-          onClick={() => {
-            googleLogout();
-            handleLogout();
-          }}
-        >
-          Logout
-        </button></>
+          <NavBar userId={userId} />
+          <button
+            onClick={() => {
+              googleLogout();
+              handleLogout();
+            }}
+          >
+            Logout
+          </button>
+        </>
       ) : (
         <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
       )}
       <UserContext.Provider value={authContextValue}>
-      <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
-      {userId ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />}
-    </CartContext.Provider>
-    </UserContext.Provider>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+          {userId ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />}
+        </CartContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 };
