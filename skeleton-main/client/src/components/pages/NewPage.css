@@ -99,3 +99,172 @@ input[type="file"]::file-selector-button {
   color: #c62828;
   border: 1px solid #ef9a9a;
 }
+
+.NewPage-imagePreview {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 0;
+  margin-top: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #e07007 #f3f4f6;
+  -webkit-overflow-scrolling: touch;
+}
+
+.NewPage-imagePreview::-webkit-scrollbar {
+  height: 6px;
+}
+
+.NewPage-imagePreview::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.NewPage-imagePreview::-webkit-scrollbar-thumb {
+  background-color: #e07007;
+  border-radius: 3px;
+}
+
+.NewPage-previewImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 2px solid #e5e7eb;
+  transition: transform 0.2s ease;
+}
+
+.NewPage-previewImage:hover {
+  transform: scale(1.05);
+}
+
+.NewPage-dropzone {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.NewPage-dropzone.active {
+  border-color: #e07007;
+  background: #fff5eb;
+}
+
+.NewPage-dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+}
+
+.NewPage-dropzone-content i {
+  font-size: 2rem;
+  color: #e07007;
+  margin-bottom: 0.5rem;
+}
+
+.NewPage-dropzone-content p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.NewPage-dropzone-content small {
+  color: #666;
+  display: block;
+}
+
+.NewPage-imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.NewPage-imageWrapper {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f9fafb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.NewPage-previewImage {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.NewPage-imageActions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.NewPage-imageWrapper:hover .NewPage-imageActions {
+  opacity: 1;
+}
+
+.NewPage-imageAction {
+  background: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  flex: 1;
+  transition: all 0.2s ease;
+}
+
+.NewPage-imageAction:hover {
+  background: #e07007;
+  color: white;
+}
+
+.NewPage-imageAction.remove:hover {
+  background: #dc2626;
+}
+
+.NewPage-coverBadge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: #e07007;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .NewPage-imageGrid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .NewPage-imageWrapper {
+    height: 120px;
+  }
+
+  .NewPage-previewImage {
+    height: 120px;
+  }
+
+  .NewPage-imageActions {
+    flex-direction: column;
+  }
+}

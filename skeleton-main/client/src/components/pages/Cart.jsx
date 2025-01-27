@@ -47,6 +47,10 @@ const Cart = () => {
       .reduce((sum, item) => sum + item.price, 0);
   };
 
+  const handleItemClick = (itemId) => {
+    navigate(`/OrderDetails/${itemId}`);
+  };
+
   const activeItems = cartItems.filter((item) => !savedForLater.has(item.itemId));
   const savedItems = cartItems.filter((item) => savedForLater.has(item.itemId));
 
@@ -69,14 +73,26 @@ const Cart = () => {
                     onChange={() => toggleItemSelection(item.itemId)}
                   />
                 </div>
-                <div className="item-image">
+                <div 
+                  className="item-image"
+                  onClick={() => handleItemClick(item.itemId)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <img src={item.images[0]} alt={item.name} />
                 </div>
-                <div className="item-details">
+                <div 
+                  className="item-details"
+                  onClick={() => handleItemClick(item.itemId)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <h3>{item.name}</h3>
                   <div className="item-actions">
-                    <button onClick={() => toggleSaveForLater(item.itemId)}>Save for later</button>
-                    <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
+                    <button onClick={(e) => { e.stopPropagation(); toggleSaveForLater(item.itemId); }}>
+                      Save for later
+                    </button>
+                    <button onClick={(e) => { e.stopPropagation(); removeFromCart(item.itemId); }}>
+                      Remove
+                    </button>
                   </div>
                 </div>
                 <div className="item-price">${item.price}</div>
