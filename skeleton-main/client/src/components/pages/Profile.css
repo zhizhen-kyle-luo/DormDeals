@@ -95,6 +95,17 @@
   color: #e07007;
 }
 
+.Profile-email,
+.Profile-phone {
+  text-decoration: none;
+}
+
+.Profile-email:hover,
+.Profile-phone:hover,
+.Profile-rating:hover {
+  font-weight: 550;
+}
+
 .Profile-section {
   width: 100%;
   animation: fadeInUp 0.8s ease-out 0.6s backwards;

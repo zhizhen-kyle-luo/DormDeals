@@ -49,9 +49,13 @@ router.post("/initsocket", (req, res) => {
 
 // Profile endpoints
 router.get("/useritems", (req, res) => {
-  Item.find({ seller_id: req.query.userid }).then((userItemsObj) => {
-    res.send(userItemsObj);
-  });
+  Item.find({ seller_id: req.query.userid })
+    .then((userItemsObj) => {
+      res.send(userItemsObj);
+    })
+    .catch((err) => {
+      res.status(500).send("Failed to retrieve user's items", err);
+    });
 });
 
 router.get("/user", (req, res) => {
@@ -84,7 +88,7 @@ router.get("/user", (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send("User Not");
+      res.status(500).send("Failed to get user", err);
     });
 });
 
@@ -102,7 +106,7 @@ router.post("/edituser", (req, res) => {
       editedProfile.save().then(res.send(editedProfile));
     })
     .catch((err) => {
-      res.status(500).send("User Not");
+      res.status(500).send("Failed to edit profile:", err);
     });
 });
 
@@ -361,7 +365,7 @@ router.post("/newreview", auth.ensureLoggedIn, async (req, res) => {
     // Check if a review already exists
     const existingReview = await Review.findOne({
       reviewer: { name: req.user.name, _id: req.user._id },
-      itemId: req.body.itemId
+      itemId: req.body.itemId,
     });
 
     let newReview;
@@ -383,10 +387,10 @@ router.post("/newreview", auth.ensureLoggedIn, async (req, res) => {
     }
 
     // Get all reviews for this seller to update their profile rating
-    const allReviews = await Review.find({ 
-      seller: req.body.seller 
+    const allReviews = await Review.find({
+      seller: req.body.seller,
     });
-    
+
     // Calculate new average rating
     const totalRating = allReviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
     const averageRating = (totalRating / allReviews.length).toFixed(1);
@@ -404,7 +408,7 @@ router.post("/newreview", auth.ensureLoggedIn, async (req, res) => {
       item.reviewed = true;
       item.review = {
         rating: newReview.rating,
-        text: newReview.review
+        text: newReview.review,
       };
       await item.save();
     }
@@ -421,16 +425,24 @@ router.get("/review", (req, res) => {
   Review.find({
     reviewer: { name: req.user.name, _id: req.user._id },
     itemId: req.query.itemId,
-  }).then((reviews) => {
-    res.send(reviews);
-  });
+  })
+    .then((reviews) => {
+      res.send(reviews);
+    })
+    .catch((err) => {
+      res.status(500).send("Failed to find a review", err);
+    });
 });
 
 //Sends all reviews of a user
 router.get("/reviews", (req, res) => {
-  Review.find({ seller: { name: req.query.name, _id: req.query._id } }).then((reviews) => {
-    res.send(reviews);
-  });
+  Review.find({ seller: { name: req.query.name, _id: req.query._id } })
+    .then((reviews) => {
+      res.send(reviews);
+    })
+    .catch((err) => {
+      res.status(500).send("Failed to retrieve user's reviews", err);
+    });
 });
 
 // Migration endpoint to update all user profile ratings
@@ -438,26 +450,28 @@ router.post("/migrate-ratings", async (req, res) => {
   try {
     // Get all user profiles
     const userProfiles = await UserProfile.find({});
-    
+
     // Update each profile's rating
     for (const profile of userProfiles) {
       // Get all reviews for this user
-      const reviews = await Review.find({ 
-        seller: { name: profile.user.name, _id: profile.user._id } 
+      const reviews = await Review.find({
+        seller: { name: profile.user.name, _id: profile.user._id },
       });
-      
+
       if (reviews.length > 0) {
         // Calculate average rating
         const totalRating = reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
         const averageRating = (totalRating / reviews.length).toFixed(1);
-        
+
         // Update profile rating
         profile.rating = [averageRating, String(reviews.length)];
         await profile.save();
-        console.log(`Updated rating for ${profile.user.name}: ${averageRating} (${reviews.length} reviews)`);
+        console.log(
+          `Updated rating for ${profile.user.name}: ${averageRating} (${reviews.length} reviews)`
+        );
       }
     }
-    
+
     res.send({ message: "Successfully migrated all user profile ratings" });
   } catch (error) {
     console.error("Migration error:", error);
