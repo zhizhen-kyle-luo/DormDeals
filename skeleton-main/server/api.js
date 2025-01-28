@@ -361,30 +361,34 @@ router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
     reviewer: { name: req.user.name, _id: req.user._id },
     seller: req.body.seller,
     itemId: req.body.itemId,
-    rating: req.body.rating,
+    rating: Number(req.body.rating),
     review: req.body.review,
   });
 
-  let sellerRating = null;
-  UserProfile.find({ user: req.body.seller }).then((seller) => {
-    sellerRating = [Number(seller[0].rating[0]), Number(seller[0].rating[1])];
-    sellerRating[1] = String(sellerRating[1] + 1);
-    sellerRating[0] = String(
-      (sellerRating[0] + Number(newReview.rating)) / Number(sellerRating[1])
-    );
-    seller[0].rating = sellerRating;
-    seller[0].save();
-  });
+  // First get all existing reviews for this seller
+  Review.find({ seller: req.body.seller }).then((existingReviews) => {
+    // Add the new review to calculate the average
+    const allReviews = [...existingReviews, newReview];
+    const totalRating = allReviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
+    const averageRating = (totalRating / allReviews.length).toFixed(1);
 
-  newReview
-    .save()
-    .then((savedReview) => {
-      res.status(201).send(savedReview);
-    })
-    .catch((err) => {
-      console.log("Failed to save review:", err);
-      res.status(500).send({ error: "Failed to leave a review" });
+    // Update the seller's profile with the new rating
+    UserProfile.find({ user: req.body.seller }).then((seller) => {
+      seller[0].rating = [averageRating, String(allReviews.length)];
+      seller[0].save();
     });
+
+    // Save the new review
+    newReview
+      .save()
+      .then((savedReview) => {
+        res.status(201).send(savedReview);
+      })
+      .catch((err) => {
+        console.log("Failed to save review:", err);
+        res.status(500).send({ error: "Failed to leave a review" });
+      });
+  });
 });
 
 //Checks if there already exists a review for an item
@@ -402,6 +406,38 @@ router.get("/reviews", (req, res) => {
   Review.find({ seller: { name: req.query.name, _id: req.query._id } }).then((reviews) => {
     res.send(reviews);
   });
+});
+
+// Migration endpoint to update all user profile ratings
+router.post("/migrate-ratings", async (req, res) => {
+  try {
+    // Get all user profiles
+    const userProfiles = await UserProfile.find({});
+    
+    // Update each profile's rating
+    for (const profile of userProfiles) {
+      // Get all reviews for this user
+      const reviews = await Review.find({ 
+        seller: { name: profile.user.name, _id: profile.user._id } 
+      });
+      
+      if (reviews.length > 0) {
+        // Calculate average rating
+        const totalRating = reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
+        const averageRating = (totalRating / reviews.length).toFixed(1);
+        
+        // Update profile rating
+        profile.rating = [averageRating, String(reviews.length)];
+        await profile.save();
+        console.log(`Updated rating for ${profile.user.name}: ${averageRating} (${reviews.length} reviews)`);
+      }
+    }
+    
+    res.send({ message: "Successfully migrated all user profile ratings" });
+  } catch (error) {
+    console.error("Migration error:", error);
+    res.status(500).send({ error: "Failed to migrate ratings" });
+  }
 });
 
 // anything else falls to this "not found" case

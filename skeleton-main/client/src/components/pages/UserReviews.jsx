@@ -20,6 +20,14 @@ const UserReviews = () => {
       })
       .then((reviewsObj) => {
         console.log("Fetched reviews:", reviewsObj);
+        // Add detailed logging for review calculation
+        if (reviewsObj && reviewsObj.length > 0) {
+          console.log("Individual ratings:", reviewsObj.map(r => r.rating));
+          const sum = reviewsObj.reduce((sum, review) => sum + (Number(review.rating) || 0), 0);
+          console.log("Sum of ratings:", sum);
+          console.log("Number of reviews:", reviewsObj.length);
+          console.log("Calculated average:", sum / reviewsObj.length);
+        }
         setReviews(reviewsObj || []);
       })
       .catch((error) => {
@@ -46,7 +54,7 @@ const UserReviews = () => {
   }
 
   const averageRating = reviews.length > 0
-    ? Math.max(0, Math.min(5, (reviews.reduce((sum, review) => sum + (review.rating || 0), 0) / reviews.length))).toFixed(1)
+    ? (reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / reviews.length).toFixed(1)
     : 0;
 
   return (
