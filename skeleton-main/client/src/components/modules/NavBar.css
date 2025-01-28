@@ -9,7 +9,7 @@
   right: 0;
   z-index: 1000;
   transition: all 0.3s ease;
-  height: 80px; /* Explicit height */
+  height: 80px;
 }
 
 .NavBar-container.scrolled {
@@ -76,24 +76,9 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #e07007; /* Default orange color */
+  color: #e07007;
 }
 
-/* Override for home page */
-.NavBar-container.home-page .NavBar-title {
-  color: white;
-}
-
-.NavBar-title .NavBar-link {
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.NavBar-title .NavBar-link:hover {
-  opacity: 0.8;
-}
-
-/* Shopping Cart Animation */
 .NavBar-title::after {
   content: '🛒';
   font-size: 1.5rem;
@@ -110,6 +95,35 @@
   50% {
     transform: translateY(-5px) rotate(5deg);
   }
+}
+
+/* Enhance Cart icon animation */
+.Cart-icon {
+  animation: cartWiggle 1s ease-in-out infinite;
+}
+
+@keyframes cartWiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.NavBar-link:hover .Cart-icon {
+  animation: cartExcited 0.5s ease-in-out infinite;
+}
+
+@keyframes cartExcited {
+  0%, 100% { transform: scale(1.1) rotate(0); }
+  50% { transform: scale(1.2) rotate(5deg); }
+}
+
+.NavBar-title .NavBar-link {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.NavBar-title .NavBar-link:hover {
+  opacity: 0.8;
 }
 
 .NavBar-linkContainer {

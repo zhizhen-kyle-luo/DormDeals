@@ -27,7 +27,7 @@ const Home = () => {
     "Other 🦫"
   ];
 
-  const conditions = ["All", "New", "Like New", "Good", "Fair", "Poor"];
+  const conditions = ["All", "New", "Like New", "Used", "Fair"];
 
   useEffect(() => {
     // Fetch orders from the server
@@ -59,7 +59,7 @@ const Home = () => {
 
       const matchesCategory =
         filters.category === "all" ||
-        order.category.toLowerCase().split(" ")[0] === filters.category.toLowerCase();
+        categories.find(cat => cat.toLowerCase() === filters.category)?.split(" ")[0].toLowerCase() === order.category.split(" ")[0].toLowerCase();
 
       const matchesCondition =
         filters.condition === "all" ||

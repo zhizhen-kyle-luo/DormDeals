@@ -126,20 +126,11 @@
 }
 
 .No-reviews {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 150px;
-  color: #888;
-  font-size: 1.1rem;
-  grid-column: 1 / -1;
-  background: transparent;
-  border: 2px dashed #ddd;
+  text-align: center;
+  padding: 3rem;
+  background: #f9fafb;
   border-radius: 12px;
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  animation: fadeIn 0.6s ease forwards;
-  padding: 2rem;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 /* Loading Text */
