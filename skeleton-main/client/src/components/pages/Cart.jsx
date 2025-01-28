@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../App.jsx";
 import "./Cart.css";
@@ -8,6 +8,15 @@ const Cart = () => {
   const { cartItems = [], removeFromCart } = useContext(CartContext);
   const [selectedItems, setSelectedItems] = useState(new Set());
   const [savedForLater, setSavedForLater] = useState(new Set());
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    // Simulate loading time for cart items
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   const toggleItemSelection = (itemId) => {
     const newSelected = new Set(selectedItems);
@@ -53,6 +62,14 @@ const Cart = () => {
 
   const activeItems = cartItems.filter((item) => !savedForLater.has(item.itemId));
   const savedItems = cartItems.filter((item) => savedForLater.has(item.itemId));
+
+  if (isLoading) {
+    return (
+      <div className="cart-container">
+        <div>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="cart-container">

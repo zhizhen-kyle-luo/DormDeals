@@ -18,15 +18,18 @@ const OrderDetails = (props) => {
     rating: "5",
     review: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const { cartItems, addToCart } = useContext(CartContext);
 
   useEffect(() => {
+    setIsLoading(true);
     get(`/api/whoami`).then((viewingUserObj) => setViewingUser(viewingUserObj));
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     get(`/api/order`, { orderId: orderId }).then((orderObj) => {
       setOrder(orderObj);
       if (orderObj && orderObj.images.length > 0) {
@@ -41,6 +44,7 @@ const OrderDetails = (props) => {
         setStatusColor("u-green");
         setStatusButton("Mark as sold");
       }
+      setIsLoading(false);
     });
   }, [orderId]);
 
@@ -175,6 +179,14 @@ const OrderDetails = (props) => {
       [name]: value,
     }));
   };
+
+  if (isLoading) {
+    return (
+      <div className="OrderDetails-container">
+        <div>Loading...</div>
+      </div>
+    );
+  }
 
   if (!order || !viewingUser) return <div>Loading...</div>;
 
