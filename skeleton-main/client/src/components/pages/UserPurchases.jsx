@@ -9,11 +9,9 @@ const UserPurchases = () => {
   const { userId } = useParams();
   const { userId: currentUserId } = useContext(UserContext);
   const [purchases, setPurchases] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (userId === currentUserId) {
-      setIsLoading(true);
       get("/api/purchases", { userId })
         .then((purchasedItems) => {
           console.log("Fetched purchases:", purchasedItems);
@@ -22,23 +20,12 @@ const UserPurchases = () => {
         .catch((error) => {
           console.error("Error fetching purchases:", error);
           setPurchases([]);
-        })
-        .finally(() => {
-          setIsLoading(false);
         });
     }
   }, [userId, currentUserId]);
 
   const ongoingOrders = purchases.filter((item) => item.status === "Under Transaction");
   const pastOrders = purchases.filter((item) => item.status === "Sold");
-
-  if (isLoading) {
-    return (
-      <div className="Purchases-container">
-        <div className="Loading-spinner">Loading your purchases...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="Purchases-container">

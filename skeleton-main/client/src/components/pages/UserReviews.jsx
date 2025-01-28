@@ -7,10 +7,8 @@ const UserReviews = () => {
   const { userId } = useParams();
   const [reviews, setReviews] = useState([]);
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
     // First get the user info
     get("/api/user", { userid: userId })
       .then((userObj) => {
@@ -33,9 +31,6 @@ const UserReviews = () => {
       .catch((error) => {
         console.error("Error fetching reviews:", error);
         setReviews([]);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   }, [userId]);
 
@@ -44,14 +39,6 @@ const UserReviews = () => {
     const validRating = Math.max(0, Math.min(5, Math.round(rating) || 0));
     return "★".repeat(validRating) + "☆".repeat(5 - validRating);
   };
-
-  if (isLoading) {
-    return (
-      <div className="UserReviews-container">
-        <div className="Loading-spinner">Loading reviews...</div>
-      </div>
-    );
-  }
 
   const averageRating = reviews.length > 0
     ? (reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / reviews.length).toFixed(1)

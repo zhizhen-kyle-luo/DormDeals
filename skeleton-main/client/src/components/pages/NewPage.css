@@ -5,6 +5,7 @@
   min-height: calc(100vh - 64px);
   font-family: 'Playfair Display', serif;
   background-color: #fdf9f6;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .NewPage-header h1 {
@@ -51,19 +52,29 @@
   color: #e07007;
   margin-bottom: 2rem;
   text-align: center;
+  animation: slideInUp 0.8s ease-out;
 }
 
 .NewPage-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  animation: slideInUp 0.8s ease-out 0.2s backwards;
 }
 
 .NewPage-formGroup {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  animation: slideInUp 0.8s ease-out;
+  animation-fill-mode: both;
 }
+
+.NewPage-formGroup:nth-child(1) { animation-delay: 0.2s; }
+.NewPage-formGroup:nth-child(2) { animation-delay: 0.3s; }
+.NewPage-formGroup:nth-child(3) { animation-delay: 0.4s; }
+.NewPage-formGroup:nth-child(4) { animation-delay: 0.5s; }
+.NewPage-formGroup:nth-child(5) { animation-delay: 0.6s; }
 
 .NewPage-formGroup label {
   font-weight: 500;
@@ -77,6 +88,14 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.NewPage-formGroup input:focus,
+.NewPage-formGroup select:focus,
+.NewPage-formGroup textarea:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .NewPage-formGroup textarea {
@@ -98,11 +117,18 @@
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .NewPage-submit:hover {
-  background-color: #c86206;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.NewPage-submit:active {
+  transform: translateY(1px);
 }
 
 /* File input styling */
@@ -149,6 +175,7 @@ input[type="file"]::file-selector-button {
   scrollbar-width: thin;
   scrollbar-color: #e07007 #f3f4f6;
   -webkit-overflow-scrolling: touch;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .NewPage-imagePreview::-webkit-scrollbar {
@@ -190,8 +217,9 @@ input[type="file"]::file-selector-button {
 }
 
 .NewPage-dropzone.active {
+  transform: scale(1.02);
   border-color: #e07007;
-  background: #fff5eb;
+  background-color: rgba(224, 112, 7, 0.05);
 }
 
 .NewPage-dropzone-content {
@@ -307,4 +335,82 @@ input[type="file"]::file-selector-button {
   .NewPage-imageActions {
     flex-direction: column;
   }
+}
+
+/* Form Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.NewPage-imagePreview img {
+  transition: transform 0.3s ease;
+}
+
+.NewPage-imagePreview img:hover {
+  transform: scale(1.05);
+}
+
+.NewPage-removeImage {
+  transition: all 0.3s ease;
+}
+
+.NewPage-removeImage:hover {
+  background-color: #ff4444;
+  transform: scale(1.1);
+}
+
+.NewPage-mainImage {
+  transition: all 0.3s ease;
+}
+
+.NewPage-mainImage:hover {
+  transform: scale(1.05);
+}
+
+/* Error state animation */
+.NewPage-formGroup.error input,
+.NewPage-formGroup.error select,
+.NewPage-formGroup.error textarea {
+  animation: shake 0.5s ease-in-out;
+  border-color: #ff4444;
+}
+
+/* Loading state */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.NewPage-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+  margin-left: 8px;
 }

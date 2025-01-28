@@ -14,7 +14,6 @@ export const CartContext = createContext();
 const App = () => {
   const [userId, setUserId] = useState(undefined);
   const [cartItems, setCartItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
@@ -26,9 +25,6 @@ const App = () => {
           console.log("App: Setting userId to", user._id);
           setUserId(user._id);
         }
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   }, []);
 
@@ -103,11 +99,6 @@ const App = () => {
   };
 
   console.log("App: Current userId:", userId, "Current location:", location.pathname);
-
-  // Show loading state
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   // If we're already at /login and not logged in, just render the login page
   if (location.pathname === "/login" && !userId) {

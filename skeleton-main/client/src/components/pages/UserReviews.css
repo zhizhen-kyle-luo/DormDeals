@@ -5,10 +5,12 @@
   min-height: calc(100vh - 64px);
   font-family: "Playfair Display", serif;
   background-color: #fdf9f6;
+  animation: fadeInUp 0.6s ease-out;
 }
 
 .UserReviews-header {
   margin-bottom: 2rem;
+  animation: slideInLeft 0.8s ease-out;
 }
 
 .UserReviews-title {
@@ -50,11 +52,13 @@
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease;
+  animation: scaleIn 0.6s ease-out;
+  transition: all 0.3s ease;
 }
 
 .Review-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .Review-header {
@@ -82,7 +86,7 @@
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 4px;
 }
 
 .Review-stars {
@@ -98,6 +102,27 @@
 .Review-date {
   color: #6b7280;
   font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.Review-card:hover .Review-date {
+  color: #e07007;
+}
+
+.Review-content {
+  transition: all 0.3s ease;
+}
+
+.Review-card:hover .Review-content {
+  color: #1a1a1a;
+}
+
+.Review-item {
+  transition: all 0.3s ease;
+}
+
+.Review-item:hover {
+  background-color: rgba(224, 112, 7, 0.05);
 }
 
 .No-reviews {
@@ -108,13 +133,28 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+/* Loading Text */
 .Loading-spinner {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
-  color: #6b7280;
-  font-size: 1.1rem;
+  margin: 20px auto;
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  background: none;
+  width: auto;
+  height: auto;
+  animation: none;
+  border: none;
+}
+
+.Loading-spinner::before {
+  content: 'Loading';
+}
+
+.Loading-spinner::after {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -129,4 +169,94 @@
   .UserReviews-summary {
     font-size: 1rem;
   }
+}
+
+/* Reviews Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes starPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.UserReviews-stats {
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+.UserReviews-stat {
+  transition: all 0.3s ease;
+}
+
+.UserReviews-stat:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.UserReviews-reviews {
+  animation: fadeInUp 0.8s ease-out 0.4s backwards;
+}
+
+.Review-star {
+  transition: all 0.3s ease;
+}
+
+.Review-card:hover .Review-star {
+  animation: starPulse 0.8s ease-in-out;
+  animation-delay: calc(var(--star-index) * 0.1s);
+}
+
+/* Empty State Animation */
+.Empty-state {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.Empty-state img {
+  animation: scaleIn 1s ease-out 0.2s backwards;
+}
+
+/* Pagination Animation */
+.Pagination {
+  animation: fadeInUp 0.8s ease-out 0.6s backwards;
+}
+
+.Pagination-button {
+  transition: all 0.3s ease;
+}
+
+.Pagination-button:hover {
+  transform: translateY(-2px);
+  background-color: #e07007;
+  color: white;
 }

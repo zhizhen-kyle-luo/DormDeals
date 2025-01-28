@@ -6,8 +6,9 @@
 }
 
 .Home-container {
-  min-height: 100vh;
-  background-color: #ffffff;
+  min-height: calc(100vh - 64px);
+  background-color: #fdf9f6;
+  font-family: "Playfair Display", serif;
   margin-top: -80px; /* Offset the navbar height */
 }
 
@@ -429,21 +430,10 @@
   border-radius: 12px;
 }
 
-/* Loading State */
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-}
-
+/* Remove these loading styles */
+.loading-container,
 .loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid #f0f0f0;
-  border-top: 3px solid #fdf9f6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  display: none;
 }
 
 @keyframes spin {

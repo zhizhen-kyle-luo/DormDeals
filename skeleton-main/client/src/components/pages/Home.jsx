@@ -14,7 +14,6 @@ const Home = () => {
     category: "all",
     condition: "all",
   });
-  const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
 
   // Categories and conditions remain the same
@@ -42,11 +41,9 @@ const Home = () => {
         );
         setOrders(activeOrders);
         setFilteredOrders(activeOrders);
-        setIsLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching orders:", err);
-        setIsLoading(false);
       });
   }, [userId]);
 
@@ -201,11 +198,7 @@ const Home = () => {
               {showFilters ? "Hide Filters" : "Show Filters"}
             </button>
 
-            {isLoading ? (
-              <div className="loading-container">
-                <div className="loading-spinner" />
-              </div>
-            ) : filteredOrders.length === 0 ? (
+            {filteredOrders.length === 0 ? (
               <div className="empty-state">
                 <h2>No items found</h2>
                 <p>Try adjusting your filters or search criteria</p>
