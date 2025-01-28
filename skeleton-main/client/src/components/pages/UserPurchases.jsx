@@ -50,8 +50,10 @@ const UserPurchases = () => {
           {ongoingOrders.length === 0 ? (
             <div className="No-items">No ongoing orders</div>
           ) : (
-            ongoingOrders.map((order) => (
-              <OrderCard key={order._id} order={order} />
+            ongoingOrders.map((item) => (
+              <div key={item._id}>
+                <OrderCard order={item} className="Purchases-card" />
+              </div>
             ))
           )}
         </div>
@@ -63,8 +65,10 @@ const UserPurchases = () => {
           {pastOrders.length === 0 ? (
             <div className="No-items">No completed orders yet</div>
           ) : (
-            pastOrders.map((order) => (
-              <OrderCard key={order._id} order={order} />
+            pastOrders.map((item) => (
+              <div key={item._id}>
+                <OrderCard order={item} className="Purchases-card" />
+              </div>
             ))
           )}
         </div>
