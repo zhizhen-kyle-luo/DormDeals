@@ -15,8 +15,9 @@ const Home = () => {
     condition: "all",
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
-  // Updated categories to match new order form
+  // Categories and conditions remain the same
   const categories = [
     "All",
     "Textbooks",
@@ -27,7 +28,6 @@ const Home = () => {
     "Other",
   ];
 
-  // Updated conditions to match new order form
   const conditions = ["All", "New", "Like New", "Good", "Fair", "Poor"];
 
   useEffect(() => {
@@ -35,7 +35,6 @@ const Home = () => {
     fetch("/api/orders")
       .then((res) => res.json())
       .then((ordersData) => {
-        // Filter out orders that are sold or under transaction
         const activeOrders = ordersData.filter(order => 
           order.status !== "Sold" && 
           order.status !== "Under Transaction" &&
@@ -51,8 +50,8 @@ const Home = () => {
       });
   }, [userId]);
 
+  // Filter logic remains the same
   useEffect(() => {
-    // Apply filters and search whenever filters, search query, or orders change
     const filtered = orders.filter((order) => {
       const matchesSearch = order.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           order.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -100,98 +99,126 @@ const Home = () => {
 
   return (
     <div className="Home-container">
-      <div className="Home-sidebar">
-        <div className="sidebar-header">
-          <h2>Filter By</h2>
-        </div>
-
-        <div className="sidebar-section">
-          <h3>Search</h3>
-          <input
-            type="text"
-            placeholder="Search for items..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="search-input"
-          />
-        </div>
-
-        <div className="sidebar-section">
-          <h3>Price Range</h3>
-          <div className="price-inputs">
-            <div className="price-input-row">
-              <input
-                type="number"
-                placeholder="Min"
-                value={filters.priceRange.min}
-                onChange={(e) => handleFilterChange("priceRange", { min: e.target.value })}
-              />
-              <span>to</span>
-            </div>
-            <div className="price-input-row">
-              <input
-                type="number"
-                placeholder="Max"
-                value={filters.priceRange.max}
-                onChange={(e) => handleFilterChange("priceRange", { max: e.target.value })}
-              />
-            </div>
+      {/* Hero Section */}
+      <div className="Home-hero">
+        <div className="hero-background">
+          <div className="floating-items">
+            <div className="floating-item">💰</div>
+            <div className="floating-item">📱</div>
+            <div className="floating-item">💻</div>
+            <div className="floating-item">📚</div>
+            <div className="floating-item">🎮</div>
+          </div>
+          <div className="dollar-signs">
+            <span className="dollar-sign">$</span>
+            <span className="dollar-sign">$</span>
+            <span className="dollar-sign">$</span>
+            <span className="dollar-sign">$</span>
+            <span className="dollar-sign">$</span>
           </div>
         </div>
-
-        <div className="sidebar-section">
-          <h3>Category</h3>
-          <select
-            value={filters.category}
-            onChange={(e) => handleFilterChange("category", e.target.value)}
-          >
-            {categories.map((category) => (
-              <option key={category} value={category.toLowerCase()}>
-                {category}
-              </option>
-            ))}
-          </select>
+        <div className="hero-content">
+          <h1>Discover Campus Treasures</h1>
+          <p>Find amazing deals on textbooks, electronics, and more from your fellow students</p>
+          <div className="hero-search">
+            <input
+              type="text"
+              placeholder="Search for items..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+          </div>
         </div>
-
-        <div className="sidebar-section">
-          <h3>Condition</h3>
-          <select
-            value={filters.condition}
-            onChange={(e) => handleFilterChange("condition", e.target.value)}
-          >
-            {conditions.map((condition) => (
-              <option key={condition} value={condition.toLowerCase()}>
-                {condition}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <button className="clear-filters" onClick={clearFilters}>
-          Clear All
-        </button>
-
-        <div className="filter-stats">{filteredOrders.length} items found</div>
       </div>
 
-      <div className="Home-content">
-        {isLoading ? (
-          <div className="Home-loading">
-            <div className="spinner"></div>
-            <p>Loading items...</p>
-          </div>
-        ) : filteredOrders.length > 0 ? (
-          <div className="Home-orderGrid">
-            {filteredOrders.map((order) => (
-              <OrderCard key={order._id} order={order} />
-            ))}
-          </div>
-        ) : (
-          <div className="Home-empty">
-            <p>No items found matching your criteria.</p>
-            <button onClick={clearFilters}>Clear all filters</button>
-          </div>
-        )}
+      {/* Main Content */}
+      <div className="Home-main">
+        <div className="Home-content">
+          {/* Sidebar */}
+          <aside className={`Home-sidebar ${showFilters ? 'show' : ''}`}>
+            <div className="sidebar-header">
+              <h2>Filter Products</h2>
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Category</h3>
+              <select
+                value={filters.category}
+                onChange={(e) => handleFilterChange("category", e.target.value)}
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category.toLowerCase()}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Price Range</h3>
+              <div className="price-inputs">
+                <input
+                  type="number"
+                  placeholder="Min $"
+                  value={filters.priceRange.min}
+                  onChange={(e) => handleFilterChange("priceRange", { min: e.target.value })}
+                />
+                <input
+                  type="number"
+                  placeholder="Max $"
+                  value={filters.priceRange.max}
+                  onChange={(e) => handleFilterChange("priceRange", { max: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className="sidebar-section">
+              <h3>Condition</h3>
+              <select
+                value={filters.condition}
+                onChange={(e) => handleFilterChange("condition", e.target.value)}
+              >
+                {conditions.map((condition) => (
+                  <option key={condition} value={condition.toLowerCase()}>
+                    {condition}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <button className="clear-filters" onClick={clearFilters}>
+              Clear All Filters
+            </button>
+          </aside>
+
+          {/* Main Grid */}
+          <main>
+            <button 
+              className="filter-toggle"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              {showFilters ? "Hide Filters" : "Show Filters"}
+            </button>
+
+            {isLoading ? (
+              <div className="loading-container">
+                <div className="loading-spinner" />
+              </div>
+            ) : filteredOrders.length === 0 ? (
+              <div className="empty-state">
+                <h2>No items found</h2>
+                <p>Try adjusting your filters or search criteria</p>
+              </div>
+            ) : (
+              <div className="orders-grid">
+                {filteredOrders.map((order) => (
+                  <OrderCard key={order._id} order={order} />
+                ))}
+              </div>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );

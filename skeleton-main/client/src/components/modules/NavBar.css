@@ -1,31 +1,84 @@
 .NavBar-container {
-  padding: 1rem 2rem;
-  background-color: white;
+  padding: 1.25rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  font-family: "Playfair Display", serif;
+  transition: all 0.3s ease;
+  height: 80px; /* Explicit height */
 }
 
+.NavBar-container.scrolled {
+  padding: 1rem 2rem;
+}
+
+/* Home page specific styles */
+.NavBar-container.home-page {
+  background: transparent;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.NavBar-container.home-page .NavBar-title,
+.NavBar-container.home-page .NavBar-link {
+  color: white;
+}
+
+.NavBar-container.home-page .NavBar-link img {
+  filter: brightness(0) invert(1);
+}
+
+.NavBar-container.home-page.scrolled {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Other pages styles */
+.NavBar-container.other-page {
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.NavBar-container.other-page .NavBar-title,
+.NavBar-container.other-page .NavBar-link {
+  color: #000;
+}
+
+.NavBar-container.other-page .NavBar-link img {
+  filter: none;
+}
+
+.NavBar-container.other-page.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+}
+
+/* Common styles */
 .NavBar-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #e07007;
-  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
 .NavBar-title .NavBar-link {
-  color: #e07007;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
 }
 
 .NavBar-title .NavBar-link:hover {
-  color: #e07007;
+  opacity: 0.8;
 }
 
 .NavBar-linkContainer {
@@ -35,77 +88,89 @@
 }
 
 .NavBar-link {
-  text-decoration: none;
-  color: #5f6368;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: background-color 0.2s;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  opacity: 0.7;
 }
 
 .NavBar-link:hover {
-  background-color: #f1f3f4;
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
-.NavBar-logout {
-  display: none;
+.NavBar-link.active {
+  opacity: 1;
+  font-weight: 600;
 }
 
-.Cart-icon,
-.New-order-icon,
-.Profile-icon,
-.Shop-icon,
-.Bag-icon,
-.Question-icon,
-.Star-icon,
-.Logout-icon {
+/* Separate styles for icon links */
+.NavBar-linkContainer .NavBar-link {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.NavBar-linkContainer .NavBar-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.NavBar-linkContainer .NavBar-link:hover::before {
+  transform: translateX(0);
+}
+
+.NavBar-linkContainer .NavBar-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon styles */
+.NavBar-link img {
   width: 24px;
   height: 24px;
+  transition: all 0.3s ease;
+}
+
+.Question-icon,
+.Profile-icon,
+.New-order-icon,
+.Cart-icon,
+.Shop-icon,
+.Bag-icon,
+.Star-icon,
+.Logout-icon {
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   vertical-align: middle;
-  transition: transform 0.2s;
-  opacity: 0.8;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+  filter: brightness(0) invert(1);
+  position: relative;
+  z-index: 1;
 }
 
-.Cart-icon:hover,
-.New-order-icon:hover,
-.Profile-icon:hover,
-.Shop-icon:hover,
-.Bag-icon:hover,
-.Question-icon:hover,
-.Star-icon:hover,
-.Logout-icon:hover {
+.NavBar-link:hover img {
   transform: scale(1.1);
   opacity: 1;
-}
-
-/* Add tooltip on hover */
-.NavBar-link {
-  position: relative;
-}
-
-.NavBar-link::after {
-  content: attr(title);
-  position: absolute;
-  bottom: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 4px 8px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  font-size: 12px;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s;
-  font-family: "Playfair Display", serif;
-}
-
-.NavBar-link:hover::after {
-  opacity: 1;
-  visibility: visible;
 }
 
 .NavBar-link:hover .Cart-icon,
@@ -116,5 +181,88 @@
 .NavBar-link:hover .Question-icon,
 .NavBar-link:hover .Star-icon,
 .NavBar-link:hover .Logout-icon {
+  transform: scale(1.1) rotate(5deg);
   opacity: 1;
+}
+
+/* Tooltip Styles */
+.NavBar-linkContainer .NavBar-link::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.NavBar-linkContainer .NavBar-link:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Add a subtle arrow to the tooltip */
+.NavBar-linkContainer .NavBar-link::before {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.NavBar-linkContainer .NavBar-link:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .NavBar-container {
+    padding: 1rem;
+  }
+
+  .NavBar-container.scrolled {
+    padding: 0.75rem 1rem;
+  }
+
+  .NavBar-title {
+    font-size: 1.5rem;
+  }
+
+  .NavBar-linkContainer {
+    gap: 1rem;
+  }
+
+  .NavBar-link img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .Cart-icon,
+  .New-order-icon,
+  .Profile-icon,
+  .Shop-icon,
+  .Bag-icon,
+  .Question-icon,
+  .Star-icon,
+  .Logout-icon {
+    width: 18px;
+    height: 18px;
+  }
 }

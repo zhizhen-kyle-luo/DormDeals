@@ -4,6 +4,7 @@ import { socket } from "../client-socket";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import "../utilities.css";
+import "./pages/pages.css";
 import NavBar from "./modules/NavBar.jsx";
 
 export const UserContext = createContext(null);
@@ -123,11 +124,13 @@ const App = () => {
       <UserContext.Provider value={authContextValue}>
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
           {userId ? (
-            <NavBar userId={userId} />
-          ) : location.pathname !== "/instructions" && (
-            <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
-          )}
-          {userId || location.pathname === "/instructions" ? (
+            <>
+              <NavBar userId={userId} />
+              <div className="page-container">
+                <Outlet />
+              </div>
+            </>
+          ) : location.pathname === "/instructions" ? (
             <Outlet />
           ) : (
             <Navigate to="/login" state={{ from: location }} replace />

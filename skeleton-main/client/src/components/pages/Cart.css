@@ -1,10 +1,14 @@
+.cart-page {
+  padding-top: 80px; /* Height of navbar + some spacing */
+  min-height: 100vh;
+  background-color: #fdf9f6;
+}
+
 .cart-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  min-height: calc(100vh - 64px);
   font-family: 'Playfair Display', serif;
-  background-color: #fdf9f6;
 }
 
 .cart-content {
@@ -251,4 +255,3 @@
     justify-content: center;
   }
 }
-  

@@ -1,36 +1,127 @@
 .OrderCard-container {
   position: relative;
+  width: 350px;
   background: white;
-  border-radius: 12px;
+  border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   text-decoration: none;
   color: inherit;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin: 20px;
+  transform: translateY(0);
 }
 
 .OrderCard-container:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
 }
 
-.OrderCard-image {
-  position: relative;
-  width: 100%;
-  padding-top: 100%;
-  background: #f3f4f6;
-}
-
-.OrderCard-image img {
+.OrderCard-container::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.OrderCard-container:hover::before {
+  opacity: 1;
+}
+
+.OrderCard-image {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+}
+
+.OrderCard-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+}
+
+.OrderCard-container:hover .OrderCard-image img {
+  transform: none;
+}
+
+.OrderCard-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  color: white;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.7) 70%,
+    transparent
+  );
+}
+
+.OrderCard-container:hover .OrderCard-info {
+  transform: translateY(0);
+}
+
+.OrderCard-mainInfo {
+  margin-bottom: 12px;
+}
+
+.OrderCard-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.OrderCard-seller {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.OrderCard-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.OrderCard-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4CAF50;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.OrderCard-category-container {
+  display: flex;
+  gap: 8px;
+}
+
+.OrderCard-category,
+.OrderCard-condition {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
 }
 
 .OrderCard-badges {
@@ -39,96 +130,25 @@
   right: 12px;
   display: flex;
   gap: 8px;
-  z-index: 1;
+  z-index: 3;
 }
 
 .OrderCard-badge {
-  padding: 4px 12px;
+  padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  backdrop-filter: blur(4px);
 }
 
 .OrderCard-badge.sold {
-  background: rgba(220, 252, 231, 0.9);
-  color: #166534;
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
 }
 
 .OrderCard-badge.not-reviewed {
-  background: rgba(254, 226, 226, 0.9);
-  color: #991b1b;
-}
-
-.OrderCard-info {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex: 1;
-}
-
-.OrderCard-mainInfo {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.OrderCard-title {
-  font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0;
-  line-height: 1.4;
-  text-align: center;
-}
-
-.OrderCard-seller {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin: 0;
-}
-
-.OrderCard-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid #f3f4f6;
-}
-
-.OrderCard-price {
-  font-family: "Playfair Display", serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.OrderCard-category-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.OrderCard-category,
-.OrderCard-condition {
-  font-size: 0.75rem;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-family: "Playfair Display", serif;
-}
-
-.OrderCard-category {
-  background: #f3f4f6;
-  color: #4b5563;
-}
-
-.OrderCard-condition {
-  background: #ecfdf5;
-  color: #065f46;
+  background: rgba(244, 67, 54, 0.9);
+  color: white;
 }

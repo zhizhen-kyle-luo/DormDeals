@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { googleLogout } from "@react-oauth/google";
 import { UserContext } from "../App.jsx";
 import "./NavBar.css";
@@ -14,11 +14,26 @@ import starIcon from "../../assets/rating-star.png";
 
 const NavBar = ({ userId }) => {
   const { handleLogout } = useContext(UserContext);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 20;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [scrolled]);
 
   if (!userId) return null;
 
   return (
-    <nav className="NavBar-container">
+    <nav className={`NavBar-container ${scrolled ? 'scrolled' : ''} ${isHomePage ? 'home-page' : 'other-page'}`}>
       <div className="NavBar-title">
         <Link to="/" className="NavBar-link" title="Home">
           DormDeals
