@@ -39,8 +39,12 @@ const OrderDetails = (props) => {
         setStatus("Sold");
         setStatusColor("u-red");
         setStatusButton("Put back on market");
+      } else if (orderObj.status === "Under Transaction") {
+        setStatus("Under Transaction");
+        setStatusColor("u-gold");
+        setStatusButton("Mark as sold");
       } else {
-        setStatus(orderObj.status);
+        setStatus("Active");
         setStatusColor("u-green");
         setStatusButton("Mark as sold");
       }
@@ -107,7 +111,7 @@ const OrderDetails = (props) => {
             category: order.category,
             condition: order.condition,
             seller_id: order.seller_id,
-            seller: order.seller
+            seller: order.seller,
           },
         ],
       },
@@ -123,6 +127,10 @@ const OrderDetails = (props) => {
         setStatus("Sold");
         setStatusColor("u-red");
         setStatusButton("Put back on market");
+      } else if (orderObj.status === "Under Transaction") {
+        setStatus("Under Transaction");
+        setStatusColor("u-gold");
+        setStatusButton("Mark as sold");
       } else {
         setStatus("Active");
         setStatusColor("u-green");
@@ -158,11 +166,11 @@ const OrderDetails = (props) => {
 
       await post("/api/newreview", reviewDataToSend);
       setShowReviewForm(false);
-      
+
       // Refresh order data to update the review status
       const updatedOrder = await get(`/api/order`, { orderId });
       setOrder(updatedOrder);
-      
+
       // Update the review data state with the new review
       setReviewData({
         rating: updatedOrder.review.rating.toString(),
@@ -218,7 +226,6 @@ const OrderDetails = (props) => {
           <Link to={`/profile/${order.seller_id}`} className="OrderDetails-seller">
             Seller: {order.seller}
           </Link>
-          <div className={`OrderDetails-status ${statusColor}`}>{status}</div>
           {order.purchaseDate && (
             <div className="OrderDetails-purchase-date">
               Purchased on {new Date(order.purchaseDate).toLocaleDateString()}
@@ -226,6 +233,7 @@ const OrderDetails = (props) => {
           )}
 
           <div className="OrderDetails-tags">
+            <span className={`OrderDetails-status ${statusColor}`}>{status}</span>
             <span className="OrderDetails-category">{getCategoryWithEmoji(order.category)}</span>
             <span className="OrderDetails-condition">{order.condition}</span>
           </div>

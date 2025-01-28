@@ -112,7 +112,7 @@
 }
 
 .OrderDetails-seller::after {
-  content: 'Click me! 👆';
+  content: "Click me! 👆";
   position: absolute;
   top: -30px;
   left: 50%;
@@ -131,7 +131,7 @@
 }
 
 .OrderDetails-seller::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -8px;
   left: 50%;
@@ -152,7 +152,11 @@
 
 /* Tooltip Animations */
 @keyframes tooltipBounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0) translateX(-50%);
   }
   40% {
@@ -198,6 +202,11 @@
 .u-green {
   background: #dcfce7 !important;
   color: #166534 !important;
+}
+
+.u-gold {
+  background: #fcf9dc !important;
+  color: #daac06 !important;
 }
 
 .OrderDetails-purchase-date {

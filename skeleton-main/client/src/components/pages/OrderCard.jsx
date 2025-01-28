@@ -4,6 +4,11 @@ import { getCategoryWithEmoji } from "../../utilities/categoryUtils";
 import "./OrderCard.css";
 
 const OrderCard = ({ order }) => {
+  const statusColors = {
+    Sold: "u-red",
+    "Under Transaction": "u-gold",
+    Active: "u-green",
+  };
   return (
     <Link to={`/OrderDetails/${order._id}`} className="OrderCard-container">
       <div className="OrderCard-image">
@@ -14,8 +19,9 @@ const OrderCard = ({ order }) => {
         <div className="OrderCard-badges">
           {order.status === "Sold" && (
             <>
-              <span className="OrderCard-badge sold">SOLD</span>
-              {!order.reviewed && <span className="OrderCard-badge not-reviewed">Not Reviewed</span>}
+              {!order.reviewed && (
+                <span className="OrderCard-badge not-reviewed">Not Reviewed</span>
+              )}
             </>
           )}
         </div>
@@ -28,6 +34,7 @@ const OrderCard = ({ order }) => {
         <div className="OrderCard-details">
           <span className="OrderCard-price">${order.price}</span>
           <div className="OrderCard-category-container">
+            <span className={`OrderCard-status ${statusColors[order.status]}`}>{order.status}</span>
             <span className="OrderCard-category">{getCategoryWithEmoji(order.category)}</span>
             <span className="OrderCard-condition">{order.condition}</span>
           </div>
