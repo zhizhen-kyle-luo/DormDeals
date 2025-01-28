@@ -372,7 +372,6 @@ router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
     sellerRating[0] = Math.round(
       (sellerRating[0] + Number(newReview.rating)) / sellerRating[1]
     ).toFixed(1);
-    console.log(sellerRating);
     seller[0].rating = sellerRating;
     seller[0].save();
   });

@@ -10,10 +10,11 @@ import shopIcon from "../../assets/shop.png";
 import bagIcon from "../../assets/shopping_bag.png";
 import questionIcon from "../../assets/question_mark.png";
 import logoutIcon from "../../assets/logoutIcon.png";
+import starIcon from "../../assets/rating-star.png";
 
 const NavBar = ({ userId }) => {
   const { handleLogout } = useContext(UserContext);
-  
+
   if (!userId) return null;
 
   return (
@@ -42,14 +43,17 @@ const NavBar = ({ userId }) => {
         <Link to={`/UserPurchases/${userId}`} className="NavBar-link" title="My Purchases">
           <img src={bagIcon} alt="Shopping Bag" className="Bag-icon" />
         </Link>
-        <div 
-          className="NavBar-link" 
+        <Link to={`/UserReviews/${userId}`} className="NavBar-link" title="Reviews of Me">
+          <img src={starIcon} alt="Star" className="Star-icon" />
+        </Link>
+        <div
+          className="NavBar-link"
           title="Logout"
           onClick={() => {
             googleLogout();
             handleLogout();
           }}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
         >
           <img src={logoutIcon} alt="Logout" className="Logout-icon" />
         </div>
