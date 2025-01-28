@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../App.jsx";
+import { get } from "../../utilities";
 import "./Cart.css";
 
 const Cart = () => {
@@ -9,42 +10,64 @@ const Cart = () => {
   const [selectedItems, setSelectedItems] = useState(new Set());
   const [savedForLater, setSavedForLater] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
+  const [itemStatuses, setItemStatuses] = useState({});
 
   useEffect(() => {
     setIsLoading(true);
-    // Simulate loading time for cart items
-    setTimeout(() => {
+    // Check status of all cart items
+    const checkItemStatuses = async () => {
+      const statuses = {};
+      for (const item of cartItems) {
+        try {
+          const orderDetails = await get("/api/order", { orderId: item.itemId });
+          statuses[item.itemId] = orderDetails.status;
+        } catch (error) {
+          console.error("Error fetching item status:", error);
+          statuses[item.itemId] = "error";
+        }
+      }
+      setItemStatuses(statuses);
       setIsLoading(false);
-    }, 500);
-  }, []);
+    };
+    
+    checkItemStatuses();
+  }, [cartItems]);
 
   const toggleItemSelection = (itemId) => {
-    const newSelected = new Set(selectedItems);
-    if (newSelected.has(itemId)) {
-      newSelected.delete(itemId);
-    } else {
-      newSelected.add(itemId);
+    // Only allow selection if item is active
+    if (itemStatuses[itemId] === "Active") {
+      const newSelected = new Set(selectedItems);
+      if (newSelected.has(itemId)) {
+        newSelected.delete(itemId);
+      } else {
+        newSelected.add(itemId);
+      }
+      setSelectedItems(newSelected);
     }
-    setSelectedItems(newSelected);
   };
 
   const toggleSaveForLater = (itemId) => {
-    const newSaved = new Set(savedForLater);
-    if (newSaved.has(itemId)) {
-      newSaved.delete(itemId);
-    } else {
-      newSaved.add(itemId);
-      const newSelected = new Set(selectedItems);
-      newSelected.delete(itemId);
-      setSelectedItems(newSelected);
+    // Only allow saving for later if item is active
+    if (itemStatuses[itemId] === "Active") {
+      const newSaved = new Set(savedForLater);
+      if (newSaved.has(itemId)) {
+        newSaved.delete(itemId);
+      } else {
+        newSaved.add(itemId);
+        const newSelected = new Set(selectedItems);
+        newSelected.delete(itemId);
+        setSelectedItems(newSelected);
+      }
+      setSavedForLater(newSaved);
     }
-    setSavedForLater(newSaved);
   };
 
   const handleCheckout = () => {
-    const itemsToCheckout = cartItems.filter((item) => selectedItems.has(item.itemId));
+    const itemsToCheckout = cartItems.filter(
+      (item) => selectedItems.has(item.itemId) && itemStatuses[item.itemId] === "Active"
+    );
     if (itemsToCheckout.length === 0) {
-      alert("Please select items to purchase");
+      alert("Please select active items to purchase");
       return;
     }
     navigate("/purchase", { state: { items: itemsToCheckout } });
@@ -52,7 +75,7 @@ const Cart = () => {
 
   const calculateSubtotal = () => {
     return cartItems
-      .filter((item) => selectedItems.has(item.itemId))
+      .filter((item) => selectedItems.has(item.itemId) && itemStatuses[item.itemId] === "Active")
       .reduce((sum, item) => sum + item.price, 0);
   };
 
@@ -60,8 +83,18 @@ const Cart = () => {
     navigate(`/OrderDetails/${itemId}`);
   };
 
-  const activeItems = cartItems.filter((item) => !savedForLater.has(item.itemId));
-  const savedItems = cartItems.filter((item) => savedForLater.has(item.itemId));
+  // Filter items based on their status
+  const activeItems = cartItems.filter(
+    (item) => !savedForLater.has(item.itemId) && itemStatuses[item.itemId] === "Active"
+  );
+  
+  const savedItems = cartItems.filter(
+    (item) => savedForLater.has(item.itemId) && itemStatuses[item.itemId] === "Active"
+  );
+
+  const expiredItems = cartItems.filter(
+    (item) => itemStatuses[item.itemId] && itemStatuses[item.itemId] !== "Active"
+  );
 
   if (isLoading) {
     return (
@@ -74,95 +107,106 @@ const Cart = () => {
   return (
     <div className="cart-container">
       <div className="cart-content">
-        <div className="cart-main">
-          <div className="cart-header">
-            <h1>Shopping Cart</h1>
-            <span>{activeItems.length} items</span>
-          </div>
+        <div className="cart-top-section">
+          <div className="cart-main">
+            <div className="cart-header">
+              <h1>Shopping Cart</h1>
+              <span>{activeItems.length} items</span>
+            </div>
 
-          <div className="cart-items">
-            {activeItems.map((item) => (
-              <div key={item.itemId} className="cart-item">
-                <div className="item-select">
-                  <input
-                    type="checkbox"
-                    checked={selectedItems.has(item.itemId)}
-                    onChange={() => toggleItemSelection(item.itemId)}
-                    disabled={item.status === "Under Transaction" || item.status === "Sold"}
-                  />
-                </div>
-                <div 
-                  className="item-image"
-                  onClick={() => handleItemClick(item.itemId)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <img src={item.images[0]} alt={item.name} />
-                </div>
-                <div 
-                  className="item-details"
-                  onClick={() => handleItemClick(item.itemId)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <h3>{item.name}</h3>
-                  {(item.status === "Under Transaction" || item.status === "Sold") && (
-                    <div className="item-status" data-status={item.status}>
-                      {item.status}
-                    </div>
-                  )}
-                  <div className="item-actions">
-                    <button onClick={(e) => { e.stopPropagation(); toggleSaveForLater(item.itemId); }}>
-                      Save for later
-                    </button>
-                    <button onClick={(e) => { e.stopPropagation(); removeFromCart(item.itemId); }}>
-                      Remove
-                    </button>
-                  </div>
-                </div>
-                <div className="item-price">${item.price}</div>
-              </div>
-            ))}
-          </div>
-
-          {savedItems.length > 0 && (
-            <div className="saved-for-later">
-              <h2>Saved for Later</h2>
-              {savedItems.map((item) => (
+            <div className="cart-items">
+              {activeItems.map((item) => (
                 <div key={item.itemId} className="cart-item">
-                  <div className="item-image">
+                  <div className="cart-item-select">
+                    <input
+                      type="checkbox"
+                      checked={selectedItems.has(item.itemId)}
+                      onChange={() => toggleItemSelection(item.itemId)}
+                    />
+                  </div>
+                  <div className="cart-item-image" onClick={() => handleItemClick(item.itemId)}>
                     <img src={item.images[0]} alt={item.name} />
                   </div>
-                  <div className="item-details">
-                    <h3>{item.name}</h3>
-                    <div className="item-actions">
-                      <button onClick={() => toggleSaveForLater(item.itemId)}>Move to Cart</button>
+                  <div className="cart-item-details">
+                    <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
+                    <p className="cart-item-price">${item.price}</p>
+                    <div className="cart-item-actions">
                       <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
+                      <button onClick={() => toggleSaveForLater(item.itemId)}>Save for later</button>
                     </div>
                   </div>
-                  <div className="item-price">${item.price}</div>
                 </div>
               ))}
             </div>
-          )}
+          </div>
+
+          <div className="cart-summary">
+            <h2>Order Summary</h2>
+            <div className="cart-summary-details">
+              <div className="cart-summary-row">
+                <span>Subtotal ({selectedItems.size} items)</span>
+                <span>${calculateSubtotal()}</span>
+              </div>
+            </div>
+            <button
+              className="cart-checkout-button"
+              onClick={handleCheckout}
+              disabled={selectedItems.size === 0}
+            >
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
 
-        <div className="cart-summary">
-          <h2>Order Summary</h2>
-          <div className="summary-row">
-            <span>Selected Items</span>
-            <span>{selectedItems.size}</span>
+        {expiredItems.length > 0 && (
+          <div className="expired-items-section">
+            <div className="section-header">
+              <h2>Expired Items</h2>
+              <span>{expiredItems.length} items</span>
+            </div>
+            <div className="cart-items">
+              {expiredItems.map((item) => (
+                <div key={item.itemId} className="cart-item expired">
+                  <div className="cart-item-image" onClick={() => handleItemClick(item.itemId)}>
+                    <img src={item.images[0]} alt={item.name} />
+                  </div>
+                  <div className="cart-item-details">
+                    <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
+                    <div className="cart-item-actions">
+                      <button onClick={() => removeFromCart(item.itemId)}>Remove from cart</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="summary-row">
-            <span>Subtotal</span>
-            <span>${calculateSubtotal().toFixed(2)}</span>
+        )}
+
+        {savedItems.length > 0 && (
+          <div className="saved-items-section">
+            <div className="section-header">
+              <h2>Saved for Later</h2>
+              <span>{savedItems.length} items</span>
+            </div>
+            <div className="cart-items">
+              {savedItems.map((item) => (
+                <div key={item.itemId} className="cart-item">
+                  <div className="cart-item-image" onClick={() => handleItemClick(item.itemId)}>
+                    <img src={item.images[0]} alt={item.name} />
+                  </div>
+                  <div className="cart-item-details">
+                    <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
+                    <p className="cart-item-price">${item.price}</p>
+                    <div className="cart-item-actions">
+                      <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
+                      <button onClick={() => toggleSaveForLater(item.itemId)}>Move to cart</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <button
-            className="checkout-button"
-            onClick={handleCheckout}
-            disabled={selectedItems.size === 0}
-          >
-            Proceed to Checkout
-          </button>
-        </div>
+        )}
       </div>
     </div>
   );

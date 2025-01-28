@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getCategoryWithEmoji } from "../../utilities/categoryUtils";
 import "./OrderCard.css";
 
 const OrderCard = ({ order }) => {
@@ -28,7 +27,7 @@ const OrderCard = ({ order }) => {
         <div className="OrderCard-details">
           <span className="OrderCard-price">${order.price}</span>
           <div className="OrderCard-category-container">
-            <span className="OrderCard-category">{getCategoryWithEmoji(order.category)}</span>
+            <span className="OrderCard-category">{order.category}</span>
             <span className="OrderCard-condition">{order.condition}</span>
           </div>
         </div>
