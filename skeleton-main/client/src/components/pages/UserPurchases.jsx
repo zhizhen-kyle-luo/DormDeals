@@ -1,6 +1,6 @@
-import { React, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { get } from "../../utilities";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { UserContext } from "../App.jsx";
 import OrderCard from "./OrderCard";
 import "./UserPurchases.css";
@@ -29,61 +29,50 @@ const UserPurchases = () => {
     }
   }, [userId, currentUserId]);
 
-  const ongoingOrders = purchases.filter((item) => item.status === "Under Transaction");
-  const pastOrders = purchases.filter((item) => item.status === "Sold");
-
   if (isLoading) {
     return (
-      <div className="Purchases-container">
+      <div className="Items-container">
         <div>Loading...</div>
       </div>
     );
   }
 
-  return (
-    <div className="Purchases-container">
-      <h1>My Purchases</h1>
+  const ongoingOrders = purchases.filter((item) => item.status === "Under Transaction");
+  const pastOrders = purchases.filter((item) => item.status === "Sold");
 
-      <div className="Purchases-section">
+  return (
+    <div className="Items-container">
+      <h1>My Purchases</h1>
+      
+      <div className="Items-section">
         <h2>Ongoing Orders</h2>
-        <div className="Purchases-grid">
+        <div className="Items-grid">
           {ongoingOrders.length === 0 ? (
-            <div className="No-purchases">
-              <p>No ongoing orders.</p>
-            </div>
+            <div className="No-items">No ongoing orders</div>
           ) : (
-            ongoingOrders.map((item) => (
-              <div key={item._id}>
-                <OrderCard order={item} />
-              </div>
+            ongoingOrders.map((order) => (
+              <OrderCard key={order._id} order={order} />
             ))
           )}
         </div>
       </div>
 
-      <div className="Purchases-section">
+      <div className="Items-section">
         <h2>Past Orders</h2>
-        <div className="Purchases-grid">
+        <div className="Items-grid">
           {pastOrders.length === 0 ? (
-            <div className="No-purchases">
-              <p>No completed orders yet.</p>
-            </div>
+            <div className="No-items">No completed orders yet</div>
           ) : (
-            pastOrders.map((item) => (
-              <div key={item._id}>
-                <OrderCard order={item} />
-              </div>
+            pastOrders.map((order) => (
+              <OrderCard key={order._id} order={order} />
             ))
           )}
         </div>
       </div>
 
       {purchases.length === 0 && (
-        <div className="No-purchases">
+        <div className="No-items">
           <p>You haven't made any purchases yet.</p>
-          <Link to="/" className="Start-shopping">
-            Start Shopping
-          </Link>
         </div>
       )}
     </div>
