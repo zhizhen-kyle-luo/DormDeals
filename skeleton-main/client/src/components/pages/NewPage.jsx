@@ -18,12 +18,12 @@ const NewPage = () => {
   const [dragActive, setDragActive] = useState(false);
 
   const categories = [
-    "Textbooks",
-    "Electronics",
-    "Furniture",
-    "Clothing",
-    "School Supplies",
-    "Other",
+    "Textbooks 📚",
+    "Electronics 💻",
+    "Furniture 🪑",
+    "Clothing 👕",
+    "School Supplies ✏️",
+    "Other 🦫"
   ];
 
   const handleInputChange = (event) => {

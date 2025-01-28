@@ -20,12 +20,12 @@ const Home = () => {
   // Categories and conditions remain the same
   const categories = [
     "All",
-    "Textbooks",
-    "Electronics",
-    "Furniture",
-    "Clothing",
-    "School Supplies",
-    "Other",
+    "Textbooks 📚",
+    "Electronics 💻",
+    "Furniture 🪑",
+    "Clothing 👕",
+    "School Supplies ✏️",
+    "Other 🦫"
   ];
 
   const conditions = ["All", "New", "Like New", "Good", "Fair", "Poor"];
@@ -62,7 +62,7 @@ const Home = () => {
 
       const matchesCategory =
         filters.category === "all" ||
-        order.category.toLowerCase() === filters.category.toLowerCase();
+        order.category.toLowerCase().split(" ")[0] === filters.category.toLowerCase();
 
       const matchesCondition =
         filters.condition === "all" ||

@@ -2,6 +2,7 @@ import { React, useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { get, post } from "../../utilities";
 import { CartContext } from "../App.jsx";
+import { getCategoryWithEmoji } from "../../utilities/categoryUtils";
 import "./OrderDetails.css";
 
 const OrderDetails = (props) => {
@@ -212,7 +213,7 @@ const OrderDetails = (props) => {
           )}
 
           <div className="OrderDetails-tags">
-            <span className="OrderDetails-category">{order.category}</span>
+            <span className="OrderDetails-category">{getCategoryWithEmoji(order.category)}</span>
             <span className="OrderDetails-condition">{order.condition}</span>
           </div>
 
