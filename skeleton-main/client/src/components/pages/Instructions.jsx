@@ -25,7 +25,7 @@ const Instructions = () => {
             automatically update the feed so that you can easily see what available items there are
             that fit your criteria. If you see an item you like, click on the card, which will take
             you to a new page with more details on the item. The home page is accessible through
-            clicking the website icon on the left side of the navigation bar.
+            clicking the "Dorm Deals" icon on the left side of the navigation bar.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
@@ -36,7 +36,7 @@ const Instructions = () => {
           <div className="Instructions-text">
             Once you click on an item, you will be taken to a page with more details about that
             product. If you are interested in purchasing this item, feel free to click the "Add to
-            Cart" button, which will then redirect you to the cart page.
+            Cart" or "Purchase Now" button, which will then redirect you to the cart page.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
@@ -71,12 +71,14 @@ const Instructions = () => {
           <div className="Instructions-text">
             The profile page can be accessed by clicking the person icon in the navigation bar.
             Here, you are able to edit your own profile to include a description and email so others
-            know how to contact you if they have any questions. You can customize your picture as
-            well to give your profile more personality! Also included in the profile page are all
+            know how to contact you if they have any questions. Clicking the email will open a new
+            window to send an email with the user as the recipient. You can customize your picture
+            as well to give your profile more personality! Also included in the profile page are all
             the items that person is selling, making it easier for you to access a favorite person's
             items. The item icons are clickable, meaning you can easily check out whatever seems
             interesting to you. Finally, there is a rating of the user below their picture, which
-            takes you to a page that shows all reviews of that person when clicked.
+            takes you to a page that shows all reviews of that person when clicked. Your reviews can
+            be easily accessed by clicking the star icon in the navigation bar.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>

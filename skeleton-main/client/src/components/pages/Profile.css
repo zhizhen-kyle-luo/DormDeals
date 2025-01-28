@@ -3,12 +3,12 @@
   margin: 0 auto;
   padding: 2rem;
   min-height: calc(100vh - 64px);
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   background-color: #fdf9f6;
 }
 
 .Profile-header h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 2rem;
   font-weight: 600;
   color: #1a1a1a;
@@ -17,7 +17,7 @@
 }
 
 .Profile-section h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.5rem;
   font-weight: 600;
   color: #1a1a1a;
@@ -25,21 +25,21 @@
 }
 
 .Profile-info p {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   color: rgba(0, 0, 0, 0.8);
 }
 
 .Profile-stats {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
 
 .Profile-stats span {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   color: rgba(0, 0, 0, 0.6);
 }
 
 .Profile-button {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 500;
 }
 
@@ -116,6 +116,7 @@
 .Profile-description {
   color: #666;
   margin: 10px 0;
+  font-size: 1.2rem;
 }
 
 .Rating-container {
@@ -131,10 +132,11 @@
 
 .Profile-rating {
   color: #888;
-  font-size: 0.9rem;
+  font-size: 1rem;
   display: block;
   line-height: 50px;
   text-decoration: none;
+  align-self: center;
 }
 
 .Profile-rating:hover {
@@ -145,7 +147,7 @@
 .Profile-rating::after {
   content: "See All Reviews";
   position: absolute;
-  top: 260px;
+  top: 252px;
   left: 50%;
   transform: translateX(-50%);
   padding: 4px 8px;
@@ -176,8 +178,38 @@
 }
 
 .Profile-email {
+  text-decoration: none;
+  align-self: center;
   color: #888;
-  font-size: 0.9rem;
+  font-size: 1rem;
+}
+
+.Profile-email:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.Profile-email::after {
+  content: "Email user";
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  line-height: 20px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s;
+}
+
+.Profile-email:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 .userItems {

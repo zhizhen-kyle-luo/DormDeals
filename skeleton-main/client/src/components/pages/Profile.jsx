@@ -149,7 +149,9 @@ const Profile = () => {
               <div />
               <div className="Email-container">
                 <img src={emailicon} alt="Email icon" className="Email-icon" />
-                <p className="Profile-email">{userinformation.email}</p>
+                <a href={`mailto:${userinformation.email}`} className="Profile-email">
+                  {userinformation.email}
+                </a>
               </div>
             </div>
             <div className="Profile-subContainer u-textCenter">
