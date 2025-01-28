@@ -74,6 +74,7 @@
 .Shop-icon:hover,
 .Bag-icon:hover,
 .Question-icon:hover,
+.Star-icon:hover,
 .Logout-icon:hover {
   transform: scale(1.1);
   opacity: 1;
@@ -113,6 +114,7 @@
 .NavBar-link:hover .Shop-icon,
 .NavBar-link:hover .Bag-icon,
 .NavBar-link:hover .Question-icon,
+.NavBar-link:hover .Star-icon,
 .NavBar-link:hover .Logout-icon {
   opacity: 1;
 }

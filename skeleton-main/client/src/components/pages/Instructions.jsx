@@ -3,14 +3,28 @@ import "./Instructions.css";
 const Instructions = () => {
   return (
     <div className="Instructions-container">
-      <h1 className="Instructions-title">Instructions Page</h1>
+      <h1 className="Instructions-title">Instructions Page & About Us</h1>
       <div className="Instructions-sectionContainer">
         <div className="Instructions-textContainer">
           <h3 className="Instructions-subtitle">An Introduction</h3>
           <div className="Instructions-text">
             Welcome to DormDeals! Thanks for taking the time to check out our wonderful website! If
             you are unsure where to start, do not worry! We will show you how to use all the amazing
-            features this website has to offer just below. Thanks again!
+            features this website has to offer below. Thanks again!
+          </div>
+        </div>
+      </div>
+      <div className="Instructions-sectionContainer">
+        <div className="Instructions-textContainer">
+          <h3 className="Instructions-subtitle">About Us</h3>
+          <div className="Instructions-text">
+            We are a team of three MIT students from the Class of 2028 (Zhizhen (Kyle) Luo, Fatima
+            Danishyar, Anthony Zheng), who created this website to ease the process of selling items
+            amongst MIT students. We believe that the current method of advertising items through
+            Dormspam and Dormsoup is not centralized enough, complicating the process. Students are
+            forced to browse through many slideshows to see if there is anything of interest to
+            them. To address this issue, this website makes it simple for users to browse and filter
+            for certain items while also allowing the option to leave reviews for sellers.
           </div>
         </div>
       </div>
@@ -114,6 +128,19 @@ const Instructions = () => {
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
+      </div>
+      <div className="Instructions-sectionContainer">
+        <div className="Instructions-textContainer">
+          <h3 className="Instructions-subtitle">What Next?</h3>
+          <div className="Instructions-text">
+            As always, there is room for improvement. There still exists several unadded features we
+            hope to later implement. This includes a built-in communication feature between buyers
+            and sellers for questions or coming to an agreement on the exchanging process instead of
+            relying on email. Another feature is sending a notification to the seller when an item
+            has been brought, to prevent the buyer from manually doing this. Finally, an auction
+            feature to fit certain seller's needs is yet to be implemented.
+          </div>
+        </div>
       </div>
     </div>
   );
