@@ -9,7 +9,7 @@ const Purchase = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { userId } = useContext(UserContext);
-  const { clearCart } = useContext(CartContext);
+  const { removeFromCart } = useContext(CartContext);
   const [isProcessing, setIsProcessing] = useState(false);
   const items = location.state?.items || [];
   const total = items.reduce((sum, item) => sum + parseFloat(item.price), 0);
@@ -34,9 +34,11 @@ const Purchase = () => {
       const updatedItems = await Promise.all(updatePromises);
       console.log("All items updated:", updatedItems);
 
-      // Clear the cart after successful purchase
-      await clearCart();
-      console.log("Cart cleared");
+      // Remove only the purchased items from cart
+      for (const item of items) {
+        await removeFromCart(item.itemId || item._id);
+      }
+      console.log("Purchased items removed from cart");
 
       // Reset processing state before navigation
       setIsProcessing(false);
