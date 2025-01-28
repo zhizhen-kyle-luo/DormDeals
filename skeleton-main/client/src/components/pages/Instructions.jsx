@@ -7,13 +7,13 @@ import wavingBag from "../../assets/wavingBag.gif";
 const Instructions = () => {
   useEffect(() => {
     // Add random directions to fireworks
-    const fireworks = document.querySelectorAll('.firework');
-    fireworks.forEach(firework => {
+    const fireworks = document.querySelectorAll(".firework");
+    fireworks.forEach((firework) => {
       setInterval(() => {
         const x = (Math.random() - 0.5) * 200;
         const y = (Math.random() - 0.5) * 200;
-        firework.style.setProperty('--x', `${x}px`);
-        firework.style.setProperty('--y', `${y}px`);
+        firework.style.setProperty("--x", `${x}px`);
+        firework.style.setProperty("--y", `${y}px`);
       }, 1500);
     });
   }, []);
@@ -40,13 +40,14 @@ const Instructions = () => {
           <div className="Instructions-text">
             We are a team of 3 MIT students from the Class of 2028—Zhizhen (Kyle) Luo, Fatima
             Danishyar, Anthony Zheng—who created DormDeals to make buying and selling items on
-            campus easier and more efficient. We believe that the current method of advertising items
-            through Dormspam and Dormsoup lacks organization and convenience. For DormSpam, students are forced
-            to browse through many slideshows to see if there is anything of interest to them. For
-            DormSoup, it miscategories events as sales and does not include any email sales from individual senders.
-            To address this demand, we created DormDeals to centralize all the sales and deals around
-            MIT, along with compelling features such as rating and review system, filtering sales, 
-            streamlined communication between buyers and sellers, and more!
+            campus easier and more efficient. We believe that the current method of advertising
+            items through Dormspam and Dormsoup lacks organization and convenience. For DormSpam,
+            students are forced to browse through many slideshows to see if there is anything of
+            interest to them. For DormSoup, it miscategories events as sales and does not include
+            any email sales from individual senders. To address this demand, we created DormDeals to
+            centralize all the sales and deals around MIT, along with compelling features such as
+            rating and review system, filtering sales, streamlined communication between buyers and
+            sellers, and more!
           </div>
         </div>
         <div className="Instructions-videoContainer">
@@ -84,9 +85,11 @@ const Instructions = () => {
         <div className="Instructions-textContainer">
           <h3 className="Instructions-subtitle">Cart</h3>
           <div className="Instructions-text">
-            The cart page displays all the items you have previously added. Here, you can remove items,
-            save items for later, or checkout items you will buy. You can access this page any time by
-            clicking the shopping cart icon in the navigation bar.
+            The cart page displays all the items you have previously added. Here, you can remove
+            items, save items for later, or checkout items you will buy. You can access this page
+            any time by clicking the shopping cart icon in the navigation bar. Items that have been
+            added to the cart but have been bought by another user will appear in the "Expired
+            Items" section.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
@@ -98,7 +101,7 @@ const Instructions = () => {
             See something you want to buy? Select all the items you want to checkout and by clicking
             the "Proceed to Checkout" button, it will redirect you to the purchase page, where you
             can confirm your orders. It is now up to you to contact the seller about your purchase
-            and agree on a place and time to exchange. You have access to their emails and phone 
+            and agree on a place and time to exchange. You have access to their emails and phone
             numbers after clicking on their profile. After confirming your purchase, you will be
             taken to your "My Purchases" page, where you can track the status of all your sales.
           </div>
@@ -116,10 +119,11 @@ const Instructions = () => {
             as well to give your profile more personality! Also included in the profile page are all
             the items that person is selling, making it easier for you to access a favorite person's
             items. The item icons are clickable, meaning you can easily check out whatever seems
-            interesting to you. You can also click on "My Items" for a full showcase of their selling items.
-            Finally, there is a rating of the user below their picture, which takes you to a page that
-            takes you to a page that shows all reviews of that person when clicked. Your reviews can
-            be easily accessed by clicking the star icon in the navigation bar.
+            interesting to you. You can also click on "My Items" for a full showcase of their
+            selling items. Finally, there is a rating of the user below their picture, which takes
+            you to a page that takes you to a page that shows all reviews of that person when
+            clicked. Your reviews can be easily accessed by clicking the star icon in the navigation
+            bar.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
@@ -131,10 +135,10 @@ const Instructions = () => {
             When you checkout an item and the seller has marked it as "Sold", you will have the
             option to leave a review and rating for the seller. To do that, go to "My Purchases" by
             clicking the shopping bag icon in the navigation bar. There, you will find a list of all
-            items you have bought and an option to leave a review and rating by clicking on the correspodning
-            order and then clicking "Leave a Review". You can also view all your reviews by clicking on the star icon
-            You might also modify your reviews by clicking on the "Edit Reviews" button, which is 
-            visible after you have left a review.
+            items you have bought and an option to leave a review and rating by clicking on the
+            correspodning order and then clicking "Leave a Review". You can also view all your
+            reviews by clicking on the star icon You might also modify your reviews by clicking on
+            the "Edit Reviews" button, which is visible after you have left a review.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>

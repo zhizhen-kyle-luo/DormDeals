@@ -80,7 +80,7 @@
 }
 
 .NavBar-title::after {
-  content: '🛒';
+  content: "🛒";
   font-size: 1.5rem;
   animation: cartBounce 2s ease-in-out infinite;
   display: inline-block;
@@ -89,7 +89,8 @@
 }
 
 @keyframes cartBounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0);
   }
   50% {
@@ -97,24 +98,26 @@
   }
 }
 
-/* Enhance Cart icon animation */
-.Cart-icon {
-  animation: cartWiggle 1s ease-in-out infinite;
-}
-
 @keyframes cartWiggle {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-5deg); }
-  75% { transform: rotate(5deg); }
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
 }
-
-.NavBar-link:hover .Cart-icon {
-  animation: cartExcited 0.5s ease-in-out infinite;
-}
-
 @keyframes cartExcited {
-  0%, 100% { transform: scale(1.1) rotate(0); }
-  50% { transform: scale(1.2) rotate(5deg); }
+  0%,
+  100% {
+    transform: scale(1.1) rotate(0);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+  }
 }
 
 .NavBar-title .NavBar-link {
@@ -167,7 +170,7 @@
 }
 
 .NavBar-linkContainer .NavBar-link::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -211,6 +214,7 @@
   filter: brightness(0) invert(1);
   position: relative;
   z-index: 1;
+  animation: cartWiggle 1s ease-in-out infinite;
 }
 
 .NavBar-link:hover img {
@@ -228,6 +232,7 @@
 .NavBar-link:hover .Logout-icon {
   transform: scale(1.1) rotate(5deg);
   opacity: 1;
+  animation: cartExcited 0.5s ease-in-out infinite;
 }
 
 /* Tooltip Styles */
@@ -259,7 +264,7 @@
 
 /* Add a subtle arrow to the tooltip */
 .NavBar-linkContainer .NavBar-link::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -30px;
   left: 50%;
