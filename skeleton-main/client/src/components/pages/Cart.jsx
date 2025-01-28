@@ -34,7 +34,6 @@ const Cart = () => {
   }, [cartItems]);
 
   const toggleItemSelection = (itemId) => {
-    // Only allow selection if item is active
     if (itemStatuses[itemId] === "Active") {
       const newSelected = new Set(selectedItems);
       if (newSelected.has(itemId)) {
@@ -47,7 +46,6 @@ const Cart = () => {
   };
 
   const toggleSaveForLater = (itemId) => {
-    // Only allow saving for later if item is active
     if (itemStatuses[itemId] === "Active") {
       const newSaved = new Set(savedForLater);
       if (newSaved.has(itemId)) {
@@ -87,7 +85,7 @@ const Cart = () => {
   const activeItems = cartItems.filter(
     (item) => !savedForLater.has(item.itemId) && itemStatuses[item.itemId] === "Active"
   );
-  
+
   const savedItems = cartItems.filter(
     (item) => savedForLater.has(item.itemId) && itemStatuses[item.itemId] === "Active"
   );
@@ -99,7 +97,7 @@ const Cart = () => {
   if (isLoading) {
     return (
       <div className="cart-container">
-        <div>Loading...</div>
+        <div className="Loading-spinner">Loading...</div>
       </div>
     );
   }
@@ -114,30 +112,34 @@ const Cart = () => {
               <span>{activeItems.length} items</span>
             </div>
 
-            <div className="cart-items">
-              {activeItems.map((item) => (
-                <div key={item.itemId} className="cart-item">
-                  <div className="cart-item-select">
-                    <input
-                      type="checkbox"
-                      checked={selectedItems.has(item.itemId)}
-                      onChange={() => toggleItemSelection(item.itemId)}
-                    />
-                  </div>
-                  <div className="cart-item-image" onClick={() => handleItemClick(item.itemId)}>
-                    <img src={item.images[0]} alt={item.name} />
-                  </div>
-                  <div className="cart-item-details">
-                    <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
-                    <p className="cart-item-price">${item.price}</p>
-                    <div className="cart-item-actions">
-                      <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
-                      <button onClick={() => toggleSaveForLater(item.itemId)}>Save for later</button>
+            {activeItems.length === 0 ? (
+              <div className="No-items">No items in your cart</div>
+            ) : (
+              <div className="cart-items">
+                {activeItems.map((item) => (
+                  <div key={item.itemId} className="cart-item">
+                    <div className="cart-item-select">
+                      <input
+                        type="checkbox"
+                        checked={selectedItems.has(item.itemId)}
+                        onChange={() => toggleItemSelection(item.itemId)}
+                      />
+                    </div>
+                    <div className="cart-item-image" onClick={() => handleItemClick(item.itemId)}>
+                      <img src={item.images[0]} alt={item.name} />
+                    </div>
+                    <div className="cart-item-details">
+                      <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
+                      <p className="cart-item-price">${item.price}</p>
+                      <div className="cart-item-actions">
+                        <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
+                        <button onClick={() => toggleSaveForLater(item.itemId)}>Save for later</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="cart-summary">
@@ -158,36 +160,14 @@ const Cart = () => {
           </div>
         </div>
 
-        {expiredItems.length > 0 && (
-          <div className="expired-items-section">
-            <div className="section-header">
-              <h2>Expired Items</h2>
-              <span>{expiredItems.length} items</span>
-            </div>
-            <div className="cart-items">
-              {expiredItems.map((item) => (
-                <div key={item.itemId} className="cart-item expired">
-                  <div className="cart-item-image" onClick={() => handleItemClick(item.itemId)}>
-                    <img src={item.images[0]} alt={item.name} />
-                  </div>
-                  <div className="cart-item-details">
-                    <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
-                    <div className="cart-item-actions">
-                      <button onClick={() => removeFromCart(item.itemId)}>Remove from cart</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="saved-items-section">
+          <div className="section-header">
+            <h2>Saved for Later</h2>
+            <span>{savedItems.length} items</span>
           </div>
-        )}
-
-        {savedItems.length > 0 && (
-          <div className="saved-items-section">
-            <div className="section-header">
-              <h2>Saved for Later</h2>
-              <span>{savedItems.length} items</span>
-            </div>
+          {savedItems.length === 0 ? (
+            <div className="No-items">No items saved for later</div>
+          ) : (
             <div className="cart-items">
               {savedItems.map((item) => (
                 <div key={item.itemId} className="cart-item">
@@ -205,8 +185,35 @@ const Cart = () => {
                 </div>
               ))}
             </div>
+          )}
+        </div>
+
+        <div className="expired-items-section">
+          <div className="section-header">
+            <h2>Expired Items</h2>
+            <span>{expiredItems.length} items</span>
           </div>
-        )}
+          {expiredItems.length === 0 ? (
+            <div className="No-items">No expired items</div>
+          ) : (
+            <div className="cart-items">
+              {expiredItems.map((item) => (
+                <div key={item.itemId} className="cart-item expired">
+                  <div className="cart-item-image" onClick={() => handleItemClick(item.itemId)}>
+                    <img src={item.images[0]} alt={item.name} />
+                  </div>
+                  <div className="cart-item-details">
+                    <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
+                    <p className="cart-item-price">${item.price}</p>
+                    <div className="cart-item-actions">
+                      <button onClick={() => removeFromCart(item.itemId)}>Remove from cart</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
