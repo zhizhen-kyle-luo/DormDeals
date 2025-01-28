@@ -244,7 +244,9 @@ const Profile = () => {
 
         <div className="Profile-section">
           <h2 className="Profile-sectionTitle">
-            My Items
+            <Link to={`/UserAllItems/${userId}`} className="Profile-sectionLink">
+              My Items
+            </Link>
             {userItems.length > 12 && (
               <button onClick={displayAllItems} className="Profile-viewAllButton">
                 View All Items
@@ -252,7 +254,9 @@ const Profile = () => {
             )}
           </h2>
           <div className="Profile-itemsGrid">
-            {userItems.length === 0 ? (
+            {isLoading ? (
+              <div className="Loading-spinner">Loading items...</div>
+            ) : userItems.length === 0 ? (
               <p>No items listed yet</p>
             ) : (
               userItems.slice(0, 12).map((item) => (

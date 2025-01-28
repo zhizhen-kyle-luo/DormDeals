@@ -356,39 +356,64 @@ router.get("/purchases", auth.ensureLoggedIn, (req, res) => {
 });
 
 // Review endpoints
-router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
-  const newReview = new Review({
-    reviewer: { name: req.user.name, _id: req.user._id },
-    seller: req.body.seller,
-    itemId: req.body.itemId,
-    rating: Number(req.body.rating),
-    review: req.body.review,
-  });
+router.post("/newreview", auth.ensureLoggedIn, async (req, res) => {
+  try {
+    // Check if a review already exists
+    const existingReview = await Review.findOne({
+      reviewer: { name: req.user.name, _id: req.user._id },
+      itemId: req.body.itemId
+    });
 
-  // First get all existing reviews for this seller
-  Review.find({ seller: req.body.seller }).then((existingReviews) => {
-    // Add the new review to calculate the average
-    const allReviews = [...existingReviews, newReview];
+    let newReview;
+    if (existingReview) {
+      // Update existing review
+      existingReview.rating = Number(req.body.rating);
+      existingReview.review = req.body.review;
+      newReview = await existingReview.save();
+    } else {
+      // Create new review
+      newReview = new Review({
+        reviewer: { name: req.user.name, _id: req.user._id },
+        seller: req.body.seller,
+        itemId: req.body.itemId,
+        rating: Number(req.body.rating),
+        review: req.body.review,
+      });
+      await newReview.save();
+    }
+
+    // Get all reviews for this seller to update their profile rating
+    const allReviews = await Review.find({ 
+      seller: req.body.seller 
+    });
+    
+    // Calculate new average rating
     const totalRating = allReviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
     const averageRating = (totalRating / allReviews.length).toFixed(1);
 
-    // Update the seller's profile with the new rating
-    UserProfile.find({ user: req.body.seller }).then((seller) => {
-      seller[0].rating = [averageRating, String(allReviews.length)];
-      seller[0].save();
-    });
+    // Update seller's profile
+    const seller = await UserProfile.findOne({ user: req.body.seller });
+    if (seller) {
+      seller.rating = [averageRating, String(allReviews.length)];
+      await seller.save();
+    }
 
-    // Save the new review
-    newReview
-      .save()
-      .then((savedReview) => {
-        res.status(201).send(savedReview);
-      })
-      .catch((err) => {
-        console.log("Failed to save review:", err);
-        res.status(500).send({ error: "Failed to leave a review" });
-      });
-  });
+    // Update the item to mark it as reviewed
+    const item = await Item.findById(req.body.itemId);
+    if (item) {
+      item.reviewed = true;
+      item.review = {
+        rating: newReview.rating,
+        text: newReview.review
+      };
+      await item.save();
+    }
+
+    res.status(201).send(newReview);
+  } catch (err) {
+    console.error("Failed to save review:", err);
+    res.status(500).send({ error: "Failed to leave a review" });
+  }
 });
 
 //Checks if there already exists a review for an item

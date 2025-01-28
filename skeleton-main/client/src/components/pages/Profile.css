@@ -332,3 +332,25 @@
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 }
+
+.Profile-sectionLink {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.Profile-sectionLink:hover {
+  color: #e07007;
+  text-decoration: underline;
+}
+
+.Loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #6b7280;
+  font-size: 1.1rem;
+  width: 100%;
+  grid-column: 1 / -1;
+}
