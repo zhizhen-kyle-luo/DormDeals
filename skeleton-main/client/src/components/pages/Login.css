@@ -15,7 +15,7 @@
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: white;
+  background-color: rgb(251, 246, 237);
 }
 .rubik-vinyl-regular {
   font-family: "Rubik Vinyl", serif;
@@ -25,7 +25,7 @@
 
 .floating-text {
   position: absolute;
-  color: rgb(214, 49, 49);
+  color: rgb(234, 115, 11);
   font-size: 24px;
   font-weight: bold;
   animation: float 15s linear infinite;

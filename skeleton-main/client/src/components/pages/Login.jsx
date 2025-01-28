@@ -39,14 +39,14 @@ const Login = () => {
       </div>
       <div className="electric-border">
         <div className="main_div">
-          <h1 style={{color: "red"}}>Welcome to DormDeals</h1>
-          <div className="Login-google">
+          <h1 style={{color: "rgb(234, 115, 11)"}}>Welcome to DormDeals</h1>
+          <div className="Login-google" >
             <GoogleLogin
               onSuccess={handleLoginSuccess}
               onError={(err) => console.log("Google Login Failed:", err)}
             />
           </div>
-          <Link to="/instructions" className="Instructions-button">
+          <Link to="/instructions" className="Instructions-button" style={{color: "rgb(234, 115, 11)", backgroundColor: "white", margin: "20px", textDecoration: "none", border: "2px solid rgb(234, 115, 11)", padding: "10px", borderRadius: "15px"}}>
             How to use DormDeals
           </Link>
         </div>

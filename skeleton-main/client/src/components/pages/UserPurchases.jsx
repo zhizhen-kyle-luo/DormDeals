@@ -54,7 +54,7 @@ const UserPurchases = () => {
           ) : (
             ongoingOrders.map((item) => (
               <div key={item._id}>
-                <OrderCard order={item} />
+                <OrderCard order={item} className="Purchases-card" />
               </div>
             ))
           )}
@@ -71,7 +71,7 @@ const UserPurchases = () => {
           ) : (
             pastOrders.map((item) => (
               <div key={item._id}>
-                <OrderCard order={item} />
+                {/* <OrderCard order={item} /> */}
               </div>
             ))
           )}
