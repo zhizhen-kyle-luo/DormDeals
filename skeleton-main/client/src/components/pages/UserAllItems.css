@@ -1,23 +1,30 @@
 .Items-container {
   padding: 2rem;
   margin: 0 auto;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   background-color: #fdf9f6;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.Items-header {
+  animation: slideInRight 0.8s ease-out;
 }
 
 .Items-container h1 {
   color: #333;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
 .Items-grid {
+  animation: fadeInUp 0.8s ease-out 0.4s backwards;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
+  padding: 1rem;
 }
 
 .No-items {
@@ -31,7 +38,7 @@
   background: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
 
 /* Responsive grid */
@@ -40,14 +47,13 @@
   .OrderCard-container {
     width: calc(50% - 2rem);
   }
-
 }
 
 @media (max-width: 640px) {
   .OrderCard-container {
     width: calc(100% - 2rem);
   }
-  }
+}
 
 /* My Sales Animations */
 @keyframes fadeInUp {
@@ -83,6 +89,7 @@
   }
 }
 
+/*
 .UserAllItems-container {
   animation: fadeInUp 0.6s ease-out;
 }
@@ -197,6 +204,7 @@
   background: #fef3c7;
   color: #92400e;
 }
+*/
 
 /* Filter Controls Animation */
 .Filter-controls {
@@ -251,4 +259,3 @@
   color: #6b7280;
   margin-bottom: 2rem;
 }
-

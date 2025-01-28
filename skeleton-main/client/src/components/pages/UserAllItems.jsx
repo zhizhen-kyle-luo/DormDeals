@@ -16,19 +16,17 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    get(`/api/user`, { userid: props.userId, picture: defaultpfpimg })
-      .then((sellerObj) => {
-        setSeller(`All Items Sold by ${sellerObj[0].name}`);
-        setSellerLoaded(true);
-      });
+    get(`/api/user`, { userid: props.userId, picture: defaultpfpimg }).then((sellerObj) => {
+      setSeller(`All Items Sold by ${sellerObj[0].name}`);
+      setSellerLoaded(true);
+    });
   }, []);
 
   useEffect(() => {
-    get("/api/userallitems", { seller_id: props.userId })
-      .then((orderObjs) => {
-        setOrders(orderObjs);
-        setOrdersLoaded(true);
-      });
+    get("/api/userallitems", { seller_id: props.userId }).then((orderObjs) => {
+      setOrders(orderObjs);
+      setOrdersLoaded(true);
+    });
   }, []);
 
   // Update loading state when both data are loaded
@@ -48,14 +46,12 @@ const Home = () => {
 
   return (
     <div className="Items-container">
-      <h1>{seller}</h1>
+      <h1 className="Items-header">{seller}</h1>
       <div className="Items-grid">
         {orders.length === 0 ? (
           <div className="No-items">No items found</div>
         ) : (
-          orders.map((order) => (
-            <OrderCard className="Item" key={order._id} order={order} />
-          ))
+          orders.map((order) => <OrderCard className="Item-card" key={order._id} order={order} />)
         )}
       </div>
     </div>
