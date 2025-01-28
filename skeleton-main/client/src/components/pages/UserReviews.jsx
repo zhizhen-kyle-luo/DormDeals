@@ -33,11 +33,13 @@ const UserReviews = () => {
   if (isLoading) {
     return <h3>Loading...</h3>;
   }
-
+  console.log(seller);
   return (
     <div className="Reviews-container">
       <h1>Reviews for {seller.user.name}</h1>
-      <div className="User-rating">{`★ ${seller.rating[0]} (${seller.rating[1]})`}</div>
+      <div className="User-rating">{`★ ${Number(seller.rating[0]).toFixed(1)} (${
+        seller.rating[1]
+      })`}</div>
       <div className="Reviews-grid">
         {reviews.map((review) => (
           <div className="Review-card">

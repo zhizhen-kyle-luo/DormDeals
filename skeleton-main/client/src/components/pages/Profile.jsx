@@ -142,10 +142,9 @@ const Profile = () => {
               <h1 className="Profile-subtitle">{user.name}</h1>
               <div className="Rating-container">
                 <img src={ratingstaricon} alt="Rating icon" className="Rating-icon" />
-                <Link
-                  to={`/UserReviews/${props.userId}`}
-                  className="Profile-rating"
-                >{`${userinformation.rating[0]} (${userinformation.rating[1]})`}</Link>
+                <Link to={`/UserReviews/${props.userId}`} className="Profile-rating">{`${Number(
+                  userinformation.rating[0]
+                ).toFixed(1)} (${userinformation.rating[1]})`}</Link>
               </div>
               <div />
               <div className="Email-container">

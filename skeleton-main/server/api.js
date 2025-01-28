@@ -369,9 +369,9 @@ router.post("/newreview", auth.ensureLoggedIn, (req, res) => {
   UserProfile.find({ user: req.body.seller }).then((seller) => {
     sellerRating = [Number(seller[0].rating[0]), Number(seller[0].rating[1])];
     sellerRating[1] = String(sellerRating[1] + 1);
-    sellerRating[0] = Math.round(
-      (sellerRating[0] + Number(newReview.rating)) / sellerRating[1]
-    ).toFixed(1);
+    sellerRating[0] = String(
+      (sellerRating[0] + Number(newReview.rating)) / Number(sellerRating[1])
+    );
     seller[0].rating = sellerRating;
     seller[0].save();
   });
