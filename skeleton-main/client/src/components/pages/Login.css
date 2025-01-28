@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   background-color: #fdf9f6;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
 
 .floating-background {
@@ -74,17 +74,17 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 500px; 
-  height: auto; 
+  width: 500px;
+  height: auto;
   align-items: center;
   justify-content: center;
   padding: 70px;
-  border-radius: 15px; 
+  border-radius: 15px;
   background: transparent;
   backdrop-filter: blur(20px) saturate(200%);
   -webkit-backdrop-filter: blur(20px) saturate(200%);
-  box-shadow: 0 8px 32px rgba(183, 160, 160, 0.984); 
-  border: 1px solid rgba(255, 255, 255, 0.2); 
+  box-shadow: 0 8px 32px rgba(183, 160, 160, 0.984);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
@@ -103,7 +103,7 @@
 }
 
 .Login-content h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 2rem;
   font-weight: 600;
   color: #1a1a1a;
@@ -112,7 +112,7 @@
 }
 
 .Login-content p {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   color: rgba(0, 0, 0, 0.6);
   margin-bottom: 2rem;
   line-height: 1.6;
@@ -125,8 +125,14 @@
 }
 
 .Instructions-button {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 500;
+  margin-top: 10px;
+  text-decoration: none;
+}
+
+.Instructions-button:hover {
+  font-weight: 700;
 }
 
 .login-description {
