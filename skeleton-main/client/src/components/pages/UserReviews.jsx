@@ -1,59 +1,88 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { get } from "../../utilities";
 import { useParams, Link } from "react-router-dom";
-import defaultpfpimg from "../../assets/blank-profile.png";
-
 import "./UserReviews.css";
 
 const UserReviews = () => {
-  let props = useParams();
-  const [seller, setSeller] = useState({});
+  const { userId } = useParams();
   const [reviews, setReviews] = useState([]);
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const ratingIcon = {
-    1: "★☆☆☆☆",
-    2: "★★☆☆☆",
-    3: "★★★☆☆",
-    4: "★★★★☆",
-    5: "★★★★★",
-  };
 
   useEffect(() => {
     setIsLoading(true);
-    get(`/api/user`, { userid: props.userId, picture: defaultpfpimg }).then((sellerObj) => {
-      setSeller(sellerObj[1]);
-      get(`/api/reviews`, { name: sellerObj[0].name, _id: props.userId }).then((reviewsObj) => {
-        setReviews(reviewsObj);
+    // First get the user info
+    get("/api/user", { userid: userId })
+      .then((userObj) => {
+        setUser(userObj[0]);
+        // Then get their reviews - using the correct endpoint
+        return get("/api/getreviews", { seller_id: userId });
+      })
+      .then((reviewsObj) => {
+        console.log("Fetched reviews:", reviewsObj);
+        setReviews(reviewsObj || []);
+      })
+      .catch((error) => {
+        console.error("Error fetching reviews:", error);
+        setReviews([]);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
-    });
-  }, []);
+  }, [userId]);
+
+  const renderStars = (rating) => {
+    return "★".repeat(rating) + "☆".repeat(5 - rating);
+  };
 
   if (isLoading) {
-    return <h3>Loading...</h3>;
+    return (
+      <div className="UserReviews-container">
+        <div className="Loading-spinner">Loading reviews...</div>
+      </div>
+    );
   }
-  console.log(seller);
+
+  const averageRating = reviews.length > 0
+    ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
+    : 0;
+
   return (
-    <div className="Reviews-container">
-      <h1>Reviews for {seller.user.name}</h1>
-      <div className="User-rating">{`★ ${Number(seller.rating[0]).toFixed(1)} (${
-        seller.rating[1]
-      })`}</div>
-      <div className="Reviews-grid">
-        {reviews.map((review) => (
-          <div className="Review-card">
-            <div className="Review-author">
-              <div className="Review-author-imageContainer">
-                <img src={seller.picture} className="Review-author-image" />
-              </div>
-              <h3 className="Review-author-name">{review.reviewer.name}</h3>
-            </div>
-            <div className="Review-rating">{ratingIcon[review.rating]}</div>
-            <hr className="Review-divide" />
-            <div className="Review-main">{review.review}</div>
+    <div className="UserReviews-container">
+      <div className="UserReviews-header">
+        <h1 className="UserReviews-title">Reviews for {user?.name || "User"}</h1>
+        {reviews.length > 0 && (
+          <div className="UserReviews-summary">
+            <span className="UserReviews-rating">
+              <span className="Review-stars">{renderStars(Math.round(averageRating))}</span>
+              {averageRating}/5
+            </span>
+            <span className="UserReviews-count">({reviews.length} reviews)</span>
           </div>
-        ))}
+        )}
+      </div>
+      <div className="UserReviews-grid">
+        {reviews.length === 0 ? (
+          <div className="No-reviews">No reviews yet</div>
+        ) : (
+          reviews.map((review) => (
+            <div key={review._id} className="Review-card">
+              <div className="Review-header">
+                <Link to={`/profile/${review.reviewer._id}`} className="Review-seller">
+                  {review.reviewer.name}
+                </Link>
+                <div className="Review-rating">
+                  <span className="Review-stars">{renderStars(review.rating)}</span>
+                  {review.rating}/5
+                </div>
+              </div>
+              <p className="Review-text">{review.review}</p>
+              <div className="Review-date">
+                {new Date(review.date).toLocaleDateString()}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

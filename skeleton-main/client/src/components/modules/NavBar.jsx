@@ -43,7 +43,7 @@ const NavBar = ({ userId }) => {
         <Link to={`/UserPurchases/${userId}`} className="NavBar-link" title="My Purchases">
           <img src={bagIcon} alt="Shopping Bag" className="Bag-icon" />
         </Link>
-        <Link to={`/UserReviews/${userId}`} className="NavBar-link" title="Reviews of Me">
+        <Link to={`/UserReviews/${userId}`} className="NavBar-link" title="My Reviews">
           <img src={starIcon} alt="Star" className="Star-icon" />
         </Link>
         <div
