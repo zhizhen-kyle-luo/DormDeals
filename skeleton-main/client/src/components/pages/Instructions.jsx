@@ -1,6 +1,23 @@
+import React, { useEffect } from "react";
 import "./Instructions.css";
+import dancingBeaver from "../../assets/dancingBeaver.gif";
+import fireworks from "../../assets/fireworks.gif";
+import wavingBag from "../../assets/wavingBag.gif";
 
 const Instructions = () => {
+  useEffect(() => {
+    // Add random directions to fireworks
+    const fireworks = document.querySelectorAll('.firework');
+    fireworks.forEach(firework => {
+      setInterval(() => {
+        const x = (Math.random() - 0.5) * 200;
+        const y = (Math.random() - 0.5) * 200;
+        firework.style.setProperty('--x', `${x}px`);
+        firework.style.setProperty('--y', `${y}px`);
+      }, 1500);
+    });
+  }, []);
+
   return (
     <div className="Instructions-container">
       <h1 className="Instructions-title">Instructions Page & About Us</h1>
@@ -12,6 +29,9 @@ const Instructions = () => {
             If you are unsure where to start, do not worry! We are excited to guide you through all
             our amazing features!
           </div>
+        </div>
+        <div className="Instructions-videoContainer">
+          <img src={wavingBag} alt="Waving Bag" className="instruction-gif" />
         </div>
       </div>
       <div className="Instructions-sectionContainer">
@@ -28,6 +48,9 @@ const Instructions = () => {
             MIT, along with compelling features such as rating and review system, filtering sales, 
             streamlined communication between buyers and sellers, and more!
           </div>
+        </div>
+        <div className="Instructions-videoContainer">
+          <img src={dancingBeaver} alt="Dancing Beaver" className="instruction-gif" />
         </div>
       </div>
       <div className="Instructions-sectionContainer">
@@ -146,6 +169,9 @@ const Instructions = () => {
             has been brought, to prevent the buyer from manually doing this. Finally, an auction
             feature to fit certain seller's needs is yet to be implemented.
           </div>
+        </div>
+        <div className="Instructions-videoContainer">
+          <img src={fireworks} alt="Fireworks" className="instruction-gif" />
         </div>
       </div>
     </div>
