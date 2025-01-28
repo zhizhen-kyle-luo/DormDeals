@@ -98,18 +98,6 @@
   }
 }
 
-@keyframes cartWiggle {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  25% {
-    transform: rotate(-5deg);
-  }
-  75% {
-    transform: rotate(5deg);
-  }
-}
 @keyframes cartExcited {
   0%,
   100% {
@@ -214,7 +202,6 @@
   filter: brightness(0) invert(1);
   position: relative;
   z-index: 1;
-  animation: cartWiggle 1s ease-in-out infinite;
 }
 
 .NavBar-link:hover img {
