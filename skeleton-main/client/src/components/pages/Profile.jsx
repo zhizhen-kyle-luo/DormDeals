@@ -24,7 +24,7 @@ const Profile = () => {
       setViewingUser(viewingUserObj);
       // Set the default email to the Google email when it's the user's own profile
       if (viewingUserObj?._id === userId) {
-        setNewPicture(prev => ({ ...prev, email: viewingUserObj.email }));
+        setUser(prev => [prev[0], { ...prev[1], email: viewingUserObj.email }]);
       }
     });
     get(`/api/useritems`, { userid: userId }).then((userItemsObj) =>
@@ -212,11 +212,9 @@ const Profile = () => {
                 <input
                   type="email"
                   id="Email-input"
-                  defaultValue={viewingUser?.email}
+                  defaultValue={userinformation?.email}
                   placeholder="Your email"
-                  disabled={true}
                 />
-                <small className="Profile-emailNote">Email is linked to your Google account</small>
               </div>
               <div className="Profile-formGroup">
                 <label>Phone Number</label>

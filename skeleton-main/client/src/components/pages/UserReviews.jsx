@@ -15,8 +15,8 @@ const UserReviews = () => {
     get("/api/user", { userid: userId })
       .then((userObj) => {
         setUser(userObj[0]);
-        // Then get their reviews - using the correct endpoint
-        return get("/api/reviews", { seller: { _id: userId, name: userObj[0].name } });
+        // Then get their reviews - using the correct endpoint with proper parameter format
+        return get("/api/reviews", { name: userObj[0].name, _id: userId });
       })
       .then((reviewsObj) => {
         console.log("Fetched reviews:", reviewsObj);
@@ -32,7 +32,9 @@ const UserReviews = () => {
   }, [userId]);
 
   const renderStars = (rating) => {
-    return "★".repeat(rating) + "☆".repeat(5 - rating);
+    // Ensure rating is a valid number between 0 and 5
+    const validRating = Math.max(0, Math.min(5, Math.round(rating) || 0));
+    return "★".repeat(validRating) + "☆".repeat(5 - validRating);
   };
 
   if (isLoading) {
@@ -44,7 +46,7 @@ const UserReviews = () => {
   }
 
   const averageRating = reviews.length > 0
-    ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
+    ? Math.max(0, Math.min(5, (reviews.reduce((sum, review) => sum + (review.rating || 0), 0) / reviews.length))).toFixed(1)
     : 0;
 
   return (
