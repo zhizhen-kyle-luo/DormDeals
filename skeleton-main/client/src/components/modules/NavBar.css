@@ -48,7 +48,10 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
-.NavBar-container.other-page .NavBar-title,
+.NavBar-container.other-page .NavBar-title {
+  color: #e07007;
+}
+
 .NavBar-container.other-page .NavBar-link {
   color: #000;
 }
@@ -70,6 +73,15 @@
   text-decoration: none;
   position: relative;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e07007; /* Default orange color */
+}
+
+/* Override for home page */
+.NavBar-container.home-page .NavBar-title {
+  color: white;
 }
 
 .NavBar-title .NavBar-link {
@@ -79,6 +91,25 @@
 
 .NavBar-title .NavBar-link:hover {
   opacity: 0.8;
+}
+
+/* Shopping Cart Animation */
+.NavBar-title::after {
+  content: '🛒';
+  font-size: 1.5rem;
+  animation: cartBounce 2s ease-in-out infinite;
+  display: inline-block;
+  margin-left: 0.5rem;
+  transform-origin: bottom;
+}
+
+@keyframes cartBounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-5px) rotate(5deg);
+  }
 }
 
 .NavBar-linkContainer {

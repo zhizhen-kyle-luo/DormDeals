@@ -1,6 +1,6 @@
 .Profile-container {
   min-height: calc(100vh - 64px);
-  background-color: #fafafa;
+  background-color: #fdf9f6;
   font-family: "Playfair Display", serif;
   animation: fadeInUp 0.6s ease-out;
 }
@@ -13,9 +13,9 @@
 }
 
 .Profile-content {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: -100px auto 0;
-  padding: 0 2rem 4rem;
+  padding: 0 4rem 4rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -27,10 +27,10 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  border: 8px solid white;
+  border: 8px solid #fdf9f6;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   overflow: hidden;
-  background: white;
+  background: #fdf9f6;
   align-self: center;
   animation: scaleIn 0.8s ease-out;
 }
@@ -82,11 +82,14 @@
   transition: transform 0.3s ease, color 0.3s ease;
   padding: 0.5rem 1rem;
   border-radius: 30px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
 }
 
 .Profile-detail:hover {
   transform: translateX(5px);
   color: #e07007;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .Profile-detail svg {
@@ -98,17 +101,28 @@
 .Profile-email,
 .Profile-phone {
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .Profile-email:hover,
 .Profile-phone:hover,
 .Profile-rating:hover {
-  font-weight: 550;
+  color: #e07007;
 }
 
 .Profile-section {
   width: 100%;
   animation: fadeInUp 0.8s ease-out 0.6s backwards;
+  background: transparent;
+  border-radius: 16px;
+  padding: 2rem;
+  border: 2px dashed rgba(229, 231, 235, 0.8);
+  transition: all 0.3s ease;
+}
+
+.Profile-section:hover {
+  border-color: rgba(224, 112, 7, 0.3);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .Profile-sectionTitle {
@@ -121,7 +135,8 @@
   align-items: center;
   gap: 1rem;
   position: relative;
-  cursor: pointer;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e07007;
 }
 
 .Profile-aboutText {
@@ -130,30 +145,38 @@
   font-size: 1.2rem;
   max-width: 800px;
   font-weight: 300;
+  padding: 1.5rem;
+  background: transparent;
+  border-radius: 12px;
+  transition: all 0.3s ease;
 }
 
 .Profile-itemsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  padding: 0.5rem;
 }
 
 .Profile-itemCard {
   position: relative;
   aspect-ratio: 1;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  background: white;
+  background: transparent;
+  border: 1px solid rgba(229, 231, 235, 0.5);
   animation: scaleIn 0.6s ease-out;
 }
 
 .Profile-itemCard:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+  border-color: rgba(224, 112, 7, 0.3);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .Profile-itemImage {
@@ -174,19 +197,20 @@
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   border-radius: 30px;
-  background: #fff3e0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
-  border: none;
+  border: 1px solid rgba(224, 112, 7, 0.2);
   cursor: pointer;
   margin-left: 1.5rem;
   font-weight: 500;
-  box-shadow: 0 2px 8px rgba(224, 112, 7, 0.15);
+  box-shadow: 0 4px 12px rgba(224, 112, 7, 0.1);
 }
 
 .Profile-viewAllButton:hover {
-  background: #ffe0b2;
+  background: rgba(255, 255, 255, 0.9);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(224, 112, 7, 0.2);
+  box-shadow: 0 6px 16px rgba(224, 112, 7, 0.2);
 }
 
 .Profile-editText {
@@ -340,9 +364,19 @@
   cursor: not-allowed;
 }
 
+@media (max-width: 1200px) {
+  .Profile-content {
+    padding: 0 2rem 2rem;
+  }
+
+  .Profile-name {
+    font-size: 2.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .Profile-content {
-    padding: 0 1rem 2rem;
+    padding: 0 1.5rem 1.5rem;
     margin-top: -80px;
   }
 
@@ -356,7 +390,38 @@
   }
 
   .Profile-itemsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .Profile-section {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .Profile-content {
+    padding: 0 1rem 1rem;
+  }
+
+  .Profile-name {
+    font-size: 1.8rem;
+  }
+
+  .Profile-itemsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .Profile-section {
+    padding: 1rem;
+  }
+
+  .Profile-viewAllButton {
+    margin-left: 0;
+    margin-top: 1rem;
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -454,7 +519,7 @@
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
