@@ -12,7 +12,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   background: white;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -20,24 +20,24 @@
 .OrderDetails-imageSection {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem;
 }
 
 .OrderDetails-mainImage {
   width: 100%;
-  height: 400px;
-  border-radius: 8px;
+  height: 500px;
+  border-radius: 12px;
   object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .OrderDetails-thumbnails {
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   overflow-x: auto;
-  padding: 10px 0;
+  padding: 0.5rem 0;
   scrollbar-width: thin;
   scrollbar-color: #e07007 #f3f4f6;
-  -webkit-overflow-scrolling: touch;
 }
 
 .OrderDetails-thumbnails::-webkit-scrollbar {
@@ -58,156 +58,225 @@
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
   border: 2px solid transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .OrderDetails-thumbnail:hover {
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .OrderDetails-thumbnail.active {
   border-color: #e07007;
-  box-shadow: 0 2px 8px rgba(224, 112, 7, 0.2);
 }
 
 .OrderDetails-info {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem;
+  padding-top: 1rem;
 }
 
 .OrderDetails-title {
-  font-family: "Playfair Display", serif;
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #1a1a1a;
-  margin: 0 0 1rem;
+  margin: 0;
   font-weight: 600;
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .OrderDetails-price {
-  font-family: "Playfair Display", serif;
-  font-size: 1.75rem;
-  color: #1a1a1a;
+  font-size: 2rem;
+  color: #e07007;
   font-weight: 600;
-  margin: 1rem 0;
+  margin: 0;
 }
 
 .OrderDetails-seller {
-  color: #e07007;
+  color: #4a5568;
   text-decoration: none;
   font-size: 1.1rem;
-  margin: 0.5rem 0;
+  margin: 0;
   display: inline-block;
   transition: all 0.2s ease;
 }
 
 .OrderDetails-seller:hover {
-  color: #c86006;
-  text-decoration: underline;
+  color: #e07007;
 }
 
 .OrderDetails-status {
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  background: #f3f4f6;
+  color: #4b5563;
+  width: fit-content;
+}
+
+.u-red {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+.u-green {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.OrderDetails-purchase-date {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
 }
 
 .OrderDetails-tags {
   display: flex;
-  gap: 10px;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
 }
 
 .OrderDetails-category,
 .OrderDetails-condition {
-  padding: 5px 10px;
-  background: #f0f0f0;
-  border-radius: 15px;
-  font-size: 0.9em;
-  color: #666;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.OrderDetails-category {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.OrderDetails-condition {
+  background: #f3e8ff;
+  color: #6b21a8;
 }
 
 .OrderDetails-description {
-  margin-top: 20px;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
 }
 
 .OrderDetails-description h2 {
-  font-family: "Playfair Display", serif;
   font-size: 1.25rem;
   color: #1a1a1a;
-  margin: 1.5rem 0 1rem;
+  margin: 0 0 1rem;
 }
 
 .OrderDetails-description p {
-  font-family: "Playfair Display", serif;
   font-size: 1rem;
-  color: rgba(0, 0, 0, 0.8);
-  line-height: 1.6;
+  color: #4b5563;
+  line-height: 1.7;
+  margin: 0;
 }
 
 .OrderDetails-actions {
   display: flex;
-  gap: 15px;
+  gap: 1rem;
   margin-top: auto;
+  padding-top: 2rem;
 }
 
 .OrderDetails-button {
-  font-family: "Playfair Display", serif;
   font-size: 1rem;
-  font-weight: 500;
-  padding: 12px 25px;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
+  flex: 1;
 }
 
 .OrderDetails-addToCart {
+  background: white;
+  color: #e07007;
+  border: 2px solid #e07007;
+}
+
+.OrderDetails-addToCart:hover {
+  background: #fff8f3;
+}
+
+.OrderDetails-purchaseNow {
   background: #e07007;
   color: white;
 }
 
-.OrderDetails-addToCart:hover {
-  background: #c86206;
+.OrderDetails-purchaseNow:hover {
+  background: #c86006;
 }
 
-.OrderDetails-purchaseNow {
-  background: #080500;
+.OrderDetails-review {
+  background: #e07007;
   color: white;
 }
 
-.OrderDetails-purchaseNow:hover {
-  background: #c86206;
+.OrderDetails-review:hover {
+  background: #c86006;
 }
 
 .OrderDetails-sold {
-  background: #03a350;
-  color: white;
+  background: #dcfce7;
+  color: #166534;
 }
 
 .OrderDetails-sold:hover {
-  background: #048b28;
+  background: #bbf7d0;
 }
 
 .OrderDetails-remove {
-  background: #d90000;
-  color: white;
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 .OrderDetails-remove:hover {
-  background: #af0000;
+  background: #fecaca;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .OrderDetails-content {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+
+  .OrderDetails-mainImage {
+    height: 400px;
+  }
+
+  .OrderDetails-title {
+    font-size: 2rem;
+  }
+
+  .OrderDetails-price {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .OrderDetails-container {
+    padding: 1rem;
   }
 
   .OrderDetails-actions {
     flex-direction: column;
+  }
+
+  .OrderDetails-button {
+    width: 100%;
   }
 }
 
@@ -304,19 +373,11 @@
 .OrderDetails-button.OrderDetails-review {
   background: #e07007;
   color: white;
+  flex: 0 1 auto;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
 }
 
 .OrderDetails-button.OrderDetails-review:hover {
   background: #c86006;
-}
-
-.OrderDetails-purchase-date {
-  font-family: "Playfair Display", serif;
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin: 0.5rem 0;
-  padding: 0.5rem 0.75rem;
-  background: #f3f4f6;
-  border-radius: 8px;
-  display: inline-block;
 }
