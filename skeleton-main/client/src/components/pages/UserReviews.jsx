@@ -16,7 +16,7 @@ const UserReviews = () => {
       .then((userObj) => {
         setUser(userObj[0]);
         // Then get their reviews - using the correct endpoint
-        return get("/api/getreviews", { seller_id: userId });
+        return get("/api/reviews", { seller: { _id: userId, name: userObj[0].name } });
       })
       .then((reviewsObj) => {
         console.log("Fetched reviews:", reviewsObj);
