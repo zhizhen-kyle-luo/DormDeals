@@ -12,6 +12,7 @@ const ReviewSchema = new mongoose.Schema({
   itemId: String,
   rating: Number,
   review: String,
+  date: { type: Date, default: Date.now }
 });
 
 // compile model from schema
