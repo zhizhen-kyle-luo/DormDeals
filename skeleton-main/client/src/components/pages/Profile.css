@@ -1,305 +1,356 @@
 .Profile-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
   min-height: calc(100vh - 64px);
-  font-family: "Playfair Display", serif;
-  background-color: #fdf9f6;
-}
-
-.Profile-header h1 {
-  font-family: "Playfair Display", serif;
-  font-size: 2rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 2rem 0;
-  letter-spacing: -0.02em;
-}
-
-.Profile-section h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 1.5rem 0;
-}
-
-.Profile-info p {
-  font-family: "Playfair Display", serif;
-  color: rgba(0, 0, 0, 0.8);
-}
-
-.Profile-stats {
+  background-color: #fafafa;
   font-family: "Playfair Display", serif;
 }
 
-.Profile-stats span {
-  font-family: "Playfair Display", serif;
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.Profile-button {
-  font-family: "Playfair Display", serif;
-  font-weight: 500;
-}
-
-.Profile-banner {
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
+.Profile-background {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
   position: relative;
 }
 
-.Profile-bannerImage {
+.Profile-content {
+  max-width: 1200px;
+  margin: -100px auto 0;
+  padding: 0 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+.Profile-avatarContainer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 8px solid white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  background: white;
+  align-self: center;
+}
+
+.Profile-avatar {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-.Profile-content {
-  max-width: 1500px;
-  margin: -60px auto 0;
-  padding: 0 20px;
-  position: relative;
-}
-
-.Profile-avatarContainer {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-#Profile-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.Edit-avatarContainer {
-  width: 30px;
-  height: 30px;
-  margin: 0 auto;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-
-.Edit-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .Profile-info {
-  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+  align-self: center;
 }
 
-.Profile-subContainer {
-  flex-grow: 1;
-  flex-basis: 0;
-  display: block;
+.Profile-name {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
 }
 
-.Profile-subtitle {
-  margin: 0;
+.Profile-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: #4b5563;
+  font-size: 1.1rem;
+}
+
+.Profile-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #4b5563;
+  transition: all 0.2s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+}
+
+.Profile-detail:hover {
+  color: #e07007;
+  background: rgba(224, 112, 7, 0.05);
+}
+
+.Profile-detail svg {
+  width: 20px;
+  height: 20px;
+  color: #e07007;
+}
+
+.Profile-section {
+  width: 100%;
+}
+
+.Profile-sectionTitle {
   font-size: 2rem;
-  color: #333;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.Profile-description {
-  color: #666;
-  margin: 10px 0;
+.Profile-aboutText {
+  color: #4b5563;
+  line-height: 1.8;
   font-size: 1.2rem;
+  max-width: 800px;
+  font-weight: 300;
 }
 
-.Rating-container {
-  display: inline-flex;
-  margin: 0 auto;
+.Profile-itemsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  margin-top: 1rem;
 }
 
-.Rating-icon {
-  width: 20px;
-  margin: 10px 5px;
-  object-fit: contain;
+.Profile-itemCard {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  background: white;
 }
 
-.Profile-rating {
-  color: #888;
-  font-size: 1rem;
-  display: block;
-  line-height: 50px;
+.Profile-itemCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.Profile-itemImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.Profile-itemCard:hover .Profile-itemImage {
+  transform: scale(1.05);
+}
+
+.Profile-viewAllButton {
+  font-size: 1.1rem;
+  color: #e07007;
   text-decoration: none;
-  align-self: center;
-}
-
-.Profile-rating:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.Profile-rating::after {
-  content: "See All Reviews";
-  position: absolute;
-  top: 252px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 4px 8px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  font-size: 12px;
-  line-height: 20px;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s;
-}
-
-.Profile-rating:hover::after {
-  opacity: 1;
-  visibility: visible;
-}
-
-.Email-container {
-  display: inline-flex;
-}
-
-.Email-icon {
-  width: 20px;
-  margin: 10px 5px;
-  object-fit: contain;
-}
-
-.Profile-email {
-  text-decoration: none;
-  align-self: center;
-  color: #888;
-  font-size: 1rem;
-}
-
-.Profile-email:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.Profile-email::after {
-  content: "Email user";
-  position: absolute;
-  top: 300px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 4px 8px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  font-size: 12px;
-  line-height: 20px;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s;
-}
-
-.Profile-email:hover::after {
-  opacity: 1;
-  visibility: visible;
-}
-
-.userItems {
-  margin: 10px 0px;
-}
-
-.userItems-container {
-  display: block;
-}
-
-.userItem {
-  width: 100px;
-  height: 60px;
-  object-fit: contain;
-}
-
-.userItems-button {
-  background-color: blue;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 12px 15px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  background: #fff3e0;
+  transition: all 0.3s ease;
   border: none;
   cursor: pointer;
-  width: 60%;
-  opacity: 0.8;
-  border-radius: 10px;
+  margin-left: 1.5rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(224, 112, 7, 0.15);
 }
 
-.edit-Form-popup {
-  width: 30%;
-  border: 1px solid #f1f1f1;
-  background-color: white;
-  display: none;
+.Profile-viewAllButton:hover {
+  background: #ffe0b2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(224, 112, 7, 0.2);
+}
+
+.Profile-editText {
+  color: #e07007;
+  background: #fff3e0;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(224, 112, 7, 0.15);
+}
+
+.Profile-editText:hover {
+  background: #ffe0b2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(224, 112, 7, 0.2);
+}
+
+/* Modal Styles */
+.Profile-modal {
   position: fixed;
-  left: 35%;
-  margin: 0 auto;
-  padding: 1.5%;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border-radius: 3%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
 }
 
-.Form-container {
-  width: 50%;
-}
-
-#Description-input {
-  padding: 2px;
-  margin: 0 auto;
-  border: none;
-  background: #f1f1f1;
-  resize: none;
-  font-family: inherit;
-}
-
-#Email-input {
-  padding: 7px;
-  margin: 0 auto;
-  border: none;
-  background: #f1f1f1;
-  font-family: inherit;
-}
-
-#Picture-input {
-  padding: 0px;
-  margin: 0px 0 5px 0;
-  border: none;
-}
-
-.Cancel-button {
-  background-color: gray;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 12px 15px;
-  border: none;
-  cursor: pointer;
+.Profile-editForm {
   width: 100%;
-  margin-bottom: 5px;
-  opacity: 0.8;
+  max-width: 600px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 2rem;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-.Submit-button {
-  background-color: #04aa6d;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 12px 15px;
-  border: none;
-  cursor: pointer;
+.Profile-editForm h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.Profile-formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.Profile-formGroup label {
+  display: block;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.Profile-formGroup input,
+.Profile-formGroup textarea {
   width: 100%;
-  opacity: 0.8;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.Profile-formGroup input:focus,
+.Profile-formGroup textarea:focus {
+  outline: none;
+  border-color: #e07007;
+}
+
+.Profile-formButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.Profile-cancelButton,
+.Profile-saveButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.Profile-cancelButton {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+}
+
+.Profile-cancelButton:hover {
+  background: #e5e7eb;
+}
+
+.Profile-saveButton {
+  background: #e07007;
+  border: none;
+  color: white;
+}
+
+.Profile-saveButton:hover {
+  background: #c86006;
+}
+
+.Profile-backgroundPreview {
+  width: 100%;
+  height: 150px;
+  margin: 1rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.Profile-backgroundPreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.Profile-emailNote {
+  display: block;
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.Profile-formGroup input[disabled] {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .Profile-content {
+    padding: 0 1rem 2rem;
+    margin-top: -80px;
+  }
+
+  .Profile-avatarContainer {
+    width: 160px;
+    height: 160px;
+  }
+
+  .Profile-name {
+    font-size: 2rem;
+  }
+
+  .Profile-itemsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+.Profile-sectionLink {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.Profile-sectionLink:hover {
+  color: #e07007;
+  text-decoration: underline;
+}
+
+.Loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #6b7280;
+  font-size: 1.1rem;
+  width: 100%;
+  grid-column: 1 / -1;
 }

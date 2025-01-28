@@ -1,71 +1,132 @@
-.Reviews-container {
-  padding: 2rem;
+.UserReviews-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem;
+  min-height: calc(100vh - 64px);
   font-family: "Playfair Display", serif;
   background-color: #fdf9f6;
 }
 
-.Reviews-container h1 {
-  color: #333;
-  margin-bottom: 1rem;
-  font-family: "Playfair Display", serif;
+.UserReviews-header {
+  margin-bottom: 2rem;
 }
 
-.User-rating {
+.UserReviews-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a1a1a;
   margin-bottom: 1rem;
-  font-size: 20px;
+  letter-spacing: -0.02em;
 }
 
-.Reviews-grid {
+.UserReviews-summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.25rem;
+  color: #1a1a1a;
+}
+
+.UserReviews-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.UserReviews-count {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.UserReviews-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .Review-card {
-  background-color: white;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
 }
 
-.Review-author {
-  display: inline-flex;
+.Review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.Review-author-imageContainer {
-  width: 50px;
-  height: 50px;
-  align-self: center;
-  margin-right: 10px;
+.Review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
 }
 
-.Review-author-image {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  object-fit: cover;
-}
-
-.Review-author-name {
-  font-size: 25px;
+.Review-seller {
   color: #e07007;
-  vertical-align: middle;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.Review-seller:hover {
+  color: #c86006;
+  text-decoration: underline;
 }
 
 .Review-rating {
-  font-size: 20px;
-  margin-bottom: 10px;
+  color: #1a1a1a;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.Review-divide {
-  margin: 20px auto;
+.Review-stars {
+  color: #f59e0b;
 }
 
-.Review-main {
-  font-size: 18px;
-  margin-bottom: 10px;
+.Review-text {
+  color: #4b5563;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.Review-date {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.No-reviews {
+  text-align: center;
+  padding: 3rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.Loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .UserReviews-container {
+    padding: 1rem;
+  }
+
+  .UserReviews-title {
+    font-size: 1.5rem;
+  }
+
+  .UserReviews-summary {
+    font-size: 1rem;
+  }
 }

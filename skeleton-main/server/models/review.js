@@ -10,7 +10,7 @@ const ReviewSchema = new mongoose.Schema({
     _id: String,
   },
   itemId: String,
-  rating: String,
+  rating: Number,
   review: String,
 });
 

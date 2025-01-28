@@ -15,7 +15,15 @@ const ItemSchema = new mongoose.Schema({
     default: 'Active'
   },
   buyer_id: String,
-  purchaseDate: Date
+  purchaseDate: Date,
+  reviewed: {
+    type: Boolean,
+    default: false
+  },
+  review: {
+    rating: Number,
+    text: String
+  }
 });
 
 // compile model from schema

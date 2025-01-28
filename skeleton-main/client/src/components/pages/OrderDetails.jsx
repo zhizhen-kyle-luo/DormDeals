@@ -152,9 +152,16 @@ const OrderDetails = (props) => {
 
       await post("/api/newreview", reviewDataToSend);
       setShowReviewForm(false);
-      // Refresh order data
+      
+      // Refresh order data to update the review status
       const updatedOrder = await get(`/api/order`, { orderId });
       setOrder(updatedOrder);
+      
+      // Update the review data state with the new review
+      setReviewData({
+        rating: updatedOrder.review.rating.toString(),
+        review: updatedOrder.review.text || "",
+      });
     } catch (error) {
       console.error("Failed to submit review:", error);
     }
@@ -258,7 +265,7 @@ const OrderDetails = (props) => {
       {showReviewForm && (
         <div className="OrderDetails-reviewForm">
           <div className="ReviewForm-content">
-            <h2>Review Your Purchase</h2>
+            <h2>{order.reviewed ? "Edit Your Review" : "Review Your Purchase"}</h2>
             <h3>Rate your experience with {order.seller}</h3>
             <select name="rating" value={reviewData.rating} onChange={handleInputChange} required>
               <option value="5">★★★★★ (5) Excellent</option>
@@ -279,7 +286,7 @@ const OrderDetails = (props) => {
 
             <div className="ReviewForm-actions">
               <button className="ReviewForm-submit" onClick={handleReviewSubmit}>
-                Submit Review
+                {order.reviewed ? "Update Review" : "Submit Review"}
               </button>
               <button className="ReviewForm-cancel" onClick={() => setShowReviewForm(false)}>
                 Cancel

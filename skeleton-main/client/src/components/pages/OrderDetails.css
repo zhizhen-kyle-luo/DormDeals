@@ -99,12 +99,17 @@
 }
 
 .OrderDetails-seller {
-  font-family: "Playfair Display", serif;
-  font-size: 1rem;
-  color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 1rem;
+  color: #e07007;
   text-decoration: none;
-  width: fit-content;
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.OrderDetails-seller:hover {
+  color: #c86006;
+  text-decoration: underline;
 }
 
 .OrderDetails-status {
