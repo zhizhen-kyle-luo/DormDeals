@@ -8,9 +8,9 @@ const Instructions = () => {
         <div className="Instructions-textContainer">
           <h3 className="Instructions-subtitle">An Introduction</h3>
           <div className="Instructions-text">
-            Welcome to DormDeals! Thanks for taking the time to check out our wonderful website! If
-            you are unsure where to start, do not worry! We will show you how to use all the amazing
-            features this website has to offer below. Thanks again!
+            Welcome to DormDeals! Thank you for taking the time to check out our wonderful website!
+            If you are unsure where to start, do not worry! We are excited to guide you through all
+            our amazing features!
           </div>
         </div>
       </div>
@@ -18,13 +18,15 @@ const Instructions = () => {
         <div className="Instructions-textContainer">
           <h3 className="Instructions-subtitle">About Us</h3>
           <div className="Instructions-text">
-            We are a team of three MIT students from the Class of 2028 (Zhizhen (Kyle) Luo, Fatima
-            Danishyar, Anthony Zheng), who created this website to ease the process of selling items
-            amongst MIT students. We believe that the current method of advertising items through
-            Dormspam and Dormsoup is not centralized enough, complicating the process. Students are
-            forced to browse through many slideshows to see if there is anything of interest to
-            them. To address this issue, this website makes it simple for users to browse and filter
-            for certain items while also allowing the option to leave reviews for sellers.
+            We are a team of 3 MIT students from the Class of 2028—Zhizhen (Kyle) Luo, Fatima
+            Danishyar, Anthony Zheng—who created DormDeals to make buying and selling items on
+            campus easier and more efficient. We believe that the current method of advertising items
+            through Dormspam and Dormsoup lacks organization and convenience. For DormSpam, students are forced
+            to browse through many slideshows to see if there is anything of interest to them. For
+            DormSoup, it miscategories events as sales and does not include any email sales from individual senders.
+            To address this demand, we created DormDeals to centralize all the sales and deals around
+            MIT, along with compelling features such as rating and review system, filtering sales, 
+            streamlined communication between buyers and sellers, and more!
           </div>
         </div>
       </div>
@@ -39,7 +41,7 @@ const Instructions = () => {
             automatically update the feed so that you can easily see what available items there are
             that fit your criteria. If you see an item you like, click on the card, which will take
             you to a new page with more details on the item. The home page is accessible through
-            clicking the "Dorm Deals" icon on the left side of the navigation bar.
+            clicking the "DormDeals" icon on the left side of the navigation bar.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
@@ -50,7 +52,7 @@ const Instructions = () => {
           <div className="Instructions-text">
             Once you click on an item, you will be taken to a page with more details about that
             product. If you are interested in purchasing this item, feel free to click the "Add to
-            Cart" or "Purchase Now" button, which will then redirect you to the cart page.
+            Cart" or "Purchase Now" button.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
@@ -59,8 +61,8 @@ const Instructions = () => {
         <div className="Instructions-textContainer">
           <h3 className="Instructions-subtitle">Cart</h3>
           <div className="Instructions-text">
-            The cart page displays all the items you have added to it. Feel free to remove any items
-            you no longer want or checkout items you will buy. You can access this page any time by
+            The cart page displays all the items you have previously added. Here, you can remove items,
+            save items for later, or checkout items you will buy. You can access this page any time by
             clicking the shopping cart icon in the navigation bar.
           </div>
         </div>
@@ -73,8 +75,9 @@ const Instructions = () => {
             See something you want to buy? Select all the items you want to checkout and by clicking
             the "Proceed to Checkout" button, it will redirect you to the purchase page, where you
             can confirm your orders. It is now up to you to contact the seller about your purchase
-            and agree on a place and time to exchange. After confirming your purchase, you will be
-            taken to your "My Purchases" page, where you can see the status of all your items.
+            and agree on a place and time to exchange. You have access to their emails and phone 
+            numbers after clicking on their profile. After confirming your purchase, you will be
+            taken to your "My Purchases" page, where you can track the status of all your sales.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
@@ -90,7 +93,8 @@ const Instructions = () => {
             as well to give your profile more personality! Also included in the profile page are all
             the items that person is selling, making it easier for you to access a favorite person's
             items. The item icons are clickable, meaning you can easily check out whatever seems
-            interesting to you. Finally, there is a rating of the user below their picture, which
+            interesting to you. You can also click on "My Items" for a full showcase of their selling items.
+            Finally, there is a rating of the user below their picture, which takes you to a page that
             takes you to a page that shows all reviews of that person when clicked. Your reviews can
             be easily accessed by clicking the star icon in the navigation bar.
           </div>
@@ -104,8 +108,10 @@ const Instructions = () => {
             When you checkout an item and the seller has marked it as "Sold", you will have the
             option to leave a review and rating for the seller. To do that, go to "My Purchases" by
             clicking the shopping bag icon in the navigation bar. There, you will find a list of all
-            items you have bought and an option to leave a review and rating for those that have
-            been sold.
+            items you have bought and an option to leave a review and rating by clicking on the correspodning
+            order and then clicking "Leave a Review". You can also view all your reviews by clicking on the star icon
+            You might also modify your reviews by clicking on the "Edit Reviews" button, which is 
+            visible after you have left a review.
           </div>
         </div>
         <div className="Instructions-videoContainer">Video Here</div>
