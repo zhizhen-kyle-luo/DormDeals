@@ -17,7 +17,7 @@ const UserReviews = () => {
       .then((userObj) => {
         setUser(userObj[0]);
         // Then get their reviews - using the correct endpoint with proper parameter format
-        return get("/api/reviews", { userId: userId });
+        return get("/api/reviews", { name: userObj[0].name, _id: userId });
       })
       .then((reviewsObj) => {
         setReviews(reviewsObj);
@@ -33,6 +33,8 @@ const UserReviews = () => {
         setIsLoading(false);
       });
   }, [userId]);
+
+  console.log(reviews);
 
   const renderStars = (rating) => {
     // Ensure rating is a valid number between 0 and 5
@@ -78,9 +80,7 @@ const UserReviews = () => {
                 </div>
               </div>
               <p className="Review-text">{review.review}</p>
-              <div className="Review-date">
-                {new Date(review.date).toLocaleDateString()}
-              </div>
+              <div className="Review-date">{new Date(review.date).toLocaleDateString()}</div>
             </div>
           ))
         )}
