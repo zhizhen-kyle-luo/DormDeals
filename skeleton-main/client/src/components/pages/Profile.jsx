@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { get, post } from "../../utilities";
 import "./Profile.css";
 import backgroundimg from "../../assets/mit-dome.jpg";
@@ -7,6 +7,7 @@ import defaultpfpimg from "../../assets/blank-profile.png";
 
 const Profile = () => {
   const { userId } = useParams();
+  const navigate = useNavigate();
   const [userandinformation, setUser] = useState([]);
   const [viewingUser, setViewingUser] = useState();
   const [userItems, setUserItems] = useState([]);
@@ -88,6 +89,11 @@ const Profile = () => {
 
   const displayAllItems = () => {
     window.location.href = `/UserAllItems/${userId}`;
+  };
+
+  const handleOrderClick = (orderId, e) => {
+    e.preventDefault();
+    navigate(`/OrderDetails/${orderId}`);
   };
 
   if (isLoading || !user) {
@@ -284,7 +290,12 @@ const Profile = () => {
               <p>No items listed yet</p>
             ) : (
               userItems.slice(0, 12).map((item) => (
-                <a key={item._id} href={`/OrderDetails/${item._id}`} className="Profile-itemCard">
+                <a
+                  key={item._id}
+                  href="#"
+                  onClick={(e) => handleOrderClick(item._id, e)}
+                  className="Profile-itemCard"
+                >
                   <img src={item.images[0]} alt={item.name} className="Profile-itemImage" />
                 </a>
               ))
