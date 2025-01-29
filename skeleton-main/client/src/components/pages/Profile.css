@@ -249,6 +249,32 @@
   animation: fadeIn 0.3s ease-out;
 }
 
+.Profile-closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  transition: all 0.2s ease;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Profile-closeButton:hover {
+  background: #f3f4f6;
+  color: #e07007;
+  transform: scale(1.1);
+}
+
 .Profile-editForm {
   width: 100%;
   max-width: 600px;

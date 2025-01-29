@@ -81,10 +81,14 @@ const Profile = () => {
       backgroundImage: newBackgroundObj[0],
       rating: userinformation.rating,
     };
-    await post("/api/edituser", body).then((profile) => {
+
+    try {
+      const profile = await post("/api/edituser", body);
       setUser([user, profile]);
       setShowEditForm(false);
-    });
+    } catch (error) {
+      console.error("Failed to save profile changes:", error);
+    }
   };
 
   const displayAllItems = () => {
@@ -191,7 +195,10 @@ const Profile = () => {
 
         {showEditForm && (
           <div className="Profile-modal" onClick={handleModalClick}>
-            <div className="Profile-editForm">
+            <div className="Profile-editForm" onClick={(e) => e.stopPropagation()}>
+              <button className="Profile-closeButton" onClick={() => setShowEditForm(false)}>
+                ×
+              </button>
               <h2>Edit Profile</h2>
               <div className="Profile-formGroup">
                 <label>Profile Picture</label>
