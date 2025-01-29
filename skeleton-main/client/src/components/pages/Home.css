@@ -327,25 +327,64 @@
   font-size: 0.875rem;
   color: #1a1a1a;
   background: white;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .Home-sidebar select:hover,
 .Home-sidebar input:hover {
-  border-color: #fdf9f6;
+  border-color: #673ab7;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(103, 58, 183, 0.1);
 }
 
 .Home-sidebar select:focus,
 .Home-sidebar input:focus {
   outline: none;
-  border-color: #fdf9f6;
+  border-color: #673ab7;
   box-shadow: 0 0 0 2px rgba(103, 58, 183, 0.1);
+  transform: translateY(-1px);
 }
 
 .price-inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.min-price-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.min-price-container span {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.price-inputs input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+}
+
+/* Filter section headers */
+.Home-sidebar h2 {
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  margin: 1.5rem 0 1rem;
+  transition: color 0.3s ease;
+}
+
+.Home-sidebar h2:hover {
+  color: #673ab7;
+}
+
+.filter-section {
+  transition: all 0.3s ease;
+}
+
+.filter-section:hover {
+  transform: translateY(-2px);
 }
 
 /* Modern Buttons */
@@ -377,11 +416,13 @@
   color: white;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .filter-toggle:hover {
-  background: #fdf9f6;
+  background: #5c33a4;
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(103, 58, 183, 0.3);
 }
 
 /* Cards Grid */

@@ -55,7 +55,7 @@ const Purchase = () => {
         <h1>Purchase Summary</h1>
 
         <div className="purchase-items">
-          <h2>Items</h2>
+          <h2>Items ({items.length})</h2>
           {items.map((item) => (
             <div key={item._id} className="purchase-item">
               <div className="item-image">
@@ -76,10 +76,11 @@ const Purchase = () => {
             <span>Total</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          <div className="transaction-note">
-            Note: After confirming your purchase, the item will be marked as "Under Transaction".
-            The seller will mark it as "Sold" after the in-person exchange is completed.
-          </div>
+        </div>
+
+        <div className="transaction-note">
+          Note: After confirming your purchase, the item will be marked as "Under Transaction".
+          The seller will mark it as "Sold" after the in-person exchange is completed.
         </div>
 
         <div className="purchase-actions">
