@@ -180,7 +180,7 @@ const OrderDetails = (props) => {
         review: updatedOrder.review.text || "",
       });
     } catch (error) {
-      console.error("Failed to submit review:", error);
+      setSubmitError("Failed to submit review. Please try again.");
     }
   };
 
@@ -208,7 +208,7 @@ const OrderDetails = (props) => {
         review: "",
       });
     } catch (error) {
-      console.error("Failed to delete review:", error);
+      setDeleteError("Failed to delete review. Please try again.");
     }
   };
 

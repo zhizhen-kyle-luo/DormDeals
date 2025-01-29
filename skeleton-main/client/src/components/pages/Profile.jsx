@@ -16,6 +16,7 @@ const Profile = () => {
   const [newPicture, setNewPicture] = useState({ picture: [defaultpfpimg] });
   const [newBackground, setNewBackground] = useState({ picture: [backgroundimg] });
   const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     get(`/api/user`, { userid: userId }).then((userObj) => {
@@ -103,7 +104,8 @@ const Profile = () => {
       setUser([user, profile]);
       setShowEditForm(false);
     } catch (error) {
-      console.error("Failed to save profile changes:", error);
+      setIsLoading(false);
+      setError("Failed to save changes. Please try again.");
     } finally {
       setIsSaving(false);
     }

@@ -22,7 +22,6 @@ const Cart = () => {
           const orderDetails = await get("/api/order", { orderId: item.itemId });
           statuses[item.itemId] = orderDetails.status;
         } catch (error) {
-          console.error("Error fetching item status:", error);
           statuses[item.itemId] = "error";
         }
       }
@@ -81,7 +80,6 @@ const Cart = () => {
           seller: item.seller
         };
       } catch (error) {
-        console.error("Error fetching order details:", error);
         return item;
       }
     }));

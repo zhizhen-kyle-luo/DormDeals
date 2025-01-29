@@ -18,8 +18,6 @@ const Purchase = () => {
   const handleConfirmPurchase = async () => {
     setIsProcessing(true);
     try {
-      console.log("Starting purchase process for items:", items);
-      // Update each item's status to "Under Transaction" and add buyer info
       const updatePromises = items.map((item) =>
         post("/api/items/update", {
           itemId: item.itemId || item._id,
@@ -27,25 +25,18 @@ const Purchase = () => {
           buyer_id: userId,
           purchaseDate: new Date().toISOString(),
         }).then((response) => {
-          console.log("Updated item:", response);
           return response;
         })
       );
 
       const updatedItems = await Promise.all(updatePromises);
-      console.log("All items updated:", updatedItems);
 
-      // Clear the cart after successful purchase
       await clearCart();
-      console.log("Cart cleared");
 
-      // Reset processing state before navigation
       setIsProcessing(false);
 
-      // Navigate to user purchases page
       navigate(`/UserPurchases/${userId}`);
     } catch (error) {
-      console.error("Error processing purchase:", error);
       setIsProcessing(false);
     }
   };

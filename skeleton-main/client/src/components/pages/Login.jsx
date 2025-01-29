@@ -26,7 +26,6 @@ const Login = () => {
   });
 
   const handleLoginSuccess = (credentialResponse) => {
-    console.log("Google login success, got credential:", credentialResponse);
     handleLogin(credentialResponse);
   };
 
@@ -43,7 +42,7 @@ const Login = () => {
           <div className="Login-google" >
             <GoogleLogin
               onSuccess={handleLoginSuccess}
-              onError={(err) => console.log("Google Login Failed:", err)}
+              onError={() => {}}
             />
           </div>
           <Link to="/instructions" className="Instructions-button" style={{color: "rgb(234, 115, 11)", backgroundColor: "white", margin: "20px", textDecoration: "none", border: "2px solid rgb(234, 115, 11)", padding: "10px", borderRadius: "15px"}}>

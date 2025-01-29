@@ -16,6 +16,8 @@ const NewPage = () => {
   });
   const [submitStatus, setSubmitStatus] = useState("");
   const [dragActive, setDragActive] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const categories = [
     "Textbooks 📚",
@@ -78,8 +80,8 @@ const NewPage = () => {
           : `${base64Images.length} images added`
       );
     } catch (error) {
-      console.error("Error processing images:", error);
-      setSubmitStatus("Error processing images. Please try again.");
+      setError("Error processing images. Please try again.");
+      setIsLoading(false);
     }
   };
 
@@ -121,6 +123,7 @@ const NewPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitStatus("Submitting...");
+    setIsLoading(true);
 
     try {
       const formDataToSend = {
@@ -153,8 +156,8 @@ const NewPage = () => {
         }, 2000);
       }
     } catch (error) {
-      console.error("Failed to create order:", error);
-      setSubmitStatus("Failed to create order. Please try again.");
+      setError("Failed to create order. Please try again.");
+      setIsLoading(false);
     }
   };
 

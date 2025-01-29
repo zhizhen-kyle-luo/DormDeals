@@ -16,11 +16,9 @@ const UserPurchases = () => {
       setIsLoading(true);
       get("/api/purchases", { userId })
         .then((purchasedItems) => {
-          console.log("Fetched purchases:", purchasedItems);
           setPurchases(Array.isArray(purchasedItems) ? purchasedItems : []);
         })
         .catch((error) => {
-          console.error("Error fetching purchases:", error);
           setPurchases([]);
         })
         .finally(() => {

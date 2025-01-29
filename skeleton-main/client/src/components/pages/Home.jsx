@@ -43,7 +43,6 @@ const Home = () => {
         setFilteredOrders(activeOrders);
       })
       .catch((err) => {
-        console.error("Error fetching orders:", err);
       });
   }, [userId]);
 
