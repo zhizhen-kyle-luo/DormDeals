@@ -35,7 +35,7 @@ const Instructions = () => {
               and sellers, and more!
             </p>
             <div className="section-image">
-              <img src={dancingBeaver} alt="MIT Beaver" className="section-gif" />
+              <img src={wavingBag} alt="Waving" className="section-gif" />
             </div>
           </div>
         </section>
