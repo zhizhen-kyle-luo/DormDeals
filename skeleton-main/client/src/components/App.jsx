@@ -68,14 +68,16 @@ const App = () => {
 
   const removeFromCart = async (itemId) => {
     try {
-      const updatedItems = await fetch(`/api/cart/remove/${itemId}`, {
+      const response = await fetch(`/api/cart/remove/${itemId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-      }).then(res => res.json());
-      setCartItems(updatedItems);
+      });
+      const updatedItems = await response.json();
+      setCartItems(updatedItems || []);
     } catch (err) {
+      console.error("Failed to remove item from cart:", err);
     }
   };
 
