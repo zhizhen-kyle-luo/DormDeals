@@ -37,24 +37,22 @@ const UserPurchases = () => {
     );
   }
 
+  console.log(purchases);
+
   const ongoingOrders = purchases.filter((item) => item.status === "Under Transaction");
   const pastOrders = purchases.filter((item) => item.status === "Sold");
 
   return (
     <div className="Items-container">
       <h1>My Purchases</h1>
-      
+
       <div className="Items-section">
         <h2>Ongoing Orders</h2>
         <div className="Items-grid">
           {ongoingOrders.length === 0 ? (
             <div className="No-items">No ongoing orders</div>
           ) : (
-            ongoingOrders.map((item) => (
-              <div key={item._id}>
-                <OrderCard order={item} className="Purchases-card" />
-              </div>
-            ))
+            ongoingOrders.map((order) => <OrderCard key={order._id} order={order} />)
           )}
         </div>
       </div>
@@ -65,11 +63,7 @@ const UserPurchases = () => {
           {pastOrders.length === 0 ? (
             <div className="No-items">No completed orders yet</div>
           ) : (
-            pastOrders.map((item) => (
-              <div key={item._id}>
-                <OrderCard order={item} className="Purchases-card" />
-              </div>
-            ))
+            pastOrders.map((order) => <OrderCard key={order._id} order={order} />)
           )}
         </div>
       </div>
