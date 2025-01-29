@@ -66,7 +66,7 @@ const Purchase = () => {
                 <div className="item-category">{item.category}</div>
                 <div className="item-condition">{item.condition}</div>
               </div>
-              <div className="item-price">${item.price}</div>
+              <div className="item-price">${Number(item.price).toFixed(2)}</div>
             </div>
           ))}
         </div>

@@ -32,7 +32,7 @@ const OrderCard = ({ order }) => {
           <p className="OrderCard-seller">by {order.seller}</p>
         </div>
         <div className="OrderCard-details">
-          <span className="OrderCard-price">${order.price}</span>
+          <span className="OrderCard-price">${Number(order.price).toFixed(2)}</span>
           <div className="OrderCard-category-container">
             <span className={`OrderCard-status ${statusColors[order.status]}`}>{order.status}</span>
             <span className="OrderCard-category">{getCategoryWithEmoji(order.category)}</span>

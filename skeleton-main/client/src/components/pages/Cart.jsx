@@ -29,7 +29,7 @@ const Cart = () => {
       setItemStatuses(statuses);
       setIsLoading(false);
     };
-    
+
     checkItemStatuses();
   }, [cartItems]);
 
@@ -130,10 +130,12 @@ const Cart = () => {
                     </div>
                     <div className="cart-item-details">
                       <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
-                      <p className="cart-item-price">${item.price}</p>
+                      <p className="cart-item-price">${Number(item.price).toFixed(2)}</p>
                       <div className="cart-item-actions">
                         <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
-                        <button onClick={() => toggleSaveForLater(item.itemId)}>Save for later</button>
+                        <button onClick={() => toggleSaveForLater(item.itemId)}>
+                          Save for later
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -176,7 +178,7 @@ const Cart = () => {
                   </div>
                   <div className="cart-item-details">
                     <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
-                    <p className="cart-item-price">${item.price}</p>
+                    <p className="cart-item-price">${Number(item.price).toFixed(2)}</p>
                     <div className="cart-item-actions">
                       <button onClick={() => removeFromCart(item.itemId)}>Remove</button>
                       <button onClick={() => toggleSaveForLater(item.itemId)}>Move to cart</button>
@@ -204,7 +206,7 @@ const Cart = () => {
                   </div>
                   <div className="cart-item-details">
                     <h3 onClick={() => handleItemClick(item.itemId)}>{item.name}</h3>
-                    <p className="cart-item-price">${item.price}</p>
+                    <p className="cart-item-price">${Number(item.price).toFixed(2)}</p>
                     <div className="cart-item-actions">
                       <button onClick={() => removeFromCart(item.itemId)}>Remove from cart</button>
                     </div>

@@ -222,7 +222,7 @@ const OrderDetails = (props) => {
 
         <div className="OrderDetails-info">
           <h1 className="OrderDetails-title">{order.name}</h1>
-          <div className="OrderDetails-price">${order.price}</div>
+          <div className="OrderDetails-price">${Number(order.price).toFixed(2)}</div>
           <Link to={`/profile/${order.seller_id}`} className="OrderDetails-seller">
             Seller: {order.seller}
           </Link>
