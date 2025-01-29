@@ -143,12 +143,23 @@
 .dollar-sign:nth-child(5) { left: 90%; animation-delay: -10s; }
 
 /* Hero Content */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
 .hero-content {
   position: relative;
   z-index: 10;
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
+  pointer-events: none;
 }
 
 .hero-content h1 {
@@ -169,26 +180,37 @@
 
 .hero-search {
   position: relative;
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  animation: fadeInUp 1s ease-out 0.4s backwards;
+  z-index: 20;
+  pointer-events: all;
 }
 
 .search-input {
   width: 100%;
-  padding: 1.5rem 2rem;
-  font-size: 1.125rem;
-  border: none;
-  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  color: #333;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  pointer-events: all;
 }
 
 .search-input:focus {
   outline: none;
+  border-color: #e07007;
   background: white;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.search-input::placeholder {
+  color: #666;
+  opacity: 0.8;
 }
 
 /* Animations */

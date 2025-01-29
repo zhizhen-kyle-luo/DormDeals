@@ -324,11 +324,95 @@
   border-color: #e07007;
 }
 
+.Profile-imageControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.Profile-deleteImage {
+  background: #fee2e2;
+  color: #991b1b;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.Profile-deleteImage:hover {
+  background: #fecaca;
+  transform: translateY(-1px);
+}
+
+.Profile-imageWrapper {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f9fafb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
+
+.Profile-previewImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.Profile-imageActions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.Profile-imageWrapper:hover .Profile-imageActions {
+  opacity: 1;
+}
+
+.Profile-imageAction {
+  background: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  flex: 1;
+  transition: all 0.2s ease;
+}
+
+.Profile-imageAction:hover {
+  background: #e07007;
+  color: white;
+}
+
+.Profile-imageAction.remove:hover {
+  background: #dc2626;
+}
+
+.Profile-saveWarning {
+  text-align: center;
+  color: #e07007;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
 .Profile-formButtons {
   display: flex;
+  justify-content: flex-start;
   gap: 1rem;
-  justify-content: flex-end;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .Profile-cancelButton,
@@ -343,7 +427,7 @@
 
 .Profile-cancelButton {
   background: #f3f4f6;
-  border: 1px solid #e5e7eb;
+  border: none;
   color: #4b5563;
 }
 
@@ -359,6 +443,16 @@
 
 .Profile-saveButton:hover {
   background: #c86006;
+}
+
+.Profile-cancelButton:disabled,
+.Profile-saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.Profile-saveButton:disabled {
+  background: #e0700780;
 }
 
 .Profile-backgroundPreview {
