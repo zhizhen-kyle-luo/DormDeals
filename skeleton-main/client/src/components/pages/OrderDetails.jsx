@@ -332,7 +332,7 @@ const OrderDetails = (props) => {
               name="review"
               value={reviewData.review}
               onChange={handleInputChange}
-              placeholder="Share your experience about the item and the seller..."
+              placeholder="Please focus on your experience with the seller's service and communication. You may include comments about the item, but please center it around the seller."
               required
             />
 
