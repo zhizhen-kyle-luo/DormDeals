@@ -25,6 +25,7 @@
   color: white;
   overflow: hidden;
   background: linear-gradient(45deg, #1a1a1a, #2c2c2c);
+  pointer-events: auto;
 }
 
 /* Animated Background Elements */
@@ -35,6 +36,7 @@
   right: 0;
   bottom: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 /* First Layer - Gradient Overlay */
@@ -155,7 +157,7 @@
 
 .hero-content {
   position: relative;
-  z-index: 10;
+  z-index: 30;
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
@@ -183,8 +185,8 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  z-index: 20;
-  pointer-events: all;
+  z-index: 40;
+  pointer-events: auto;
 }
 
 .search-input {
@@ -198,7 +200,8 @@
   color: #333;
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  pointer-events: all;
+  pointer-events: auto;
+  cursor: text;
 }
 
 .search-input:focus {
