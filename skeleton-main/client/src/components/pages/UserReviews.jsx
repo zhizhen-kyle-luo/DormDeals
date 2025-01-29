@@ -34,8 +34,6 @@ const UserReviews = () => {
       });
   }, [userId]);
 
-  console.log(reviews);
-
   const renderStars = (rating) => {
     // Ensure rating is a valid number between 0 and 5
     const validRating = Math.max(0, Math.min(5, Math.round(rating) || 0));
