@@ -3,6 +3,10 @@ import "./Instructions.css";
 import dancingBeaver from "../../assets/dancingBeaver.gif";
 import fireworks from "../../assets/fireworks.gif";
 import wavingBag from "../../assets/wavingBag.gif";
+import Video1 from "../../assets/videos/Video1.mp4";
+import Video2 from "../../assets/videos/Video2.mp4";
+import Video3 from "../../assets/videos/Video3.mp4";
+import Video4 from "../../assets/videos/Video4.mp4";
 
 const Instructions = () => {
   return (
@@ -61,7 +65,7 @@ const Instructions = () => {
               <div className="video-placeholder">
                 <span>
                   <video controls>
-                    <source src="/videos/vid2.mp4" type="video/mp4" />
+                    <source src={Video1} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </span>
@@ -90,7 +94,7 @@ const Instructions = () => {
               <div className="video-placeholder">
                 <span>
                   <video controls>
-                    <source src="/videos/vid1.mp4" type="video/mp4" />
+                    <source src={Video2} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </span>
@@ -118,7 +122,7 @@ const Instructions = () => {
               <div className="video-placeholder">
                 <span>
                   <video controls>
-                    <source src="/videos/vid3.mp4" type="video/mp4" />
+                    <source src={Video3} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </span>
@@ -143,9 +147,9 @@ const Instructions = () => {
               access a favorite person's items. The item icons are clickable, meaning you can easily
               check out whatever seems interesting to you. You can also click on "My Items" for a
               full showcase of their selling items. Finally, there is a rating of the user below
-              their picture, which takes you to a page that takes you to a page that shows all
-              reviews of that person when clicked. Your reviews can be easily accessed by clicking
-              the star icon in the navigation bar.
+              their picture, which takes you to a page that shows all reviews of that person when
+              clicked. Your reviews can be easily accessed by clicking the star icon in the
+              navigation bar.
             </p>
             <p>
               When you checkout an item and the seller has marked it as "Sold", you will have the
@@ -154,13 +158,14 @@ const Instructions = () => {
               of all items you have bought and an option to leave a review and rating by clicking on
               the corresponding order and then clicking "Leave a Review". You can also view all your
               reviews by clicking on the star icon. You might also modify your reviews by clicking
-              on the "Edit Reviews" button, which is visible after you have left a review.
+              on the "Edit Reviews" button, which is visible after you have left a review or
+              deleting it entirely.
             </p>
             <div className="video-container">
               <div className="video-placeholder">
                 <span>
                   <video controls>
-                    <source src="/videos/vid4.mp4" type="video/mp4" />
+                    <source src={Video4} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </span>
@@ -179,9 +184,11 @@ const Instructions = () => {
               As always, there is room for improvement. There still exists several unadded features
               we hope to later implement. This includes a built-in communication feature between
               buyers and sellers for questions or coming to an agreement on the exchanging process
-              instead of relying on email. Another feature is sending a notification to the seller
-              when an item has been brought, to prevent the buyer from manually doing this. Finally,
-              an auction feature to fit certain seller's needs is yet to be implemented.
+              instead of relying on email. Building on this feature, a smooth transaction process
+              that handles payment and shipping would ease the exchange process. Another feature is
+              sending a notification to the seller when an item has been brought, to prevent the
+              buyer from manually doing this. Finally, an auction feature to fit certain seller's
+              needs is yet to be implemented.
             </p>
             <div className="section-image">
               <img src={fireworks} alt="Celebration" className="section-gif" />

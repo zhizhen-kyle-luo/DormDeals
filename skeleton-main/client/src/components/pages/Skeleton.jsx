@@ -31,7 +31,10 @@ const Skeleton = () => {
           Logout
         </button>
       ) : (
-        <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
+        <GoogleLogin
+          onSuccess={handleLogin}
+          onError={() => {}}
+        />
       )}
       <Routes>
         <Route path="/" element={userId ? <Home /> : <div>Please log in</div>} />

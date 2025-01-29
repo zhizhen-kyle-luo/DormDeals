@@ -8,6 +8,7 @@ const UserReviews = () => {
   const [reviews, setReviews] = useState([]);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     setIsLoading(true);
@@ -16,22 +17,16 @@ const UserReviews = () => {
       .then((userObj) => {
         setUser(userObj[0]);
         // Then get their reviews - using the correct endpoint with proper parameter format
-        return get("/api/reviews", { name: userObj[0].name, _id: userId });
+        return get("/api/reviews", { userId: userId });
       })
       .then((reviewsObj) => {
-        console.log("Fetched reviews:", reviewsObj);
-        // Add detailed logging for review calculation
+        setReviews(reviewsObj);
         if (reviewsObj && reviewsObj.length > 0) {
-          console.log("Individual ratings:", reviewsObj.map(r => r.rating));
-          const sum = reviewsObj.reduce((sum, review) => sum + (Number(review.rating) || 0), 0);
-          console.log("Sum of ratings:", sum);
-          console.log("Number of reviews:", reviewsObj.length);
-          console.log("Calculated average:", sum / reviewsObj.length);
+          const sum = reviewsObj.reduce((acc, review) => acc + review.rating, 0);
+          setAverageRating(sum / reviewsObj.length);
         }
-        setReviews(reviewsObj || []);
       })
       .catch((error) => {
-        console.error("Error fetching reviews:", error);
         setReviews([]);
       })
       .finally(() => {
@@ -44,10 +39,6 @@ const UserReviews = () => {
     const validRating = Math.max(0, Math.min(5, Math.round(rating) || 0));
     return "★".repeat(validRating) + "☆".repeat(5 - validRating);
   };
-
-  const averageRating = reviews.length > 0
-    ? (reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / reviews.length).toFixed(1)
-    : 0;
 
   if (isLoading) {
     return (
@@ -65,7 +56,7 @@ const UserReviews = () => {
           <div className="UserReviews-summary">
             <span className="UserReviews-rating">
               <span className="Review-stars">{renderStars(Math.round(averageRating))}</span>
-              {averageRating}/5
+              {averageRating.toFixed(1)}/5
             </span>
             <span className="UserReviews-count">({reviews.length} reviews)</span>
           </div>

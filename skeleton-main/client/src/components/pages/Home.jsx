@@ -43,7 +43,6 @@ const Home = () => {
         setFilteredOrders(activeOrders);
       })
       .catch((err) => {
-        console.error("Error fetching orders:", err);
       });
   }, [userId]);
 
@@ -63,7 +62,8 @@ const Home = () => {
 
       const matchesCondition =
         filters.condition === "all" ||
-        order.condition.toLowerCase() === filters.condition.toLowerCase();
+        order.condition.toLowerCase() === filters.condition.toLowerCase() ||
+        (filters.condition.toLowerCase() === "like new" && order.condition === "like-new");
 
       return matchesSearch && matchesPrice && matchesCategory && matchesCondition;
     });
@@ -155,12 +155,15 @@ const Home = () => {
             <div className="sidebar-section">
               <h3>Price Range</h3>
               <div className="price-inputs">
-                <input
-                  type="number"
-                  placeholder="Min $"
-                  value={filters.priceRange.min}
-                  onChange={(e) => handleFilterChange("priceRange", { min: e.target.value })}
-                />
+                <div className="min-price-container">
+                  <input
+                    type="number"
+                    placeholder="Min $"
+                    value={filters.priceRange.min}
+                    onChange={(e) => handleFilterChange("priceRange", { min: e.target.value })}
+                  />
+                  <span>to</span>
+                </div>
                 <input
                   type="number"
                   placeholder="Max $"

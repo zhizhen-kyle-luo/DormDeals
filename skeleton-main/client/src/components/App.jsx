@@ -17,29 +17,23 @@ const App = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("App: Checking current user");
     get("/api/whoami")
       .then((user) => {
-        console.log("App: whoami response:", user);
         if (user._id) {
-          console.log("App: Setting userId to", user._id);
           setUserId(user._id);
         }
       });
   }, []);
 
   const handleLogin = (credentialResponse) => {
-    console.log("App: Handling login");
     const userToken = credentialResponse.credential;
     post("/api/login", { token: userToken }).then((user) => {
-      console.log("App: Login response:", user);
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
     });
   };
 
   const handleLogout = () => {
-    console.log("App: Handling logout");
     setUserId(undefined);
     post("/api/logout");
   };
@@ -63,15 +57,12 @@ const App = () => {
 
   const addToCart = async (item) => {
     try {
-      // Prevent users from adding their own items to cart
       if (item.seller_id === userId) {
-        console.log("Cannot add your own item to cart");
         return;
       }
       const updatedItems = await post("/api/cart/add", { item });
       setCartItems(updatedItems);
     } catch (err) {
-      console.log("Failed to add item to cart:", err);
     }
   };
 
@@ -85,7 +76,6 @@ const App = () => {
       }).then(res => res.json());
       setCartItems(updatedItems);
     } catch (err) {
-      console.log("Failed to remove item from cart:", err);
     }
   };
 
@@ -94,11 +84,8 @@ const App = () => {
       await post("/api/cart/clear");
       setCartItems([]);
     } catch (err) {
-      console.log("Failed to clear cart:", err);
     }
   };
-
-  console.log("App: Current userId:", userId, "Current location:", location.pathname);
 
   // If we're already at /login and not logged in, just render the login page
   if (location.pathname === "/login" && !userId) {

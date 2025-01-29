@@ -16,11 +16,9 @@ const UserPurchases = () => {
       setIsLoading(true);
       get("/api/purchases", { userId })
         .then((purchasedItems) => {
-          console.log("Fetched purchases:", purchasedItems);
           setPurchases(Array.isArray(purchasedItems) ? purchasedItems : []);
         })
         .catch((error) => {
-          console.error("Error fetching purchases:", error);
           setPurchases([]);
         })
         .finally(() => {
@@ -43,14 +41,16 @@ const UserPurchases = () => {
   return (
     <div className="Items-container">
       <h1>My Purchases</h1>
-
+      
       <div className="Items-section">
         <h2>Ongoing Orders</h2>
         <div className="Items-grid">
           {ongoingOrders.length === 0 ? (
             <div className="No-items">No ongoing orders</div>
           ) : (
-            ongoingOrders.map((order) => <OrderCard key={order._id} order={order} />)
+            ongoingOrders.map((order) => (
+              <OrderCard key={order._id} order={order} />
+            ))
           )}
         </div>
       </div>
@@ -61,7 +61,9 @@ const UserPurchases = () => {
           {pastOrders.length === 0 ? (
             <div className="No-items">No completed orders yet</div>
           ) : (
-            pastOrders.map((order) => <OrderCard key={order._id} order={order} />)
+            pastOrders.map((order) => (
+              <OrderCard key={order._id} order={order} />
+            ))
           )}
         </div>
       </div>

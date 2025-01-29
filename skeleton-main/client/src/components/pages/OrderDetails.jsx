@@ -85,6 +85,9 @@ const OrderDetails = (props) => {
       images: order.images,
       description: order.description,
       seller_id: order.seller_id,
+      seller: order.seller,
+      category: order.category,
+      condition: order.condition,
       status: order.status,
     };
     addToCart(cartItem);
@@ -177,7 +180,7 @@ const OrderDetails = (props) => {
         review: updatedOrder.review.text || "",
       });
     } catch (error) {
-      console.error("Failed to submit review:", error);
+      setSubmitError("Failed to submit review. Please try again.");
     }
   };
 
@@ -205,7 +208,7 @@ const OrderDetails = (props) => {
         review: "",
       });
     } catch (error) {
-      console.error("Failed to delete review:", error);
+      setDeleteError("Failed to delete review. Please try again.");
     }
   };
 
@@ -263,7 +266,10 @@ const OrderDetails = (props) => {
           <div className="OrderDetails-tags">
             <span className={`OrderDetails-status ${statusColor}`}>{status}</span>
             <span className="OrderDetails-category">{getCategoryWithEmoji(order.category)}</span>
-            <span className="OrderDetails-condition">{order.condition}</span>
+            <span className="OrderDetails-condition">
+              {order.condition === "like-new" ? "Like New" : 
+               order.condition.charAt(0).toUpperCase() + order.condition.slice(1)}
+            </span>
           </div>
 
           <div className="OrderDetails-description">

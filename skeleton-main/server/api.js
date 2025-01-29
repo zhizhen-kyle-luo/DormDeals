@@ -51,11 +51,11 @@ router.post("/initsocket", (req, res) => {
 router.get("/useritems", (req, res) => {
   Item.find({ seller_id: req.query.userid })
     .then((userItemsObj) => {
-      res.send(userItemsObj);
+    res.send(userItemsObj);
     })
     .catch((err) => {
       res.status(500).send("Failed to retrieve user's items", err);
-    });
+  });
 });
 
 router.get("/user", (req, res) => {
@@ -75,11 +75,16 @@ router.get("/user", (req, res) => {
           if (userProfile.rating.length === 0) {
             userProfile.rating = ["0.0", "0"];
           }
+          // Update email if it's blank or different from Google email
+          if (!userProfile.email || userProfile.email === "Blank") {
+            userProfile.email = user.email;
+          }
         } else {
           userProfile = new UserProfile({
             user: user,
             description: "Blank",
-            email: "Blank",
+            email: user.email, // Use Google email instead of "Blank"
+            phone: "",
             picture: req.query.picture,
             rating: ["0.0", "0"],
           });
@@ -100,7 +105,9 @@ router.post("/edituser", (req, res) => {
         user: user,
         description: req.body.description,
         email: req.body.email,
+        phone: req.body.phone,
         picture: req.body.picture,
+        backgroundImage: req.body.backgroundImage,
         rating: req.body.rating,
       });
       editedProfile.save().then(res.send(editedProfile));

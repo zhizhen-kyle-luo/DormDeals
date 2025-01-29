@@ -7,7 +7,9 @@ const UserProfileSchema = new mongoose.Schema({
   },
   description: String,
   email: String,
+  phone: String,
   picture: Object,
+  backgroundImage: Object,
   rating: Array /*[Rating, Number of Reviews]*/,
 });
 

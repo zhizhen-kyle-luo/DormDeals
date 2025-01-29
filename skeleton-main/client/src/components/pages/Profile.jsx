@@ -15,15 +15,22 @@ const Profile = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [newPicture, setNewPicture] = useState({ picture: [defaultpfpimg] });
   const [newBackground, setNewBackground] = useState({ picture: [backgroundimg] });
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     get(`/api/user`, { userid: userId }).then((userObj) => {
       setUser(userObj);
       setIsLoading(false);
+      if (userObj[1]?.picture) {
+        setNewPicture({ picture: [userObj[1].picture] });
+      }
+      if (userObj[1]?.backgroundImage) {
+        setNewBackground({ picture: [userObj[1].backgroundImage] });
+      }
     });
     get(`/api/whoami`).then((viewingUserObj) => {
       setViewingUser(viewingUserObj);
-      // Set the default email to the Google email when it's the user's own profile
       if (viewingUserObj?._id === userId) {
         setUser((prev) => [prev[0], { ...prev[1], email: viewingUserObj.email }]);
       }
@@ -58,18 +65,28 @@ const Profile = () => {
     }
   };
 
+  const handleDeleteImage = (type) => {
+    if (type === "profile") {
+      setNewPicture({ picture: [defaultpfpimg] });
+    } else if (type === "background") {
+      setNewBackground({ picture: [backgroundimg] });
+    }
+  };
+
   const saveEdits = async () => {
+    setIsSaving(true);
     const newDescription = document.getElementById("Description-input").value;
     const newEmail = document.getElementById("Email-input").value;
     const newPhone = document.getElementById("Phone-input").value;
+    
     let newPictureObj = newPicture.picture;
-    let newBackgroundObj = newBackground.picture;
-
-    if (newPictureObj.length === 0) {
-      newPictureObj = [defaultpfpimg];
+    if (newPictureObj[0] === defaultpfpimg && userinformation?.picture) {
+      newPictureObj = [userinformation.picture];
     }
-    if (newBackgroundObj.length === 0) {
-      newBackgroundObj = [backgroundimg];
+
+    let newBackgroundObj = newBackground.picture;
+    if (newBackgroundObj[0] === backgroundimg && userinformation?.backgroundImage) {
+      newBackgroundObj = [userinformation.backgroundImage];
     }
 
     const body = {
@@ -81,10 +98,17 @@ const Profile = () => {
       backgroundImage: newBackgroundObj[0],
       rating: userinformation.rating,
     };
-    await post("/api/edituser", body).then((profile) => {
+
+    try {
+      const profile = await post("/api/edituser", body);
       setUser([user, profile]);
       setShowEditForm(false);
-    });
+    } catch (error) {
+      setIsLoading(false);
+      setError("Failed to save changes. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const displayAllItems = () => {
@@ -108,7 +132,6 @@ const Profile = () => {
     })`,
   };
 
-  // Add function to close modal when clicking outside
   const handleModalClick = (e) => {
     if (e.target.className === "Profile-modal") {
       setShowEditForm(false);
@@ -191,38 +214,60 @@ const Profile = () => {
 
         {showEditForm && (
           <div className="Profile-modal" onClick={handleModalClick}>
-            <div className="Profile-editForm">
+            <div className="Profile-editForm" onClick={(e) => e.stopPropagation()}>
+              <button className="Profile-closeButton" onClick={() => setShowEditForm(false)}>
+                ×
+              </button>
               <h2>Edit Profile</h2>
               <div className="Profile-formGroup">
                 <label>Profile Picture</label>
-                <input
-                  type="file"
-                  id="Picture-input"
-                  name="image"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, "profile")}
-                />
+                <div className="Profile-imageControls">
+                  <input
+                    type="file"
+                    id="Picture-input"
+                    name="image"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, "profile")}
+                  />
+                </div>
                 {newPicture.picture[0] && newPicture.picture[0] !== defaultpfpimg && (
-                  <div
-                    className="Profile-avatarContainer"
-                    style={{ margin: "1rem auto", width: "150px", height: "150px" }}
-                  >
-                    <img src={newPicture.picture[0]} alt="Preview" className="Profile-avatar" />
+                  <div className="Profile-imageWrapper">
+                    <img src={newPicture.picture[0]} alt="Preview" className="Profile-previewImage" />
+                    <div className="Profile-imageActions">
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteImage("profile")}
+                        className="Profile-imageAction remove"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
               <div className="Profile-formGroup">
                 <label>Background Image</label>
-                <input
-                  type="file"
-                  id="Background-input"
-                  name="image"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, "background")}
-                />
+                <div className="Profile-imageControls">
+                  <input
+                    type="file"
+                    id="Background-input"
+                    name="image"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, "background")}
+                  />
+                </div>
                 {newBackground.picture[0] && newBackground.picture[0] !== backgroundimg && (
-                  <div className="Profile-backgroundPreview">
-                    <img src={newBackground.picture[0]} alt="Background Preview" />
+                  <div className="Profile-imageWrapper">
+                    <img src={newBackground.picture[0]} alt="Background Preview" className="Profile-previewImage" />
+                    <div className="Profile-imageActions">
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteImage("background")}
+                        className="Profile-imageAction remove"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -253,12 +298,15 @@ const Profile = () => {
                   placeholder="Your phone number"
                 />
               </div>
+              <p className="Profile-saveWarning">
+                Please wait while your changes are being saved. Do not click multiple times.
+              </p>
               <div className="Profile-formButtons">
-                <button className="Profile-cancelButton" onClick={() => setShowEditForm(false)}>
+                <button className="Profile-cancelButton" onClick={() => setShowEditForm(false)} disabled={isSaving}>
                   Cancel
                 </button>
-                <button className="Profile-saveButton" onClick={saveEdits}>
-                  Save Changes
+                <button className="Profile-saveButton" onClick={saveEdits} disabled={isSaving}>
+                  {isSaving ? "Saving..." : "Save Changes"}
                 </button>
               </div>
             </div>
