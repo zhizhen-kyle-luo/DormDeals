@@ -12,7 +12,6 @@ const OrderDetails = (props) => {
   const [viewingUser, setViewingUser] = useState(null);
   const [status, setStatus] = useState("");
   const [statusColor, setStatusColor] = useState("");
-  const [statusButton, setStatusButton] = useState("");
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [reviewData, setReviewData] = useState({
     rating: "5",
@@ -38,15 +37,12 @@ const OrderDetails = (props) => {
       if (orderObj.status === "Sold") {
         setStatus("Sold");
         setStatusColor("u-red");
-        setStatusButton("Put back on market");
       } else if (orderObj.status === "Under Transaction") {
         setStatus("Under Transaction");
         setStatusColor("u-gold");
-        setStatusButton("Mark as sold");
       } else {
         setStatus("Active");
         setStatusColor("u-green");
-        setStatusButton("Mark as sold");
       }
       setIsLoading(false);
     });
@@ -129,15 +125,12 @@ const OrderDetails = (props) => {
       if (orderObj.status === "Sold") {
         setStatus("Sold");
         setStatusColor("u-red");
-        setStatusButton("Put back on market");
       } else if (orderObj.status === "Under Transaction") {
         setStatus("Under Transaction");
         setStatusColor("u-gold");
-        setStatusButton("Mark as sold");
       } else {
         setStatus("Active");
         setStatusColor("u-green");
-        setStatusButton("Mark as sold");
       }
     });
   };
@@ -267,8 +260,9 @@ const OrderDetails = (props) => {
             <span className={`OrderDetails-status ${statusColor}`}>{status}</span>
             <span className="OrderDetails-category">{getCategoryWithEmoji(order.category)}</span>
             <span className="OrderDetails-condition">
-              {order.condition === "like-new" ? "Like New" : 
-               order.condition.charAt(0).toUpperCase() + order.condition.slice(1)}
+              {order.condition === "like-new"
+                ? "Like New"
+                : order.condition.charAt(0).toUpperCase() + order.condition.slice(1)}
             </span>
           </div>
 
@@ -302,12 +296,14 @@ const OrderDetails = (props) => {
                 {order.reviewed ? "Edit Review" : "Leave a Review"}
               </button>
             )}
-            <button
-              className={`OrderDetails-button OrderDetails-sold ${removeItemVisible}`}
-              onClick={sellItem}
-            >
-              {statusButton}
-            </button>
+            {order.status !== "Sold" && (
+              <button
+                className={`OrderDetails-button OrderDetails-sold ${removeItemVisible}`}
+                onClick={sellItem}
+              >
+                Mark as Sold
+              </button>
+            )}
             <button
               className={`OrderDetails-button OrderDetails-remove ${removeItemVisible}`}
               onClick={removeItem}
