@@ -181,14 +181,15 @@ const Instructions = () => {
           </div>
           <div className="section-body">
             <p>
-              As always, there is room for improvement. There still exists several unadded features
-              we hope to later implement. This includes a built-in communication feature between
-              buyers and sellers for questions or coming to an agreement on the exchanging process
-              instead of relying on email. Building on this feature, a smooth transaction process
-              that handles payment and shipping would ease the exchange process. Another feature is
-              sending a notification to the seller when an item has been brought, to prevent the
-              buyer from manually doing this. Finally, an auction feature to fit certain seller's
-              needs is yet to be implemented.
+            As always, there is room for improvement. There still exists several unadded features
+              we hope to later implement. This includes a communication feature between buyers and 
+              sellers to determine when and where to meet up with a third-party drop off option,
+              instead of email and phone number. Building on this feature, a smooth transaction process
+              that handles payment and shipping would also ease the exchange process. Another feature
+              is sending email notifications to the seller to notify of an item being purchased and
+              to buyer for order confirmation. Then, we hope to also implement logistics that allow an
+              seller to sell multiple of the same item. Finally, an auction feature to fit certain
+              seller's needs is yet to be implemented.
             </p>
             <div className="section-image">
               <img src={fireworks} alt="Celebration" className="section-gif" />
