@@ -77,7 +77,6 @@ const App = () => {
       const updatedItems = await response.json();
       setCartItems(updatedItems || []);
     } catch (err) {
-      console.error("Failed to remove item from cart:", err);
     }
   };
 

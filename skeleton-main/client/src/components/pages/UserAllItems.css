@@ -1,3 +1,62 @@
+.UserAllItems-container {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 80px 2rem 2rem;
+  font-family: "Playfair Display", serif;
+  background-color: #fdf9f6;
+}
+
+.UserAllItems-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.UserAllItems-header {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 3rem;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.UserAllItems-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.UserAllItems-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  background: #fdf9f6;
+  border-radius: 12px;
+  color: #666;
+  font-size: 1.1rem;
+  font-style: italic;
+  border: 2px dashed rgba(224, 112, 7, 0.3);
+}
+
+@media (max-width: 768px) {
+  .UserAllItems-container {
+    padding: 80px 1rem 1rem;
+  }
+
+  .UserAllItems-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .UserAllItems-header {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
 .Items-container {
   margin: 0 auto;
   font-family: "Playfair Display", serif;
@@ -54,13 +113,6 @@
   }
 }
 
-@media (max-width: 768px) {
-  .Items-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-}
-
 /* My Sales Animations */
 @keyframes fadeInUp {
   from {
@@ -94,123 +146,6 @@
     transform: scale(1);
   }
 }
-
-/*
-.UserAllItems-container {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.UserAllItems-header {
-  animation: slideInRight 0.8s ease-out;
-}
-
-.UserAllItems-stats {
-  animation: fadeInUp 0.8s ease-out 0.2s backwards;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.UserAllItems-stat {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.UserAllItems-stat:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.UserAllItems-grid {
-  animation: fadeInUp 0.8s ease-out 0.4s backwards;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
-  padding: 1rem;
-}
-
-.Item-card {
-  animation: scaleIn 0.6s ease-out;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.Item-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-}
-
-.Item-image {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-}
-
-.Item-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.Item-card:hover .Item-image img {
-  transform: scale(1.1);
-}
-
-.Item-content {
-  padding: 1.5rem;
-}
-
-.Item-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 0.5rem;
-  transition: color 0.3s ease;
-}
-
-.Item-card:hover .Item-title {
-  color: #e07007;
-}
-
-.Item-price {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #e07007;
-  margin-bottom: 1rem;
-}
-
-.Item-status {
-  display: inline-block;
-  padding: 0.35rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.Item-status.active {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.Item-status.sold {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.Item-status.pending {
-  background: #fef3c7;
-  color: #92400e;
-}
-*/
 
 /* Filter Controls Animation */
 .Filter-controls {

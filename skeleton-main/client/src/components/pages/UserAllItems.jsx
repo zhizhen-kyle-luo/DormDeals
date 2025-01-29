@@ -6,7 +6,7 @@ import defaultpfpimg from "../../assets/blank-profile.png";
 import OrderCard from "./OrderCard";
 import "./UserAllItems.css";
 
-const Home = () => {
+const UserAllItems = () => {
   let props = useParams();
   const [seller, setSeller] = useState("");
   const [orders, setOrders] = useState([]);
@@ -38,24 +38,26 @@ const Home = () => {
 
   if (isLoading) {
     return (
-      <div className="Items-container">
+      <div className="UserAllItems-container">
         <div>Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="Items-container">
-      <h1 className="Items-header">{seller}</h1>
-      <div className="Items-grid">
-        {orders.length === 0 ? (
-          <div className="No-items">No items found</div>
-        ) : (
-          orders.map((order) => <OrderCard className="Item-card" key={order._id} order={order} />)
-        )}
+    <div className="UserAllItems-container">
+      <div className="UserAllItems-content">
+        <h1 className="UserAllItems-header">{seller}</h1>
+        <div className="UserAllItems-grid">
+          {orders.length === 0 ? (
+            <div className="UserAllItems-empty">No items found</div>
+          ) : (
+            orders.map((order) => <OrderCard key={order._id} order={order} />)
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default UserAllItems;
