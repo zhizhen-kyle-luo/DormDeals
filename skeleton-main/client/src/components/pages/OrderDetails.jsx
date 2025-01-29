@@ -181,6 +181,34 @@ const OrderDetails = (props) => {
     }
   };
 
+  const handleReviewDelete = async (event) => {
+    event.preventDefault();
+    if (!order || !viewingUser) return;
+
+    try {
+      const reviewDataToSend = {
+        seller: { name: order.seller, _id: order.seller_id },
+        itemId: order._id,
+        rating: reviewData.rating,
+        review: reviewData.review,
+      };
+      await post("/api/deletereview", reviewDataToSend);
+      setShowReviewForm(false);
+
+      // Refresh order data to update the review status
+      const updatedOrder = await get(`/api/order`, { orderId });
+      setOrder(updatedOrder);
+
+      // Update the review data state with the new review
+      setReviewData({
+        rating: "5",
+        review: "",
+      });
+    } catch (error) {
+      console.error("Failed to delete review:", error);
+    }
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setReviewData((prev) => ({
@@ -310,6 +338,11 @@ const OrderDetails = (props) => {
               <button className="ReviewForm-submit" onClick={handleReviewSubmit}>
                 {order.reviewed ? "Update Review" : "Submit Review"}
               </button>
+              {order.reviewed && (
+                <button className="ReviewForm-delete" onClick={handleReviewDelete}>
+                  Delete Review
+                </button>
+              )}
               <button className="ReviewForm-cancel" onClick={() => setShowReviewForm(false)}>
                 Cancel
               </button>

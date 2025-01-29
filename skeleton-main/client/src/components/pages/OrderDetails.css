@@ -417,6 +417,7 @@
 }
 
 .ReviewForm-submit,
+.ReviewForm-delete,
 .ReviewForm-cancel {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -436,6 +437,16 @@
 
 .ReviewForm-submit:hover {
   background: #c86006;
+}
+
+.ReviewForm-delete {
+  background: #e01907;
+  color: white;
+  border: none;
+}
+
+.ReviewForm-delete:hover {
+  background: #c80606;
 }
 
 .ReviewForm-cancel {

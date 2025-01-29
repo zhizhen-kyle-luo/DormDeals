@@ -420,6 +420,52 @@ router.post("/newreview", auth.ensureLoggedIn, async (req, res) => {
   }
 });
 
+router.post("/deletereview", auth.ensureLoggedIn, async (req, res) => {
+  try {
+    Review.deleteOne({ itemId: req.body.itemId }).then();
+
+    const newReview = new Review({
+      reviewer: { name: req.user.name, _id: req.user._id },
+      seller: req.body.seller,
+      itemId: req.body.itemId,
+      rating: "5",
+      review: "",
+    });
+
+    // Get all reviews for this seller to update their profile rating
+    const allReviews = await Review.find({
+      seller: req.body.seller,
+    });
+
+    // Calculate new average rating
+    const totalRating = allReviews.reduce((sum, review) => sum + Number(review.rating || 0), 0);
+    const averageRating = (totalRating / allReviews.length).toFixed(1);
+
+    // Update seller's profile
+    const seller = await UserProfile.findOne({ user: req.body.seller });
+    if (seller) {
+      seller.rating = [averageRating, String(allReviews.length)];
+      await seller.save();
+    }
+
+    // Update the item to mark it as reviewed
+    const item = await Item.findById(req.body.itemId);
+    if (item) {
+      item.reviewed = false;
+      item.review = {
+        rating: "5",
+        text: "",
+      };
+      await item.save();
+    }
+
+    res.status(201).send(newReview);
+  } catch (err) {
+    console.error("Failed to delete review:", err);
+    res.status(500).send({ error: "Failed to delete review" });
+  }
+});
+
 //Checks if there already exists a review for an item
 router.get("/review", (req, res) => {
   Review.find({

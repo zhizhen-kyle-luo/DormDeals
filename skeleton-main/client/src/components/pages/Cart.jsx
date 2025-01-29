@@ -149,7 +149,7 @@ const Cart = () => {
             <div className="cart-summary-details">
               <div className="cart-summary-row">
                 <span>Subtotal ({selectedItems.size} items)</span>
-                <span>${calculateSubtotal()}</span>
+                <span>${Number(calculateSubtotal()).toFixed(2)}</span>
               </div>
             </div>
             <button
