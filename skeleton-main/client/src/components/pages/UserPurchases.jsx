@@ -67,12 +67,6 @@ const UserPurchases = () => {
           )}
         </div>
       </div>
-
-      {purchases.length === 0 && (
-        <div className="No-items">
-          <p>You haven't made any purchases yet.</p>
-        </div>
-      )}
     </div>
   );
 };
