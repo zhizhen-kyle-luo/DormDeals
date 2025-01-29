@@ -41,6 +41,12 @@
   border: 2px dashed rgba(224, 112, 7, 0.3);
 }
 
+/* Ensure OrderCard has proper width in the grid */
+.UserAllItems-grid .OrderCard-container {
+  width: 100%;
+  margin: 0;
+}
+
 @media (max-width: 1200px) {
   .UserAllItems-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -61,12 +67,6 @@
     font-size: 2rem;
     margin-bottom: 2rem;
   }
-}
-
-/* Ensure OrderCard has proper width in the grid */
-.UserAllItems-grid .OrderCard-container {
-  width: 100%;
-  margin: 0;
 }
 
 .Items-container {
