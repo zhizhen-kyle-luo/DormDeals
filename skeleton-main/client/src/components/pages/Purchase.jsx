@@ -50,49 +50,64 @@ const Purchase = () => {
   };
 
   return (
-    <div className="purchase-container">
-      <div className="purchase-content">
+    <div className="Purchase-container">
+      <div className="Purchase-header">
         <h1>Purchase Summary</h1>
-
-        <div className="purchase-items">
-          <h2>Items</h2>
+      </div>
+      
+      <div className="Purchase-content">
+        <div className="Purchase-items">
           {items.map((item) => (
-            <div key={item._id} className="purchase-item">
-              <div className="item-image">
-                <img src={item.images[0]} alt={item.name} />
+            <div key={item._id} className="Purchase-item">
+              <img 
+                src={item.images[0]} 
+                alt={item.name} 
+                className="Purchase-itemImage" 
+              />
+              <div className="Purchase-itemInfo">
+                <h3 className="Purchase-itemName">{item.name}</h3>
+                <div className="Purchase-itemDetails">
+                  <span className="Purchase-itemCategory">{item.category} 🛍️</span>
+                  <span className="Purchase-itemCondition">{item.condition}</span>
+                </div>
               </div>
-              <div className="item-details">
-                <h3>{item.name}</h3>
-                <div className="item-category">{item.category}</div>
-                <div className="item-condition">{item.condition}</div>
+              <div className="Purchase-itemPrice">
+                ${Number(item.price).toFixed(2)}
               </div>
-              <div className="item-price">${Number(item.price).toFixed(2)}</div>
             </div>
           ))}
         </div>
 
-        <div className="purchase-summary">
-          <div className="summary-row total">
-            <span>Total</span>
-            <span>${total.toFixed(2)}</span>
+        <div className="Purchase-summary">
+          <h2 className="Purchase-summaryTitle">Order Summary</h2>
+          <div className="Purchase-total">
+            <span className="Purchase-totalLabel">Total</span>
+            <span className="Purchase-totalAmount">
+              ${total.toFixed(2)}
+            </span>
           </div>
-          <div className="transaction-note">
-            Note: After confirming your purchase, the item will be marked as "Under Transaction".
+          
+          <div className="Purchase-note">
+            Note: After confirming your purchase, the item will be marked as "Under Transaction". 
             The seller will mark it as "Sold" after the in-person exchange is completed.
           </div>
-        </div>
 
-        <div className="purchase-actions">
-          <button className="back-button" onClick={() => navigate(-1)} disabled={isProcessing}>
-            Back
-          </button>
-          <button
-            className="confirm-button"
-            onClick={handleConfirmPurchase}
-            disabled={isProcessing}
-          >
-            {isProcessing ? "Processing..." : "Confirm Purchase"}
-          </button>
+          <div className="Purchase-actions">
+            <button 
+              className="Purchase-backButton" 
+              onClick={() => navigate(-1)} 
+              disabled={isProcessing}
+            >
+              Back
+            </button>
+            <button
+              className="Purchase-confirmButton"
+              onClick={handleConfirmPurchase}
+              disabled={isProcessing}
+            >
+              {isProcessing ? "Processing..." : "Confirm Purchase"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
