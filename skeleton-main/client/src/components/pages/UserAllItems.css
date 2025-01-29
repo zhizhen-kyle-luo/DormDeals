@@ -24,7 +24,7 @@
 
 .UserAllItems-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding: 1rem;
 }
@@ -41,6 +41,12 @@
   border: 2px dashed rgba(224, 112, 7, 0.3);
 }
 
+@media (max-width: 1200px) {
+  .UserAllItems-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .UserAllItems-container {
     padding: 80px 1rem 1rem;
@@ -55,6 +61,12 @@
     font-size: 2rem;
     margin-bottom: 2rem;
   }
+}
+
+/* Ensure OrderCard has proper width in the grid */
+.UserAllItems-grid .OrderCard-container {
+  width: 100%;
+  margin: 0;
 }
 
 .Items-container {
