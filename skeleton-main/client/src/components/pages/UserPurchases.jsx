@@ -37,8 +37,6 @@ const UserPurchases = () => {
     );
   }
 
-  console.log(purchases);
-
   const ongoingOrders = purchases.filter((item) => item.status === "Under Transaction");
   const pastOrders = purchases.filter((item) => item.status === "Sold");
 
