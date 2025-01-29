@@ -63,7 +63,8 @@ const Home = () => {
 
       const matchesCondition =
         filters.condition === "all" ||
-        order.condition.toLowerCase() === filters.condition.toLowerCase();
+        order.condition.toLowerCase() === filters.condition.toLowerCase() ||
+        (filters.condition.toLowerCase() === "like new" && order.condition === "like-new");
 
       return matchesSearch && matchesPrice && matchesCategory && matchesCondition;
     });

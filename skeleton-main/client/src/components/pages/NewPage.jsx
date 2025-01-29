@@ -215,10 +215,10 @@ const NewPage = () => {
             onChange={handleInputChange}
             required
           >
-            <option value="new">New</option>
-            <option value="like-new">Like New</option>
-            <option value="used">Used</option>
-            <option value="fair">Fair</option>
+            <option value="New">New</option>
+            <option value="Like New">Like New</option>
+            <option value="Used">Used</option>
+            <option value="Fair">Fair</option>
           </select>
         </div>
 

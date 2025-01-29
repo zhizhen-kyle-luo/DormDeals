@@ -87,30 +87,25 @@
 
 .item-tags {
   display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .item-category,
 .item-condition {
-  display: inline-flex;
-  align-items: center;
   padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  width: fit-content;
-  white-space: nowrap;
+  border-radius: 16px;
+  font-size: 14px;
 }
 
 .item-category {
-  background: #e0f2fe;
-  color: #0369a1;
+  background-color: #e3f2fd;
+  color: #1976d2;
 }
 
 .item-condition {
-  background: #f3e8ff;
-  color: #6b21a8;
+  background-color: #f3e5f5;
+  color: #7b1fa2;
 }
 
 .item-price {

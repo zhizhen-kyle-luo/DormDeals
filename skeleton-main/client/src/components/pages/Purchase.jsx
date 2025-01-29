@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../App.jsx";
 import { CartContext } from "../App.jsx";
 import { post } from "../../utilities";
+import { getCategoryWithEmoji } from "../../utilities/categoryUtils";
 import "./Purchase.css";
 
 const Purchase = () => {
@@ -63,8 +64,16 @@ const Purchase = () => {
               </div>
               <div className="item-details">
                 <h3>{item.name}</h3>
-                <div className="item-category">{item.category}</div>
-                <div className="item-condition">{item.condition}</div>
+                <div className="item-tags">
+                  <span className="item-category">
+                    {item.category ? getCategoryWithEmoji(item.category) : "Electronics 💻"}
+                  </span>
+                  <span className="item-condition">
+                    {item.condition === "like-new" ? "Like New" : 
+                     item.condition ? item.condition.charAt(0).toUpperCase() + item.condition.slice(1) : 
+                     "Like New"}
+                  </span>
+                </div>
               </div>
               <div className="item-price">${Number(item.price).toFixed(2)}</div>
             </div>

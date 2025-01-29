@@ -60,10 +60,32 @@ const Cart = () => {
     }
   };
 
-  const handleCheckout = () => {
-    const itemsToCheckout = cartItems.filter(
+  const handleCheckout = async () => {
+    const selectedItemsArray = cartItems.filter(
       (item) => selectedItems.has(item.itemId) && itemStatuses[item.itemId] === "Active"
     );
+
+    // Get the latest order details for each item
+    const itemsToCheckout = await Promise.all(selectedItemsArray.map(async (item) => {
+      try {
+        const orderDetails = await get("/api/order", { orderId: item.itemId });
+        return {
+          _id: item._id,
+          itemId: item.itemId,
+          name: item.name,
+          price: item.price,
+          images: item.images,
+          category: orderDetails.category,
+          condition: orderDetails.condition,
+          seller_id: item.seller_id,
+          seller: item.seller
+        };
+      } catch (error) {
+        console.error("Error fetching order details:", error);
+        return item;
+      }
+    }));
+    
     if (itemsToCheckout.length === 0) {
       alert("Please select active items to purchase");
       return;

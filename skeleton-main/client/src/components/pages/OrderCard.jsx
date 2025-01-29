@@ -36,7 +36,10 @@ const OrderCard = ({ order }) => {
           <div className="OrderCard-category-container">
             <span className={`OrderCard-status ${statusColors[order.status]}`}>{order.status}</span>
             <span className="OrderCard-category">{getCategoryWithEmoji(order.category)}</span>
-            <span className="OrderCard-condition">{order.condition}</span>
+            <span className="OrderCard-condition">
+              {order.condition === "like-new" ? "Like New" : 
+               order.condition.charAt(0).toUpperCase() + order.condition.slice(1)}
+            </span>
           </div>
         </div>
       </div>
